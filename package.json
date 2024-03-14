@@ -7,11 +7,22 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
+    "start:ios": "npm run ios -- --simulator='iPhone 15 Pro Max (8AFD54A5-50B9-4C2C-B61C-DB4F3BF86070)'",
     "test": "jest"
   },
   "dependencies": {
+    "@eva-design/eva": "^2.2.0",
+    "@react-native-masked-view/masked-view": "^0.3.1",
+    "@react-navigation/native": "^6.1.16",
+    "@react-navigation/stack": "^6.3.28",
+    "@ui-kitten/components": "^5.3.1",
+    "@ui-kitten/eva-icons": "^5.3.1",
     "react": "18.2.0",
-    "react-native": "0.73.6"
+    "react-native": "0.73.6",
+    "react-native-gesture-handler": "^2.15.0",
+    "react-native-safe-area-context": "^4.9.0",
+    "react-native-screens": "^3.29.0",
+    "react-native-svg": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -24,9 +35,7 @@
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
-    "eslint": "^8.19.0",
     "jest": "^29.6.3",
-    "prettier": "2.8.8",
     "react-test-renderer": "18.2.0",
     "typescript": "5.0.4"
   },
