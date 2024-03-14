@@ -11,7 +11,7 @@ interface Props {
 export const Footer = ({ text, linkText, onPress }: Props) => {
   return (
     <Layout style={styles.footer}>
-      <Text>{text} </Text>
+      <Text style={globalStyles.colorOnyx}>{text} </Text>
       <Text style={globalStyles.colorPrimaryRed} onPress={onPress}>
         {linkText}
       </Text>
