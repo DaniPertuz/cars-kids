@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create({
+  flexAlignJustifyCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   input: {
     borderColor: '#DCD7D7',
     borderRadius: 10,
