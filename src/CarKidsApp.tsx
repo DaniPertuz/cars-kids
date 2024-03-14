@@ -8,6 +8,7 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 import { MainNavigator } from './presentation/navigation/MainNavigator';
+import { AuthProvider } from './presentation/providers/AuthProvider';
 
 export const CarKidsApp = () => {
   const colorScheme = useColorScheme();
@@ -32,7 +33,9 @@ export const CarKidsApp = () => {
             notification: theme['color-primary-500']
           }
         }}>
-          <MainNavigator />
+          <AuthProvider>
+            <MainNavigator />
+          </AuthProvider>
         </NavigationContainer>
       </ApplicationProvider>
     </>
