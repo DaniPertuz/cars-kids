@@ -1,7 +1,12 @@
 import { Input, useTheme } from '@ui-kitten/components';
 import { globalStyles } from '../../../styles/global.styles';
 
-export const PasswordInput = () => {
+interface Props {
+  value: string;
+  onChangeText: (password: string) => void;
+}
+
+export const PasswordInput = ({ value, onChangeText }: Props) => {
   const theme = useTheme();
 
   return (
@@ -9,6 +14,8 @@ export const PasswordInput = () => {
       placeholder='Contraseña'
       autoCapitalize='none'
       secureTextEntry
+      value={value}
+      onChangeText={onChangeText}
       style={[globalStyles.input, { backgroundColor: theme['color-basic-100'] }]}
     />
   );
