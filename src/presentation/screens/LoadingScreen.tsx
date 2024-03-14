@@ -1,9 +1,10 @@
-import { Text, View } from 'react-native';
+import { Layout, Spinner } from '@ui-kitten/components';
+import { globalStyles } from '../styles/global.styles';
 
 export const LoadingScreen = () => {
   return (
-    <View>
-      <Text>LoadingScreen</Text>
-    </View>
+    <Layout style={globalStyles.flexAlignJustifyCenter}>
+      <Spinner size='large' />
+    </Layout>
   );
 };
