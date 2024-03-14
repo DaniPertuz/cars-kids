@@ -37,7 +37,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
         </Layout>
         <Spacer height={20} />
         <Layout style={globalStyles.mainBackground}>
-          <PrimaryButton text='Ingresar' onPress={() => { }} />
+          <PrimaryButton text='Registrar' onPress={() => { }} />
         </Layout>
         <Spacer height={50} />
         <Footer text='Ya tienes cuenta?' linkText='Ingresa' onPress={() => { navigation.push('LoginScreen') }} />
