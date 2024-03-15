@@ -1,10 +1,6 @@
 export interface AuthResponse {
-  email:    string;
-  password: string;
-  name:     string;
-  role:     IUserRole;
-  status:   IStatus;
-  token:    string;
+  user:  IUser;
+  token: string;
 }
 
 export type AuthStatus = 'authenticated' | 'unauthenticated' | 'checking';
@@ -21,7 +17,6 @@ export enum IUserRole {
 
 export interface IUser {
   email:    string;
-  password: string;
   name:     string;
   role:     IUserRole;
   status:   IStatus;
