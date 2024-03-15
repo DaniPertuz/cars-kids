@@ -1,18 +1,13 @@
+import { AxiosError } from 'axios';
 import carskidsApi from '../../config/api/carskidsApi';
-import { AuthResponse, IUser } from '../../infrastructure/interfaces';
+import { AuthResponse } from '../../infrastructure/interfaces';
 
 const returnUserToken = async (data: AuthResponse) => {
-  const user: IUser = {
-    email: data.email,
-    name: data.name,
-    password: data.password,
-    role: data.role,
-    status: data.status
-  };
+  const { user, token } = data;
 
   return {
     user,
-    token: data.token
+    token
   };
 };
 
@@ -24,8 +19,37 @@ export const authLogin = async (email: string, password: string) => {
     });
 
     return returnUserToken(data);
-  } catch (error) {
-    console.log(error);
-    return null;
+  } catch (error: any) {
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
   }
 };
+
+export const authRegister = async (name: string, email: string, password: string) => {
+  try {
+    const { data } = await carskidsApi.post<AuthResponse>('auth/register', {
+      name,
+      email,
+      password
+    });
+
+    return returnUserToken(data);
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+};
+
+export const updateUserPassword = async (email: string, password: string) => {
+  try {
+    const { data } = await carskidsApi.put('/users/password', { email, password })
+
+    return returnUserToken(data);
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+}
