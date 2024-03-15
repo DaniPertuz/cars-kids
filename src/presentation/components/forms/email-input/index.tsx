@@ -2,20 +2,22 @@ import { Input, useTheme } from '@ui-kitten/components';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
+  placeholder: string;
   value: string;
   onChangeText: (email: string) => void;
 }
 
-export const EmailInput = ({ value, onChangeText }: Props) => {
+export const EmailInput = ({ placeholder, value, onChangeText }: Props) => {
   const theme = useTheme();
 
   return (
     <Input
-      placeholder='Email'
+      placeholder={placeholder}
       keyboardType='email-address'
       autoCapitalize='none'
       value={value}
       onChangeText={onChangeText}
+      textStyle={globalStyles.colorOnyx}
       style={[globalStyles.input, { backgroundColor: theme['color-basic-100'] }]}
     />
   );
