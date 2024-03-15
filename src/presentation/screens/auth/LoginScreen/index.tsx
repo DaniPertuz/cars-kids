@@ -13,7 +13,7 @@ import { useAuthStore } from '../../../store/auth/useAuthStore';
 import { authStyles } from '../../../styles/auth/styles';
 import { globalStyles } from '../../../styles/global.styles';
 
-interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> {}
+interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
 export const LoginScreen = ({ navigation }: Props) => {
   const { login } = useAuthStore();
@@ -28,15 +28,15 @@ export const LoginScreen = ({ navigation }: Props) => {
       return;
     }
 
-    const resp = await login(form.email, form.password);
+    const resp = await login(form.email.trim(), form.password.trim());
 
-    if (!resp) {
-      Snackbar.show({ text: 'Credenciales incorrectas', duration: Snackbar.LENGTH_SHORT });
+    if (resp.error) {
+      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
       return;
     }
 
     navigation.navigate('HomeScreen');
-  }
+  };
 
   return (
     <Layout style={authStyles.container}>
@@ -54,15 +54,20 @@ export const LoginScreen = ({ navigation }: Props) => {
           <Text category='p1' style={globalStyles.colorSpanishGray}>Ingresa tus credenciales</Text>
         </Layout>
         <Layout style={authStyles.formContainer}>
-          <EmailInput value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
-          <PasswordInput value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
+          <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
+          <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
+        </Layout>
+        <Layout style={globalStyles.flexEnd}>
+          <Text category='p2' style={globalStyles.colorPrimaryRed} onPress={() => navigation.navigate('ResetPasswordScreen')}>
+            ¿Olvidaste tu contraseña?
+          </Text>
         </Layout>
         <Spacer height={20} />
         <Layout style={globalStyles.mainBackground}>
           <PrimaryButton text='Ingresar' onPress={onLogin} />
         </Layout>
         <Spacer height={50} />
-        <Footer text='¿No tienes cuenta?' linkText='Crea una' onPress={() => { navigation.push('RegisterScreen') }} />
+        <Footer text='¿No tienes cuenta?' linkText='Crea una' onPress={() => { navigation.reset({ index: 0, routes: [ {name: 'RegisterScreen' }]}); }} />
       </ScrollView>
     </Layout>
   );
