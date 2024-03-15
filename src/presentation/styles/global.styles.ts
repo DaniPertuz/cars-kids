@@ -6,6 +6,10 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  flexEnd: {
+    alignItems: 'flex-end',
+    backgroundColor: '#DCD7D7'
+  },
   input: {
     borderColor: '#DCD7D7',
     borderRadius: 10,
