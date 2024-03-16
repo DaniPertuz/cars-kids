@@ -6,7 +6,7 @@ import { Layout, Text } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
-import { PrimaryButton, Spacer } from '../../../components/ui';
+import { Back, PrimaryButton, Spacer } from '../../../components/ui';
 import { useEmptyFieldValidation } from '../../../hooks/useEmptyFieldValidation';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
@@ -55,6 +55,9 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
 
   return (
     <Layout style={authStyles.container}>
+      <Layout style={authStyles.backButtonContainer}>
+        <Back />
+      </Layout>
       <ScrollView style={authStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...authStyles.mainLayout }}>
           <Layout style={authStyles.imageContainer}>
