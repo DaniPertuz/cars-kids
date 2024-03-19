@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { CustomIcon } from '../../ui/CustomIcon';
+import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   handlePasswordVisibility: (isVisible: boolean) => void;
@@ -18,7 +19,7 @@ export const DisplayPassword = ({ handlePasswordVisibility }: Props) => {
     <TouchableOpacity
       activeOpacity={1.0}
       onPress={switchDisplay}
-      style={{ height: 25, width: 25 }}
+      style={globalStyles.iconSize}
     >
       {displayPassword
         ? <CustomIcon name='eye-outline' />
