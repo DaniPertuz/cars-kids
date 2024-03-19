@@ -6,6 +6,7 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen/index';
 import { BottomNavigator } from './BottomNavigator';
+import { globalColors } from '../theme/globalColors';
 
 export type RootStackParams = {
   LoadingScreen: undefined,
@@ -28,7 +29,7 @@ const fadeAnimation: StackCardStyleInterpolator = ({ current }) => {
 export const MainNavigator = () => {
   return (
     <>
-      <StatusBarComponent color={'#DCD7D7'} theme='dark-content' />
+      <StatusBarComponent color={globalColors.background} theme='dark-content' />
       <Stack.Navigator
         initialRouteName='LoginScreen'
         screenOptions={{
