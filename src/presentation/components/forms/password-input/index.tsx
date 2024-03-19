@@ -27,7 +27,7 @@ export const PasswordInput = ({ placeholder, value, onChangeText }: Props) => {
       onChangeText={onChangeText}
       textStyle={globalStyles.colorOnyx}
       accessoryRight={<DisplayPassword handlePasswordVisibility={handlePasswordVisibility} />}
-      style={[globalStyles.input, { backgroundColor: theme['color-basic-100'] }]}
+      style={globalStyles.input}
     />
   );
 };

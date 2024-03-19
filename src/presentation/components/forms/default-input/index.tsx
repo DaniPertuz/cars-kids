@@ -17,7 +17,7 @@ export const DefaultInput = ({ placeholder, value, onChangeText }: Props) => {
       value={value}
       onChangeText={onChangeText}
       textStyle={globalStyles.colorOnyx}
-      style={[globalStyles.input, { backgroundColor: theme['color-basic-100'] }]}
+      style={globalStyles.input}
     />
   );
 };
