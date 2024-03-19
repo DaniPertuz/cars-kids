@@ -35,7 +35,7 @@ export const LoginScreen = ({ navigation }: Props) => {
       return;
     }
 
-    navigation.navigate('HomeScreen');
+    navigation.navigate('BottomNavigator');
   };
 
   return (

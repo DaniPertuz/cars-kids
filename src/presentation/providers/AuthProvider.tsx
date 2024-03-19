@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     if (status !== 'checking') {
       if (status === 'authenticated') {
-        navigation.reset({ index: 0, routes: [ {name: 'HomeScreen' }]});
+        navigation.reset({ index: 0, routes: [ {name: 'BottomNavigator' }]});
       } else {
         navigation.reset({ index: 0, routes: [ {name: 'LoginScreen' }]});
       }
