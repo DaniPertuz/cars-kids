@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-
-import { EyeClosedIcon } from '../../ui/EyeIconClosed';
-import { EyeIcon } from '../../ui/EyeIcon';
+import { CustomIcon } from '../../ui/CustomIcon';
 
 interface Props {
   handlePasswordVisibility: (isVisible: boolean) => void;
@@ -23,8 +21,8 @@ export const DisplayPassword = ({ handlePasswordVisibility }: Props) => {
       style={{ height: 25, width: 25 }}
     >
       {displayPassword
-        ? <EyeIcon />
-        : <EyeClosedIcon />
+        ? <CustomIcon name='eye-outline' />
+        : <CustomIcon name='eye-off-outline' />
       }
     </TouchableOpacity>
   );
