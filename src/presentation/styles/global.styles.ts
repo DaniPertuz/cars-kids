@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalColors } from '../theme/globalColors';
 
 export const globalStyles = StyleSheet.create({
   flexAlignJustifyCenter: {
@@ -8,41 +9,42 @@ export const globalStyles = StyleSheet.create({
   },
   flexEnd: {
     alignItems: 'flex-end',
-    backgroundColor: '#DCD7D7'
+    backgroundColor: globalColors.background
   },
   input: {
-    borderColor: '#DCD7D7',
+    backgroundColor: globalColors.white,
+    borderColor: globalColors.background,
     borderRadius: 10,
     marginBottom: 10
   },
   mainBackground: {
-    backgroundColor: '#DCD7D7'
+    backgroundColor: globalColors.background
   },
   colorPrimaryRed: {
-    color: '#E92E29'
+    color: globalColors.primaryRed
   },
   colorSecondaryRed: {
-    color: '#D1544C'
+    color: globalColors.secondaryRed
   },
   colorTerciaryRed: {
-    color: '#D46364'
+    color: globalColors.tertiaryRed
   },
   colorOnyx: {
-    color: '#33393C'
+    color: globalColors.dark
   },
   colorDeepTaupe: {
-    color: '#7C6466'
+    color: globalColors.darkLight
   },
   colorLightSilver: {
-    color: '#DCD7D7'
+    color: globalColors.background
   },
   colorOrangeCrayola: {
-    color: '#F47E36'
+    color: globalColors.warning
   },
   colorSpanishGray: {
-    color: '#9A989E'
+    color: globalColors.backgroundDark
   },
   colorWintergreenDream: {
-    color: '#5B8484'
+    color: globalColors.success
   }
 });
