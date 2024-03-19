@@ -11,6 +11,10 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'flex-end',
     backgroundColor: globalColors.background
   },
+  iconSize: {
+    height: 25,
+    width: 25
+  },
   input: {
     backgroundColor: globalColors.white,
     borderColor: globalColors.background,
