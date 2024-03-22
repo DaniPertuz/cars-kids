@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "start:ios": "npm run ios -- --simulator='iPhone 15 Pro Max (8AFD54A5-50B9-4C2C-B61C-DB4F3BF86070)'",
+    "start:ios": "npm run ios -- --simulator='iPhone 15 Pro Max (FA68CA8B-5A6F-4D40-A8B9-F0F726D3FD67)'",
     "test": "jest"
   },
   "dependencies": {
