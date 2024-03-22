@@ -5,7 +5,6 @@ export const authStyles = StyleSheet.create({
   backButtonContainer: {
     position: 'absolute',
     left: 15,
-    top: 15,
     ...globalStyles.mainBackground
   },
   container: {
