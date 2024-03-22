@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Image, ScrollView, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { Layout, Text } from '@ui-kitten/components';
@@ -16,6 +17,7 @@ import { globalStyles } from '../../../styles/global.styles';
 interface Props extends StackScreenProps<RootStackParams, 'ResetPasswordScreen'> { }
 
 export const ResetPasswordScreen = ({ navigation }: Props) => {
+  const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const { updatePassword } = useAuthStore();
   const [form, setForm] = useState({
@@ -55,7 +57,7 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
 
   return (
     <Layout style={authStyles.container}>
-      <Layout style={authStyles.backButtonContainer}>
+      <Layout style={{...authStyles.backButtonContainer, marginTop: top }}>
         <Back />
       </Layout>
       <ScrollView style={authStyles.mainMargin}>
