@@ -4,7 +4,8 @@ import StatusBarComponent from '../components/ui/status-bar';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
-import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen/index';
+import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen';
+import { UpdateProfileScreen } from '../screens/profile/UpdateProfileScreen';
 import { BottomNavigator } from './BottomNavigator';
 import { globalColors } from '../theme/globalColors';
 
@@ -13,6 +14,7 @@ export type RootStackParams = {
   LoginScreen: undefined,
   RegisterScreen: undefined,
   ResetPasswordScreen: undefined,
+  UpdateProfileScreen: undefined,
   BottomNavigator: undefined;
 };
 
@@ -41,6 +43,7 @@ export const MainNavigator = () => {
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ResetPasswordScreen" component={ResetPasswordScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BottomNavigator" component={BottomNavigator} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="UpdateProfileScreen" component={UpdateProfileScreen} />
       </Stack.Navigator>
     </>
   );
