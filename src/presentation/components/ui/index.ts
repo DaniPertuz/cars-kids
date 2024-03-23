@@ -1,4 +1,5 @@
 export * from './Back';
+export * from './BackButtonContainer';
 export * from './Caption';
 export * from './CustomIcon';
 export * from './Footnote';
