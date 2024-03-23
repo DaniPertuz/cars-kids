@@ -6,8 +6,8 @@ import { Layout } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
+import { Footer } from '../../../components/login';
 import { Caption, Footnote, PrimaryButton, Spacer, Title } from '../../../components/ui';
-import { Footer } from '../../../components/Login/footer';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 

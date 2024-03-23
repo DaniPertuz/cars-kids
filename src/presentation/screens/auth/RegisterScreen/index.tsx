@@ -5,7 +5,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
-import { Footer } from '../../../components/Login/footer';
+import { Footer } from '../../../components/login';
 import { Footnote, PrimaryButton, Spacer, Title } from '../../../components/ui';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
