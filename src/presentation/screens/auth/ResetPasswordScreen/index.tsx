@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Image, ScrollView, useWindowDimensions } from 'react-native';
+import { ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
-import { Back, Footnote, Headline, PrimaryButton, Spacer } from '../../../components/ui';
+import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
+import { Back, Footnote, Headline } from '../../../components/ui';
 import { useEmptyFieldValidation } from '../../../hooks/useEmptyFieldValidation';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
@@ -62,9 +63,7 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
       </Layout>
       <ScrollView style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
-          <Layout style={authStyles.imageContainer}>
-            <Image source={require('../../../../assets/carkids-removebg.png')} style={authStyles.mainImage} />
-          </Layout>
+          <LoginMainImage />
           <Layout style={authStyles.welcomeTextContainer}>
             <Headline text='Restablecer contraseña' textColor={globalStyles.colorOnyx} />
           </Layout>
@@ -75,10 +74,7 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
           <PasswordInput placeholder={'Ingresa contraseña'} value={password} onChangeText={(password: string) => setForm({ ...form, password })} />
           <PasswordInput placeholder={'Repite contraseña'} value={confirmPassword} onChangeText={(confirmPassword: string) => setForm({ ...form, confirmPassword })} />
         </Layout>
-        <Spacer height={20} />
-        <Layout style={globalStyles.mainBackground}>
-          <PrimaryButton text='Restablecer' onPress={onUpdatePassword} />
-        </Layout>
+        <LoginButtonContainer buttonText={'Restablecer'} onPress={onUpdatePassword} />
       </ScrollView>
     </Layout>
   );
