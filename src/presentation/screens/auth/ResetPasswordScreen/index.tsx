@@ -7,7 +7,7 @@ import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
-import { Back, Footnote, Headline } from '../../../components/ui';
+import { BackButtonContainer, Footnote, Headline } from '../../../components/ui';
 import { useEmptyFieldValidation } from '../../../hooks/useEmptyFieldValidation';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
@@ -57,10 +57,8 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Layout style={authStyles.container}>
-      <Layout style={{ ...globalStyles.backButtonContainer, marginTop: top }}>
-        <Back />
-      </Layout>
+    <Layout style={globalStyles.container}>
+      <BackButtonContainer top={top} />
       <ScrollView style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <LoginMainImage />
