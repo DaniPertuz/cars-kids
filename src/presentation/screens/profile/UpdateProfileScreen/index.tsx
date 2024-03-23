@@ -7,8 +7,8 @@ import { DefaultInput, EmailInput, PasswordInput } from '../../../components/for
 import { BackButtonContainer, Caption, Headline, PrimaryButton } from '../../../components/ui';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
-import { globalColors } from '../../../theme/globalColors';
 import { globalStyles } from '../../../styles/global.styles';
+import { styles } from './styles';
 
 export const UpdateProfileScreen = () => {
   const { top } = useSafeAreaInsets();
@@ -25,21 +25,21 @@ export const UpdateProfileScreen = () => {
   return (
     <Layout style={{ paddingTop: top, ...globalStyles.container }}>
       <BackButtonContainer top={top} />
-      <Layout style={{ marginHorizontal: 40, flex: 1, backgroundColor: globalColors.background, alignItems: 'center', gap: 15, marginVertical: height * 0.05 }}>
+      <Layout style={{ ...styles.container, marginVertical: height * 0.05 }}>
         <Headline text='Actualizar perfil' textColor={globalStyles.colorOnyx} />
-        <Layout style={{ gap: 5, backgroundColor: globalColors.background, width: '100%' }}>
+        <Layout style={styles.inputContainer}>
           <Caption text='Nombre' textColor={globalStyles.colorOnyx} />
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
         </Layout>
-        <Layout style={{ gap: 5, backgroundColor: globalColors.background, width: '100%' }}>
+        <Layout style={styles.inputContainer}>
           <Caption text='Email' textColor={globalStyles.colorOnyx} />
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
         </Layout>
-        <Layout style={{ gap: 5, backgroundColor: globalColors.background, width: '100%' }}>
+        <Layout style={styles.inputContainer}>
           <Caption text='Contraseña' textColor={globalStyles.colorOnyx} />
           <PasswordInput placeholder='Contraseña' value={''} onChangeText={() => { }} />
         </Layout>
-        <Layout style={{ gap: 5, backgroundColor: globalColors.background, width: '100%' }}>
+        <Layout style={styles.inputContainer}>
           <Caption text='Repetir contraseña' textColor={globalStyles.colorOnyx} />
           <PasswordInput placeholder='Repetir contraseña' value={''} onChangeText={() => { }} />
         </Layout>
