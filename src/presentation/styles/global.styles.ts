@@ -7,6 +7,10 @@ export const globalStyles = StyleSheet.create({
     left: 15,
     backgroundColor: globalColors.background
   },
+  container: {
+    flex: 1,
+    backgroundColor: globalColors.background
+  },
   flexAlignJustifyCenter: {
     flex: 1,
     alignItems: 'center',

@@ -2,10 +2,6 @@ import { StyleSheet } from 'react-native';
 import { globalStyles } from '../global.styles';
 
 export const authStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    ...globalStyles.mainBackground
-  },
   formContainer: {
     ...globalStyles.mainBackground,
     marginTop: 20,
