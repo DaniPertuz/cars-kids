@@ -1,4 +1,4 @@
-import { Input, useTheme } from '@ui-kitten/components';
+import { Input } from '@ui-kitten/components';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
@@ -8,7 +8,6 @@ interface Props {
 }
 
 export const DefaultInput = ({ placeholder, value, onChangeText }: Props) => {
-  const theme = useTheme();
 
   return (
     <Input
