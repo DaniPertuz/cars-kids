@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { Image, ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParams } from '../../../navigation/MainNavigator';
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
-import { Back, PrimaryButton, Spacer } from '../../../components/ui';
+import { Back, Footnote, Headline, PrimaryButton, Spacer } from '../../../components/ui';
 import { useEmptyFieldValidation } from '../../../hooks/useEmptyFieldValidation';
+import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
 import { authStyles } from '../../../styles/auth/styles';
@@ -63,15 +63,12 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
       <ScrollView style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <Layout style={authStyles.imageContainer}>
-            <Image
-              source={require('../../../../assets/carkids-removebg.png')}
-              style={authStyles.mainImage}
-            />
+            <Image source={require('../../../../assets/carkids-removebg.png')} style={authStyles.mainImage} />
           </Layout>
           <Layout style={authStyles.welcomeTextContainer}>
-            <Text category='h3' style={globalStyles.colorOnyx}>Restablecer contraseña</Text>
+            <Headline text='Restablecer contraseña' textColor={globalStyles.colorOnyx} />
           </Layout>
-          <Text category='p1' style={globalStyles.colorSpanishGray}>Ingresa email y nueva contraseña</Text>
+          <Footnote text='Ingresa email y nueva contraseña' />
         </Layout>
         <Layout style={authStyles.formContainer}>
           <EmailInput placeholder='Email' value={email} onChangeText={(email: string) => setForm({ ...form, email })} />

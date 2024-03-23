@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Image, ScrollView, useWindowDimensions } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
-import { PrimaryButton, Spacer } from '../../../components/ui';
 import { Footer } from '../../../components/Login/footer';
+import { Footnote, PrimaryButton, Spacer, Title } from '../../../components/ui';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
@@ -30,13 +31,13 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
     await register(form.name, form.email, form.password);
 
-    navigation.navigate('HomeScreen');
+    navigation.navigate('BottomNavigator');
   };
 
   return (
     <Layout style={authStyles.container}>
-      <ScrollView style={authStyles.mainMargin}>
-        <Layout style={{ paddingTop: height * 0.1, ...authStyles.mainLayout }}>
+      <ScrollView style={globalStyles.mainMargin}>
+        <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <Layout style={authStyles.imageContainer}>
             <Image
               source={require('../../../../assets/carkids-removebg.png')}
@@ -44,9 +45,9 @@ export const RegisterScreen = ({ navigation }: Props) => {
             />
           </Layout>
           <Layout style={authStyles.welcomeTextContainer}>
-            <Text category='h1' style={globalStyles.colorOnyx}>Registro</Text>
+            <Title text='Registro' />
           </Layout>
-          <Text category='p1' style={globalStyles.colorSpanishGray}>Ingresa tus datos</Text>
+          <Footnote text='Ingresa tus datos' />
         </Layout>
         <Layout style={authStyles.formContainer}>
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
@@ -58,7 +59,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
           <PrimaryButton text='Registrar' onPress={onRegister} />
         </Layout>
         <Spacer height={50} />
-        <Footer text='¿Ya tienes cuenta?' linkText='Ingresa' onPress={() => { navigation.reset({ index: 0, routes: [ {name: 'LoginScreen' }]}); }} />
+        <Footer text='¿Ya tienes cuenta?' linkText='Ingresa' onPress={() => navigation.dispatch(StackActions.push('LoginScreen'))} />
       </ScrollView>
     </Layout>
   );

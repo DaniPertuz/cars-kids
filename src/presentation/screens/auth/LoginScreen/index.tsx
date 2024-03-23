@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Image, ScrollView, useWindowDimensions } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
-import { PrimaryButton, Spacer } from '../../../components/ui';
+import { Caption, Footnote, PrimaryButton, Spacer, Title } from '../../../components/ui';
 import { Footer } from '../../../components/Login/footer';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
@@ -43,31 +44,26 @@ export const LoginScreen = ({ navigation }: Props) => {
       <ScrollView showsVerticalScrollIndicator={false} style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <Layout style={authStyles.imageContainer}>
-            <Image
-              source={require('../../../../assets/carkids-removebg.png')}
-              style={authStyles.mainImage}
-            />
+            <Image source={require('../../../../assets/carkids-removebg.png')} style={authStyles.mainImage} />
           </Layout>
           <Layout style={authStyles.welcomeTextContainer}>
-            <Text category='h1' style={globalStyles.colorOnyx}>Bienvenido</Text>
+            <Title text='Bienvenido' />
           </Layout>
-          <Text category='p1' style={globalStyles.colorSpanishGray}>Ingresa tus credenciales</Text>
+          <Footnote text='Ingresa tus credenciales' />
         </Layout>
         <Layout style={authStyles.formContainer}>
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
           <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
         </Layout>
         <Layout style={globalStyles.flexEnd}>
-          <Text category='p2' style={globalStyles.colorPrimaryRed} onPress={() => navigation.navigate('ResetPasswordScreen')}>
-            ¿Olvidaste tu contraseña?
-          </Text>
+          <Caption text={'¿Olvidaste tu contraseña?'} textColor={globalStyles.colorPrimaryRed} onPress={() => navigation.navigate('ResetPasswordScreen')} />
         </Layout>
         <Spacer height={20} />
         <Layout style={globalStyles.mainBackground}>
           <PrimaryButton text='Ingresar' onPress={onLogin} />
         </Layout>
         <Spacer height={50} />
-        <Footer text='¿No tienes cuenta?' linkText='Crea una' onPress={() => { navigation.reset({ index: 0, routes: [ {name: 'RegisterScreen' }]}); }} />
+        <Footer text='¿No tienes cuenta?' linkText='Crea una' onPress={() => navigation.dispatch(StackActions.push('RegisterScreen'))} />
       </ScrollView>
     </Layout>
   );
