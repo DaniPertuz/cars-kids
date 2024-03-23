@@ -2,6 +2,11 @@ import { StyleSheet } from 'react-native';
 import { globalColors } from '../theme/globalColors';
 
 export const globalStyles = StyleSheet.create({
+  backButtonContainer: {
+    position: 'absolute',
+    left: 15,
+    backgroundColor: globalColors.background
+  },
   flexAlignJustifyCenter: {
     flex: 1,
     alignItems: 'center',
@@ -23,6 +28,13 @@ export const globalStyles = StyleSheet.create({
   },
   mainBackground: {
     backgroundColor: globalColors.background
+  },
+  mainLayout: {
+    backgroundColor: globalColors.background,
+    gap: 20,
+  },
+  mainMargin: {
+    marginHorizontal: 40
   },
   colorPrimaryRed: {
     color: globalColors.primaryRed

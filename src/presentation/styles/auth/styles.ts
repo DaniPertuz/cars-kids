@@ -2,11 +2,6 @@ import { StyleSheet } from 'react-native';
 import { globalStyles } from '../global.styles';
 
 export const authStyles = StyleSheet.create({
-  backButtonContainer: {
-    position: 'absolute',
-    left: 15,
-    ...globalStyles.mainBackground
-  },
   container: {
     flex: 1,
     ...globalStyles.mainBackground
@@ -30,13 +25,6 @@ export const authStyles = StyleSheet.create({
     ...globalStyles.mainBackground,
     height: 200,
     width: 300
-  },
-  mainLayout: {
-    ...globalStyles.mainBackground,
-    gap: 20,
-  },
-  mainMargin: {
-    marginHorizontal: 40
   },
   spacer: {
     ...globalStyles.mainBackground,
