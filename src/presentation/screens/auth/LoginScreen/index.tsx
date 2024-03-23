@@ -40,7 +40,7 @@ export const LoginScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Layout style={authStyles.container}>
+    <Layout style={globalStyles.container}>
       <ScrollView showsVerticalScrollIndicator={false} style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <LoginMainImage />

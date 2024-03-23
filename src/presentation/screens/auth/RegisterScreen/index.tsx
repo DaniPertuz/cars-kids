@@ -34,7 +34,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Layout style={authStyles.container}>
+    <Layout style={globalStyles.container}>
       <ScrollView style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <LoginMainImage />
