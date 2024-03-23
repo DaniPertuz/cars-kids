@@ -46,9 +46,10 @@ export const BottomNavigator = () => {
           headerShown: false,
           tabBarStyle: {
             backgroundColor: globalColors.background,
-            borderTopWidth: 0,
+            borderColor: globalColors.backgroundDark,
+            borderTopWidth: 1,
             elevation: 0,
-            height: 60
+            height: 80
           },
           tabBarActiveBackgroundColor: globalColors.primaryRed,
         })}
