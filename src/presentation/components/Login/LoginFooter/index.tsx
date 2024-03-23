@@ -8,7 +8,7 @@ interface Props {
   onPress: () => void;
 }
 
-export const Footer = ({ text, linkText, onPress }: Props) => {
+export const LoginFooter = ({ text, linkText, onPress }: Props) => {
   return (
     <Layout style={styles.footer}>
       <Text style={globalStyles.colorOnyx}>{text} </Text>
