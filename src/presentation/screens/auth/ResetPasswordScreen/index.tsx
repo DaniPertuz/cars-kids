@@ -57,11 +57,11 @@ export const ResetPasswordScreen = ({ navigation }: Props) => {
 
   return (
     <Layout style={authStyles.container}>
-      <Layout style={{...authStyles.backButtonContainer, marginTop: top }}>
+      <Layout style={{ ...globalStyles.backButtonContainer, marginTop: top }}>
         <Back />
       </Layout>
-      <ScrollView style={authStyles.mainMargin}>
-        <Layout style={{ paddingTop: height * 0.1, ...authStyles.mainLayout }}>
+      <ScrollView style={globalStyles.mainMargin}>
+        <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <Layout style={authStyles.imageContainer}>
             <Image
               source={require('../../../../assets/carkids-removebg.png')}
