@@ -41,15 +41,3 @@ export const authRegister = async (name: string, email: string, password: string
     }
   }
 };
-
-export const updateUserPassword = async (email: string, password: string) => {
-  try {
-    const { data } = await carskidsApi.put('/users/password', { email, password })
-
-    return returnUserToken(data);
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      return error.response?.data;
-    }
-  }
-}
