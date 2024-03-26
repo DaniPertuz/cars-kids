@@ -1,17 +1,22 @@
 import { StyleSheet } from 'react-native';
-import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
+  justifyCenter: {
+    justifyContent: 'center'
+  },
   menuItem: {
+    backgroundColor: '#DEDEDE',
+    borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    ...globalStyles.mainBackground
+    padding: 5,
   },
   menuItemLabel: {
     alignItems: 'center',
+    backgroundColor: '#DEDEDE',
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 10,
-    ...globalStyles.mainBackground
+    padding: 5
   }
 });

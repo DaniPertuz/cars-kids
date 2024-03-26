@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     ...globalStyles.mainBackground
   },
   menuItemsContainer: {
-    gap: 35,
+    gap: 20,
     marginBottom: 40,
     ...globalStyles.mainBackground
   }

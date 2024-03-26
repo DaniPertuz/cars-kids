@@ -16,7 +16,7 @@ export const ProfileMenuItem = ({ iconName, label, onPress }: Props) => {
         <CustomIcon name={iconName} />
         <Text category='h6'>{label}</Text>
       </Layout>
-      <TouchableOpacity activeOpacity={1} onPress={onPress}>
+      <TouchableOpacity style={styles.justifyCenter} activeOpacity={1} onPress={onPress}>
         <CustomIcon name='arrow-circle-right-outline' />
       </TouchableOpacity>
     </Layout>

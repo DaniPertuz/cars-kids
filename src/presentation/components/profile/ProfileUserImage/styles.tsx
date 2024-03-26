@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: 15,
     ...globalStyles.mainBackground
   },
 });
