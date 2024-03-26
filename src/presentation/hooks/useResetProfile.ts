@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Snackbar from 'react-native-snackbar';
@@ -9,14 +9,14 @@ import { useEmptyFieldValidation } from './useEmptyFieldValidation';
 
 export const useResetProfile = () => {
   const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
-  
-  const emailStore = useAuthStore(state => state.user?.email!);
-  const nameStore = useAuthStore(state => state.user?.name!);
+
+  const emailStore = useAuthStore(state => state.user?.email || '');
+  const nameStore = useAuthStore(state => state.user?.name || '');
   const { updateEmail, updateName, updatePassword } = useAuthStore();
 
   const [form, setForm] = useState({
-    name: nameStore || '',
-    email: emailStore || '',
+    name: nameStore,
+    email: emailStore,
     password: '',
     confirmPassword: ''
   });
@@ -28,18 +28,20 @@ export const useResetProfile = () => {
   const { isEmpty: isConfirmedPasswordEmpty, checkEmptyFields: checkConfirmedPasswordEmpty } = useEmptyFieldValidation();
 
   const onUpdateProfile = async () => {
-    if (nameStore !== name) {
-      updateName(email, name);
-      Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
-      navigator.goBack();
-      return;
-    }
+    if (nameStore.length !== 0 && emailStore.length !== 0) {
+      if (nameStore !== name) {
+        updateName(emailStore, name);
+        Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
+        navigator.goBack();
+        return;
+      }
 
-    if (emailStore !== email) {
-      updateEmail(emailStore, email);
-      Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
-      navigator.goBack();
-      return;
+      if (emailStore !== email) {
+        updateEmail(emailStore, email);
+        Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
+        navigator.goBack();
+        return;
+      }
     }
 
     checkEmailEmpty(email);
