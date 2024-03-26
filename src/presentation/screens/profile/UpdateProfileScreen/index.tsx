@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
 import { BackButtonContainer, Caption, Headline, PrimaryButton } from '../../../components/ui';
-import { useAuthStore } from '../../../store/auth/useAuthStore';
+import { useResetProfile } from '../../../hooks';
 
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
@@ -13,14 +12,7 @@ import { styles } from './styles';
 export const UpdateProfileScreen = () => {
   const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-
-  const name = useAuthStore(state => state.user?.name!);
-  const email = useAuthStore(state => state.user?.email!);
-
-  const [form, setForm] = useState({
-    name,
-    email
-  });
+  const { form, setForm, onUpdateProfile } = useResetProfile();
 
   return (
     <Layout style={{ paddingTop: top, ...globalStyles.container }}>
@@ -37,13 +29,13 @@ export const UpdateProfileScreen = () => {
         </Layout>
         <Layout style={styles.inputContainer}>
           <Caption text='Contraseña' textColor={globalStyles.colorOnyx} />
-          <PasswordInput placeholder='Contraseña' value={''} onChangeText={() => { }} />
+          <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
         </Layout>
         <Layout style={styles.inputContainer}>
           <Caption text='Repetir contraseña' textColor={globalStyles.colorOnyx} />
-          <PasswordInput placeholder='Repetir contraseña' value={''} onChangeText={() => { }} />
+          <PasswordInput placeholder='Repetir contraseña' value={form.confirmPassword} onChangeText={(confirmPassword: string) => setForm({ ...form, confirmPassword })} />
         </Layout>
-        <PrimaryButton text='Actualizar' onPress={() => { }} />
+        <PrimaryButton text='Actualizar' onPress={onUpdateProfile} />
       </Layout>
     </Layout>
   );
