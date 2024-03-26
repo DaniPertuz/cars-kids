@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { authLogin, authRegister, updateUserPassword } from '../../../actions/auth/auth';
+import { authLogin, authRegister } from '../../../actions/auth';
 import { AuthStatus, IUser } from '../../../infrastructure/interfaces';
 import { StorageAdapter } from '../../../config/adapters/storage-adapter';
+import { updateUserEmail, updateUserName, updateUserPassword } from '../../../actions/users';
 
 export interface AuthState {
   status: AuthStatus;
@@ -9,6 +10,8 @@ export interface AuthState {
   user?: IUser;
   login: (email: string, password: string) => Promise<any>;
   register: (name: string, email: string, password: string) => Promise<any>;
+  updateName: (email: string, name: string) => Promise<any>;
+  updateEmail: (email: string, newEmail: string) => Promise<any>;
   updatePassword: (email: string, password: string) => Promise<any>;
   logout: () => Promise<void>;
 }
@@ -35,6 +38,36 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
       : (await StorageAdapter.setItem('token', resp.token),
         set({ status: 'authenticated', token: resp.token, user: resp.user }));
+
+    return resp;
+  },
+  updateName: async (email: string, name: string) => {
+    const resp = await updateUserName(email, name);
+
+    set({
+      status: 'authenticated',
+      token: resp.token,
+      user: {
+        ...resp,
+        name: resp.name
+      }
+    }
+    );
+
+    return resp;
+  },
+  updateEmail: async (email: string, newEmail: string) => {
+    const resp = await updateUserEmail(email, newEmail);
+
+    set({
+      status: 'authenticated',
+      token: resp.token,
+      user: {
+        ...resp,
+        email: resp.email
+      }
+    }
+    );
 
     return resp;
   },
