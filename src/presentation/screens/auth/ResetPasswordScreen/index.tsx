@@ -5,15 +5,15 @@ import { Layout } from '@ui-kitten/components';
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
 import { BackButtonContainer, Footnote, Headline } from '../../../components/ui';
-import { useResetPassword } from '../../../hooks';
 
 import { authStyles } from '../../../styles/auth/styles';
 import { globalStyles } from '../../../styles/global.styles';
+import { useResetProfile } from '../../../hooks';
 
 export const ResetPasswordScreen = () => {
   const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const { form, email, password, confirmPassword, setForm, onUpdatePassword } = useResetPassword();
+  const { form, email, password, confirmPassword, setForm, onUpdateProfile } = useResetProfile();
 
   return (
     <Layout style={globalStyles.container}>
@@ -31,7 +31,7 @@ export const ResetPasswordScreen = () => {
           <PasswordInput placeholder={'Ingresa contraseña'} value={password} onChangeText={(password: string) => setForm({ ...form, password })} />
           <PasswordInput placeholder={'Repite contraseña'} value={confirmPassword} onChangeText={(confirmPassword: string) => setForm({ ...form, confirmPassword })} />
         </Layout>
-        <LoginButtonContainer buttonText={'Restablecer'} onPress={onUpdatePassword} />
+        <LoginButtonContainer buttonText={'Restablecer'} onPress={onUpdateProfile} />
       </ScrollView>
     </Layout>
   );
