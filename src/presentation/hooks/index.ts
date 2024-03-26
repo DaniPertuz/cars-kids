@@ -1,2 +1,2 @@
 export * from './useEmptyFieldValidation';
-export * from './useResetPassword';
+export * from './useResetProfile';

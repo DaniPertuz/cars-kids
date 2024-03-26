@@ -7,23 +7,41 @@ import { RootStackParams } from '../navigation/MainNavigator';
 import { useAuthStore } from '../store/auth/useAuthStore';
 import { useEmptyFieldValidation } from './useEmptyFieldValidation';
 
-export const useResetPassword = () => {
+export const useResetProfile = () => {
   const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
-  const { updatePassword } = useAuthStore();
+  
   const emailStore = useAuthStore(state => state.user?.email!);
+  const nameStore = useAuthStore(state => state.user?.name!);
+  const { updateEmail, updateName, updatePassword } = useAuthStore();
+
   const [form, setForm] = useState({
+    name: nameStore || '',
     email: emailStore || '',
     password: '',
     confirmPassword: ''
   });
 
-  const { email, password, confirmPassword } = form;
+  const { email, name, password, confirmPassword } = form;
 
   const { isEmpty: isEmailEmpty, checkEmptyFields: checkEmailEmpty } = useEmptyFieldValidation();
   const { isEmpty: isPasswordEmpty, checkEmptyFields: checkPasswordEmpty } = useEmptyFieldValidation();
   const { isEmpty: isConfirmedPasswordEmpty, checkEmptyFields: checkConfirmedPasswordEmpty } = useEmptyFieldValidation();
 
-  const onUpdatePassword = async () => {
+  const onUpdateProfile = async () => {
+    if (nameStore !== name) {
+      updateName(email, name);
+      Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
+      navigator.goBack();
+      return;
+    }
+
+    if (emailStore !== email) {
+      updateEmail(emailStore, email);
+      Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
+      navigator.goBack();
+      return;
+    }
+
     checkEmailEmpty(email);
     checkPasswordEmpty(password);
     checkConfirmedPasswordEmpty(confirmPassword);
@@ -52,6 +70,6 @@ export const useResetPassword = () => {
     password,
     confirmPassword,
     setForm,
-    onUpdatePassword
+    onUpdateProfile
   };
 };
