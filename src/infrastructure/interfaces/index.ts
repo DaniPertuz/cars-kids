@@ -21,3 +21,20 @@ export interface IUser {
   role:     IUserRole;
   status:   IStatus;
 }
+export interface VehiclesResponse {
+  page:     number;
+  limit:    number;
+  total:    number;
+  next:     string | null;
+  prev:     string | null;
+  vehicles: IVehicle[];
+}
+
+export interface IVehicle {
+  _id:      string;
+  nickname: string;
+  category: string;
+  color:    string;
+  img:      string;
+  size:     string;
+}
