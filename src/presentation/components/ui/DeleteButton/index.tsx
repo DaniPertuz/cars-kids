@@ -10,7 +10,7 @@ interface Props {
 export const DeleteButton = ({ iconSize }: Props) => {
   return (
     <Layout style={styles.container}>
-      <CustomIcon name='trash-outline' style={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
+      <CustomIcon name='trash-outline' size={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
     </Layout>
   );
 };
