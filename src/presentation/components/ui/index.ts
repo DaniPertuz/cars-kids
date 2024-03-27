@@ -5,5 +5,6 @@ export * from './CustomIcon';
 export * from './Footnote';
 export * from './Headline';
 export * from './PrimaryButton';
+export * from './RadioGroup';
 export * from './Title';
 export * from './spacer';
