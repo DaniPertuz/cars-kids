@@ -26,12 +26,13 @@ export const authLogin = async (email: string, password: string) => {
   }
 };
 
-export const authRegister = async (name: string, email: string, password: string) => {
+export const authRegister = async (name: string, email: string, password: string, role: string) => {
   try {
     const { data } = await carskidsApi.post<AuthResponse>('auth/register', {
       name,
       email,
-      password
+      password,
+      role
     });
 
     return returnUserToken(data);

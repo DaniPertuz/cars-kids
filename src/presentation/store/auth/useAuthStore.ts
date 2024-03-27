@@ -9,7 +9,7 @@ export interface AuthState {
   token?: string;
   user?: IUser;
   login: (email: string, password: string) => Promise<any>;
-  register: (name: string, email: string, password: string) => Promise<any>;
+  register: (name: string, email: string, password: string, role: string) => Promise<any>;
   updateName: (email: string, name: string) => Promise<any>;
   updateEmail: (email: string, newEmail: string) => Promise<any>;
   updatePassword: (email: string, password: string) => Promise<any>;
@@ -31,8 +31,8 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
 
     return resp;
   },
-  register: async (name: string, email: string, password: string) => {
-    const resp = await authRegister(name, email, password);
+  register: async (name: string, email: string, password: string, role: string) => {
+    const resp = await authRegister(name, email, password, role);
 
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })

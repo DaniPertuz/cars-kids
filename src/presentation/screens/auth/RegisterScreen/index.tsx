@@ -6,6 +6,8 @@ import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
+import { RadioGroupComponent } from '../../../components/ui';
+import { IUserRole } from '../../../../infrastructure/interfaces';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
@@ -16,6 +18,7 @@ interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
 
 export const RegisterScreen = ({ navigation }: Props) => {
   const { register } = useAuthStore();
+  const [role, setRole] = useState(IUserRole.Editor);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -23,12 +26,23 @@ export const RegisterScreen = ({ navigation }: Props) => {
   });
   const { height } = useWindowDimensions();
 
+  const handleUserRole = (role: number) => {
+    switch (role) {
+      case 0:
+        setRole(IUserRole.Admin);
+        break;
+      case 1:
+        setRole(IUserRole.Editor);
+        break;
+    }
+  };
+
   const onRegister = async () => {
     if (form.email.length === 0 || form.password.length === 0) {
       return;
     }
 
-    await register(form.name, form.email, form.password);
+    await register(form.name, form.email, form.password, role);
 
     navigation.navigate('BottomNavigator');
   };
@@ -44,6 +58,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
           <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
+          <RadioGroupComponent list={['Administrador', "Editor"]} handleUserRole={handleUserRole} />
         </Layout>
         <LoginButtonContainer buttonText={'Registrar'} onPress={onRegister} />
         <LoginFooter text='¿Ya tienes cuenta?' linkText='Ingresa' onPress={() => navigation.dispatch(StackActions.push('LoginScreen'))} />
