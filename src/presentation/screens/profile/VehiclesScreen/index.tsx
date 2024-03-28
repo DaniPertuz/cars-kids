@@ -14,7 +14,7 @@ import { globalStyles } from '../../../styles/global.styles';
 export const VehiclesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const { display, vehiclesData } = useVehiclesData();
+  const { display, vehiclesData, fetchNextPage, fetchPrevPage } = useVehiclesData();
 
   return (
     <Layout style={globalStyles.container}>
@@ -23,7 +23,7 @@ export const VehiclesScreen = () => {
         <VehicleTitleHeader />
         <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
       </Layout>
-      <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} />
+      <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
       <VehicleAddButton top={top} />
     </Layout>
   );
