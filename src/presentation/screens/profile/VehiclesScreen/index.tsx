@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { BackButtonContainer } from '../../../components/ui';
+import { TotalVehiclesMessage } from '../../../components/vehicles/TotalVehiclesMessage';
 import { VehicleListComponent } from '../../../components/vehicles/VehiclesListComponent';
 import { VehiclesListPagination } from '../../../components/vehicles/VehiclesListPagination';
 import { VehicleAddButton } from '../../../components/vehicles/VehicleAddButton';
@@ -23,7 +24,12 @@ export const VehiclesScreen = () => {
         <VehicleTitleHeader />
         <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
       </Layout>
-      <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+      {vehiclesData.total !== 0 &&
+        <TotalVehiclesMessage bottom={bottom} total={vehiclesData.total} />
+      }
+      {vehiclesData.total !== 0 &&
+        <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+      }
       <VehicleAddButton top={top} />
     </Layout>
   );
