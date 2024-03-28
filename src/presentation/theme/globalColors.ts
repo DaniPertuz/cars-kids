@@ -2,6 +2,7 @@ export const globalColors = {
   background: '#DCD7D7',
   backgroundDark: '#9A989E',
   dark: '#33393C',
+  darkDisabled: 'rgba(51, 57, 60, 0.7)',
   darkLight: '#7C6466',
   primaryRed: '#E92E29',
   secondaryRed: '#D1544C',
