@@ -15,6 +15,11 @@ export enum IUserRole {
   Editor = 'editor'
 }
 
+export enum IVehicleCategory {
+  Car   = 'car',
+  Cycle = 'cycle'
+}
+
 export interface IUser {
   email:    string;
   name:     string;
