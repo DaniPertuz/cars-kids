@@ -20,6 +20,12 @@ export enum IVehicleCategory {
   Cycle = 'cycle'
 }
 
+export enum IVehicleSize {
+  Small  = 'S',
+  Medium = 'M',
+  Large  = 'L'
+}
+
 export interface IUser {
   email:    string;
   name:     string;
