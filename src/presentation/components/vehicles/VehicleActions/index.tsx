@@ -6,7 +6,7 @@ export const VehicleActions = () => {
   return (
     <Layout style={styles.container}>
       <EditButton iconSize={25} />
-      <DeleteButton iconSize={15} />
+      <DeleteButton iconSize={25} />
     </Layout>
   );
 };
