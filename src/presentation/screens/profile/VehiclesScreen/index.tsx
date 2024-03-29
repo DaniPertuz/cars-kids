@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
@@ -15,7 +16,11 @@ import { globalStyles } from '../../../styles/global.styles';
 export const VehiclesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const { display, vehiclesData, fetchNextPage, fetchPrevPage } = useVehiclesData();
+  const { display, vehiclesData, fetchNextPage, fetchPrevPage, getData } = useVehiclesData();
+
+  useEffect(() => {
+    getData();
+  }, [vehiclesData]);
 
   return (
     <Layout style={globalStyles.container}>
