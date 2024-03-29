@@ -10,7 +10,7 @@ export const Back = ({ top }: { top: number; }) => {
   const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
 
   return (
-    <Layout style={{ ...globalStyles.Back, marginTop: top }}>
+    <Layout style={{ ...globalStyles.backButtonContainer, marginTop: top }}>
       <TouchableOpacity
         activeOpacity={1.0}
         onPress={() => navigator.goBack()}
