@@ -1,10 +1,9 @@
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
+import { EmptyVehiclesListMessage } from '../EmptyVehiclesListMessage';
 import { VehiclesList } from '../VehiclesList';
 import { VehiclesResponse } from '../../../../infrastructure/interfaces';
 import { LoadingScreen } from '../../../screens/LoadingScreen';
 import { globalStyles } from '../../../styles/global.styles';
-import { HeaderFive } from '../../ui';
-import { EmptyVehiclesListMessage } from '../EmptyVehiclesListMessage';
 
 interface Props {
   bottom: number;
@@ -23,7 +22,7 @@ export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) =
           ?
           <EmptyVehiclesListMessage text='No hay vehículos registrados' />
           :
-          <VehiclesList vehiclesData={vehiclesData} />
+          <VehiclesList vehicles={vehiclesData.vehicles} />
       }
     </Layout>
   );
