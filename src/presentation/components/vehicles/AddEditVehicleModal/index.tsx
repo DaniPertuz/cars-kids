@@ -11,7 +11,7 @@ import { VehicleColorPicker } from '../VehicleColorPicker';
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
-export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, setVisible: (visible: boolean) => void; }) => {
+export const AddEditVehicleModal = ({ visible, setVisible }: { visible: boolean, setVisible: (visible: boolean) => void; }) => {
   const [loading, setLoading] = useState(false);
   const [vehicleNickname, setVehicleNickname] = useState('');
   const [vehicleCategory, setVehicleCategory] = useState(IVehicleCategory.Car);
