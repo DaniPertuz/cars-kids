@@ -46,6 +46,6 @@ export interface IVehicle {
   nickname: string;
   category: string;
   color:    string;
-  img:      string;
+  img?:     string;
   size:     string;
 }
