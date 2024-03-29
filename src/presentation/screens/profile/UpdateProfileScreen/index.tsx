@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
-import { BackButtonContainer, Caption, Headline, PrimaryButton } from '../../../components/ui';
+import { Back, Caption, Headline, PrimaryButton } from '../../../components/ui';
 import { useResetProfile } from '../../../hooks';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -16,7 +16,7 @@ export const UpdateProfileScreen = () => {
 
   return (
     <Layout style={{ paddingTop: top, ...globalStyles.container }}>
-      <BackButtonContainer top={top} />
+      <Back top={top} />
       <Layout style={{ ...styles.container, marginVertical: height * 0.05 }}>
         <Headline text='Actualizar perfil' textColor={globalStyles.colorOnyx} />
         <Layout style={styles.inputContainer}>

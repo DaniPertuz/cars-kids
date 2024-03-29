@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
-import { BackButtonContainer, Footnote, Headline } from '../../../components/ui';
+import { Back, Footnote, Headline } from '../../../components/ui';
 
 import { authStyles } from '../../../styles/auth/styles';
 import { globalStyles } from '../../../styles/global.styles';
@@ -17,7 +17,7 @@ export const ResetPasswordScreen = () => {
 
   return (
     <Layout style={globalStyles.container}>
-      <BackButtonContainer top={top} />
+      <Back top={top} />
       <ScrollView style={globalStyles.mainMargin}>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <LoginMainImage />
