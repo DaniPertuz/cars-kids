@@ -11,7 +11,7 @@ interface Props {
 export const TotalVehiclesMessage = ({ bottom, total }: Props) => {
   return (
     <Layout style={{ ...styles.container, bottom: bottom + 20 }}>
-      <Callout text={`${String(total)} vehículos`} />
+      <Callout text={`${String(total)} ${total === 1 ? 'vehículo' : 'vehículos'}`} />
     </Layout>
   );
 };
