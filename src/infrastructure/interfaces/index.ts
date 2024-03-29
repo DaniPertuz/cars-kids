@@ -42,7 +42,7 @@ export interface VehiclesResponse {
 }
 
 export interface IVehicle {
-  _id:      string;
+  _id?:     string;
   nickname: string;
   category: string;
   color:    string;
