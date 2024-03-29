@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 import { globalColors } from '../theme/globalColors';
 
 export const globalStyles = StyleSheet.create({
+  alignJustifyCenter: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   backButtonContainer: {
     position: 'absolute',
     left: 15,
@@ -42,6 +46,9 @@ export const globalStyles = StyleSheet.create({
   },
   redBorder: {
     borderColor: globalColors.primaryRed
+  },
+  whiteBorder: {
+    borderColor: globalColors.white
   },
   colorPrimaryRed: {
     color: globalColors.primaryRed
