@@ -58,7 +58,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
           <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
-          <RadioGroupComponent list={['Administrador', "Editor"]} handleUserRole={handleUserRole} />
+          <RadioGroupComponent list={['Administrador', "Editor"]} handleSelection={handleUserRole} />
         </Layout>
         <LoginButtonContainer buttonText={'Registrar'} onPress={onRegister} />
         <LoginFooter text='¿Ya tienes cuenta?' linkText='Ingresa' onPress={() => navigation.dispatch(StackActions.push('LoginScreen'))} />

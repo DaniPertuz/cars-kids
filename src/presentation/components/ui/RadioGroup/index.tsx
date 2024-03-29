@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 
 interface Props {
   list: string[];
-  handleUserRole: (role: number) => void;
+  handleSelection: (value: number) => void;
 }
 
-export const RadioGroupComponent = ({ list, handleUserRole }: Props) => {
+export const RadioGroupComponent = ({ list, handleSelection }: Props) => {
   const [selectedItem, setSelectedItem] = useState(0);
 
   useEffect(() => {
-    handleUserRole(selectedItem);
+    handleSelection(selectedItem);
   }, [selectedItem]);
 
   return (
