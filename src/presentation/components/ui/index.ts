@@ -14,5 +14,6 @@ export * from './NextButton';
 export * from './PrevButton';
 export * from './PrimaryButton';
 export * from './RadioGroup';
+export * from './SelectComponent';
 export * from './Title';
 export * from './spacer';
