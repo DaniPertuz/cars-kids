@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
+import Snackbar from 'react-native-snackbar';
+
 import { DefaultInput } from '../../forms';
-import { PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
+import { Headline, PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
 import { IVehicle, IVehicleCategory, IVehicleSize } from '../../../../infrastructure/interfaces';
 import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
+import { VehicleColorPicker } from '../VehicleColorPicker';
+
+import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, setVisible: (visible: boolean) => void; }) => {
-  const [form, setForm] = useState({
-    nickname: '',
-    color: ''
-  });
+  const [vehicleNickname, setVehicleNickname] = useState('');
   const [vehicleCategory, setVehicleCategory] = useState(IVehicleCategory.Car);
-  const [vehicleSize, setVehicleSize] = useState(IVehicleSize.Medium);
-
-  const { nickname, color } = form;
+  const [vehicleSize, setVehicleSize] = useState('');
+  const [vehicleColor, setVehicleColor] = useState<string>('');
 
   const { addVehicle } = useVehicleStore();
 
@@ -43,17 +44,28 @@ export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, 
     }
   };
 
+  const handleVehicleColor = (color: string) => {
+    setVehicleColor(color);
+  };
+
   const onSubmit = async () => {
-    setVisible(false);
     const vehicle: IVehicle = {
-      nickname,
+      nickname: vehicleNickname,
       category: vehicleCategory,
-      color: '',
-      img: '',
+      color: vehicleColor,
       size: vehicleSize
+    };
+
+    const resp = await addVehicle(vehicle);
+
+    if (resp.error) {
+      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      return;
     }
 
-    await addVehicle(vehicle);
+    Snackbar.show({ text: 'Vehículo registrado exitosamente', duration: Snackbar.LENGTH_SHORT });
+    setVisible(false);
+    setVehicleNickname('');
   };
 
   return (
@@ -63,10 +75,12 @@ export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, 
       onBackdropPress={() => setVisible(false)}
     >
       <Card>
-        <Layout style={{ gap: 10, width: 250 }}>
-          <DefaultInput placeholder={'Nombre o apodo'} value={nickname} onChangeText={(nickname: string) => setForm({ ...form, nickname })} />
+        <Layout style={styles.container}>
+          <Headline text='Nuevo vehículo' textColor={globalStyles.colorOnyx} />
+          <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleNickname} onChangeText={setVehicleNickname} />
           <RadioGroupComponent list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
           <SelectComponent placeholder='Tamaño' options={['Pequeño', 'Estándar', 'Grande']} handleSelection={handleVehicleSize} />
+          <VehicleColorPicker handleSelection={handleVehicleColor} />
           <PrimaryButton text='Agregar' onPress={onSubmit} />
         </Layout>
       </Card>
