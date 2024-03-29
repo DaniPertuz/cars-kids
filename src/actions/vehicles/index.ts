@@ -16,7 +16,7 @@ export const getVehicles = async (url: string) => {
 
 export const addVehicle = async (vehicle: IVehicle) => {
   try {
-    const { data } = await carskidsApi.post<VehiclesResponse>('/vehicles', { vehicle });
+    const { data } = await carskidsApi.post<VehiclesResponse>('vehicles', vehicle);
 
     return data;
   } catch (error: any) {
