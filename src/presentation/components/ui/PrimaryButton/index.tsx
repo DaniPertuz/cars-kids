@@ -1,23 +1,32 @@
-import { Button } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+import { Button } from '@ui-kitten/components';
+import { LoadingIndicator } from '../';
+import { globalColors } from '../../../theme/globalColors';
 
 interface Props {
   text: string;
+  disabled: boolean;
   onPress: () => void;
 }
 
-export const PrimaryButton = ({ text, onPress }: Props) => {
+export const PrimaryButton = ({ text, disabled, onPress }: Props) => {
+
   return (
-    <Button style={styles.button} onPress={onPress}>
-      {text}
+    <Button
+      style={styles.button}
+      disabled={disabled}
+      onPress={onPress}
+      accessoryLeft={disabled ? LoadingIndicator : undefined}
+    >
+      {!disabled ? text : undefined}
     </Button>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#E92E29',
-    borderColor: '#E92E29',
+    backgroundColor: globalColors.primaryRed,
+    borderColor: globalColors.primaryRed,
     borderRadius: 15
   }
 });
