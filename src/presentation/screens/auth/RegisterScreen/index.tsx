@@ -3,6 +3,7 @@ import { ScrollView, useWindowDimensions } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
+import Snackbar from 'react-native-snackbar';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
@@ -18,6 +19,7 @@ interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
 
 export const RegisterScreen = ({ navigation }: Props) => {
   const { register } = useAuthStore();
+  const [loading, setLoading] = useState(false);
   const [role, setRole] = useState(IUserRole.Editor);
   const [form, setForm] = useState({
     name: '',
@@ -39,11 +41,20 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
   const onRegister = async () => {
     if (form.email.length === 0 || form.password.length === 0) {
+      Snackbar.show({ text: 'Ingrese sus credenciales', duration: Snackbar.LENGTH_SHORT });
       return;
     }
 
-    await register(form.name, form.email, form.password, role);
+    setLoading(true);
+    const resp = await register(form.name, form.email, form.password, role);
 
+    if (resp.error) {
+      setLoading(false);
+      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      return;
+    }
+
+    setLoading(false);
     navigation.navigate('BottomNavigator');
   };
 
@@ -60,7 +71,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
           <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
           <RadioGroupComponent list={['Administrador', "Editor"]} handleSelection={handleUserRole} />
         </Layout>
-        <LoginButtonContainer buttonText={'Registrar'} onPress={onRegister} />
+        <LoginButtonContainer disabled={loading} buttonText={'Registrar'} onPress={onRegister} />
         <LoginFooter text='¿Ya tienes cuenta?' linkText='Ingresa' onPress={() => navigation.dispatch(StackActions.push('LoginScreen'))} />
       </ScrollView>
     </Layout>

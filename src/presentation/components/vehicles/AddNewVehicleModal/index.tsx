@@ -12,6 +12,7 @@ import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, setVisible: (visible: boolean) => void; }) => {
+  const [loading, setLoading] = useState(false);
   const [vehicleNickname, setVehicleNickname] = useState('');
   const [vehicleCategory, setVehicleCategory] = useState(IVehicleCategory.Car);
   const [vehicleSize, setVehicleSize] = useState('');
@@ -49,6 +50,7 @@ export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, 
   };
 
   const onSubmit = async () => {
+    setLoading(true);
     const vehicle: IVehicle = {
       nickname: vehicleNickname,
       category: vehicleCategory,
@@ -59,10 +61,12 @@ export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, 
     const resp = await addVehicle(vehicle);
 
     if (resp.error) {
+      setLoading(false);
       Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
       return;
     }
 
+    setLoading(false);
     Snackbar.show({ text: 'Vehículo registrado exitosamente', duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
     setVehicleNickname('');
@@ -81,7 +85,7 @@ export const AddNewVehicleModal = ({ visible, setVisible }: { visible: boolean, 
           <RadioGroupComponent list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
           <SelectComponent placeholder='Tamaño' options={['Pequeño', 'Estándar', 'Grande']} handleSelection={handleVehicleSize} />
           <VehicleColorPicker handleSelection={handleVehicleColor} />
-          <PrimaryButton text='Agregar' onPress={onSubmit} />
+          <PrimaryButton disabled={loading} text='Agregar' onPress={onSubmit} />
         </Layout>
       </Card>
     </Modal>

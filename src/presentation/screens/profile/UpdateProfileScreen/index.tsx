@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
@@ -12,7 +13,14 @@ import { styles } from './styles';
 export const UpdateProfileScreen = () => {
   const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
+  const [loading, setLoading] = useState(false);
   const { form, setForm, onUpdateProfile } = useResetProfile();
+
+  const onSubmit = () => {
+    setLoading(true);
+    onUpdateProfile();
+    setLoading(false);
+  }
 
   return (
     <Layout style={{ paddingTop: top, ...globalStyles.container }}>
@@ -35,7 +43,7 @@ export const UpdateProfileScreen = () => {
           <Caption text='Repetir contraseña' textColor={globalStyles.colorOnyx} />
           <PasswordInput placeholder='Repetir contraseña' value={form.confirmPassword} onChangeText={(confirmPassword: string) => setForm({ ...form, confirmPassword })} />
         </Layout>
-        <PrimaryButton text='Actualizar' onPress={onUpdateProfile} />
+        <PrimaryButton disabled={loading} text='Actualizar' onPress={onSubmit} />
       </Layout>
     </Layout>
   );
