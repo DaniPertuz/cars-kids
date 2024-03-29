@@ -9,6 +9,7 @@ export * from './Footnote';
 export * from './HeaderFive';
 export * from './HeaderSix';
 export * from './Headline';
+export * from './LoadingIndicator';
 export * from './NextButton';
 export * from './PrevButton';
 export * from './PrimaryButton';
