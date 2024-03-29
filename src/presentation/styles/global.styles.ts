@@ -26,7 +26,7 @@ export const globalStyles = StyleSheet.create({
   },
   input: {
     backgroundColor: globalColors.white,
-    borderColor: globalColors.background,
+    borderColor: globalColors.backgroundDark,
     borderRadius: 10,
     marginBottom: 10
   },
