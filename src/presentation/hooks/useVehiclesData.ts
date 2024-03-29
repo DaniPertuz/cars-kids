@@ -18,19 +18,19 @@ export const useVehiclesData = () => {
 
   const { getVehicles } = useVehicleStore();
 
+  const getData = async () => {
+    const newData = await getVehicles('vehicles');
+    setVehiclesData(newData);
+    setDisplay(newData.vehicles.length !== 0);
+  };
+
   useEffect(() => {
-    getVehicles('vehicles')
-      .then((data) => {
-        if (isMounted.current) {
-          setVehiclesData(data);
-          setDisplay(true);
-        }
-      });
+    getData();
 
     return () => {
       isMounted.current = false;
     };
-  }, [vehiclesData]);
+  }, []);
 
   const fetchNextPage = async () => {
     if (vehiclesData.next) {
@@ -52,6 +52,7 @@ export const useVehiclesData = () => {
     display,
     vehiclesData,
     fetchNextPage,
-    fetchPrevPage
+    fetchPrevPage,
+    getData
   };
 };
