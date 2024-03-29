@@ -17,7 +17,7 @@ export const SelectComponent = ({ options, placeholder, handleSelection }: Props
       setSelectedValue(options[selectedIndex.row]);
       handleSelection(selectedValue);
     }
-  }, [selectedIndex]);
+  }, [selectedIndex, selectedValue]);
 
   return (
     <Select
