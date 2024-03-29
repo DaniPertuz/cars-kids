@@ -4,7 +4,7 @@ import { globalStyles } from '../styles/global.styles';
 export const LoadingScreen = () => {
   return (
     <Layout style={globalStyles.flexAlignJustifyCenter}>
-      <Spinner size='large' style={globalStyles.redBorder} />
+      <Spinner size='giant' style={globalStyles.redBorder} />
     </Layout>
   );
 };
