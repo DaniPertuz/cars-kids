@@ -4,6 +4,7 @@ export * from './Callout';
 export * from './Caption';
 export * from './CustomIcon';
 export * from './DeleteButton';
+export * from './DeleteModal';
 export * from './EditButton';
 export * from './Footnote';
 export * from './HeaderFive';
