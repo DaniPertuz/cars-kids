@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
@@ -11,22 +11,29 @@ import { VehicleColorPicker } from '../VehicleColorPicker';
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
-export const AddEditVehicleModal = ({ visible, setVisible }: { visible: boolean, setVisible: (visible: boolean) => void; }) => {
-  const [loading, setLoading] = useState(false);
-  const [vehicleNickname, setVehicleNickname] = useState('');
-  const [vehicleCategory, setVehicleCategory] = useState(IVehicleCategory.Car);
-  const [vehicleSize, setVehicleSize] = useState('');
-  const [vehicleColor, setVehicleColor] = useState<string>('');
+interface Props {
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+}
 
-  const { addVehicle } = useVehicleStore();
+export const AddNewVehicleModal = ({ visible, setVisible }: Props) => {
+  const [loading, setLoading] = useState(false);
+  const [vehicle, setVehicle] = useState<IVehicle>({
+    nickname: '',
+    category: '',
+    size: '',
+    color: '',
+  });
+
+  const { addVehicle, updateVehicle } = useVehicleStore();
 
   const handleVehicleCategory = (category: number) => {
     switch (category) {
       case 0:
-        setVehicleCategory(IVehicleCategory.Car);
+        setVehicle({ ...vehicle, category: IVehicleCategory.Car });
         break;
       case 1:
-        setVehicleCategory(IVehicleCategory.Cycle);
+        setVehicle({ ...vehicle, category: IVehicleCategory.Cycle });
         break;
     }
   };
@@ -34,29 +41,23 @@ export const AddEditVehicleModal = ({ visible, setVisible }: { visible: boolean,
   const handleVehicleSize = (size: string) => {
     switch (size) {
       case 'Pequeño':
-        setVehicleSize(IVehicleSize.Small);
+        setVehicle({ ...vehicle, size: IVehicleSize.Small });
         break;
       case 'Estándar':
-        setVehicleSize(IVehicleSize.Medium);
+        setVehicle({ ...vehicle, size: IVehicleSize.Medium });
         break;
       case 'Grande':
-        setVehicleSize(IVehicleSize.Large);
+        setVehicle({ ...vehicle, size: IVehicleSize.Large });
         break;
     }
   };
 
   const handleVehicleColor = (color: string) => {
-    setVehicleColor(color);
+    setVehicle({ ...vehicle, color });
   };
 
   const onSubmit = async () => {
     setLoading(true);
-    const vehicle: IVehicle = {
-      nickname: vehicleNickname,
-      category: vehicleCategory,
-      color: vehicleColor,
-      size: vehicleSize
-    };
 
     const resp = await addVehicle(vehicle);
 
@@ -67,9 +68,9 @@ export const AddEditVehicleModal = ({ visible, setVisible }: { visible: boolean,
     }
 
     setLoading(false);
-    Snackbar.show({ text: 'Vehículo registrado exitosamente', duration: Snackbar.LENGTH_SHORT });
+    Snackbar.show({ text: `Vehículo ${vehicle ? 'actualizado' : 'registrado'} exitosamente`, duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
-    setVehicleNickname('');
+    setVehicle({ ...vehicle, nickname: '' });
   };
 
   return (
@@ -81,7 +82,7 @@ export const AddEditVehicleModal = ({ visible, setVisible }: { visible: boolean,
       <Card>
         <Layout style={styles.container}>
           <Headline text='Nuevo vehículo' textColor={globalStyles.colorOnyx} />
-          <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleNickname} onChangeText={setVehicleNickname} />
+          <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicle.nickname} onChangeText={(nickname: string) => setVehicle({ ...vehicle, nickname })} />
           <RadioGroupComponent list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
           <SelectComponent placeholder='Tamaño' options={['Pequeño', 'Estándar', 'Grande']} handleSelection={handleVehicleSize} />
           <VehicleColorPicker handleSelection={handleVehicleColor} />
