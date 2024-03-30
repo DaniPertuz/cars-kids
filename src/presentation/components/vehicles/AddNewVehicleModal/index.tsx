@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
@@ -25,7 +25,7 @@ export const AddNewVehicleModal = ({ visible, setVisible }: Props) => {
     color: '',
   });
 
-  const { addVehicle, updateVehicle } = useVehicleStore();
+  const { addVehicle } = useVehicleStore();
 
   const handleVehicleCategory = (category: number) => {
     switch (category) {
@@ -68,7 +68,7 @@ export const AddNewVehicleModal = ({ visible, setVisible }: Props) => {
     }
 
     setLoading(false);
-    Snackbar.show({ text: `Vehículo ${vehicle ? 'actualizado' : 'registrado'} exitosamente`, duration: Snackbar.LENGTH_SHORT });
+    Snackbar.show({ text: 'Vehículo registrado exitosamente', duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
     setVehicle({ ...vehicle, nickname: '' });
   };
