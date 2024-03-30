@@ -20,7 +20,7 @@ export const VehiclesListItem = ({ item }: Props) => {
       title={<VehicleTitle item={item} />}
       description={<VehicleDescription item={item} />}
       accessoryLeft={<VehicleImage />}
-      accessoryRight={<VehicleActions />}
+      accessoryRight={<VehicleActions vehicle={item} />}
     />
   );
 };
