@@ -3,7 +3,8 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
-import { IVehicle } from '../../../../infrastructure/interfaces';
+import { useVehiclesData } from '../../../hooks';
+import { IStatus, IVehicle } from '../../../../infrastructure/interfaces';
 import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
 
 import { styles } from './styles';
@@ -16,6 +17,7 @@ interface Props {
 
 export const DeleteModal = ({ vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
+  const { updateVehicleStatus } = useVehiclesData();
 
   const { deleteVehicle } = useVehicleStore();
 
@@ -32,6 +34,9 @@ export const DeleteModal = ({ vehicle, visible, setVisible }: Props) => {
 
     Snackbar.show({ text: 'Vehículo desactivado', duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
+
+    const updatedVehicle = { ...vehicle!, status: IStatus.Inactive };
+    updateVehicleStatus(updatedVehicle);
   };
 
   return (
@@ -42,7 +47,7 @@ export const DeleteModal = ({ vehicle, visible, setVisible }: Props) => {
     >
       <Card>
         <Layout style={styles.container}>
-          <Callout text='¿Está seguro de desactivar este vehículo?' />
+          <Callout text={`¿Desea desactivar el vehículo ${vehicle?.nickname}?`} />
           <PrimaryButton disabled={loading} text='Desactivar' onPress={handleDeleteVehicle} />
         </Layout>
       </Card>
