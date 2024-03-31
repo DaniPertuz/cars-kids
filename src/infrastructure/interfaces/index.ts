@@ -48,4 +48,5 @@ export interface IVehicle {
   color:    string;
   img?:     string;
   size:     string;
+  status?:  IStatus;
 }
