@@ -7,8 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: globalColors.platinum,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
-    width: '30%'
+    marginTop: 10
   },
   itemColor: {
     borderColor: globalColors.dark,
