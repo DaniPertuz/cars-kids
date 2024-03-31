@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { VehiclesResponse } from '../../infrastructure/interfaces';
+import { useEffect, useState } from 'react';
+import { IUserRole, IVehicle, VehiclesResponse } from '../../infrastructure/interfaces';
+import { useAuthStore } from '../store/auth/useAuthStore';
 import { useVehicleStore } from '../store/vehicles/useVehicleStore';
 
 export const useVehiclesData = () => {
@@ -14,38 +15,42 @@ export const useVehiclesData = () => {
 
   const [vehiclesData, setVehiclesData] = useState<VehiclesResponse>(init);
   const [display, setDisplay] = useState(vehiclesData.vehicles.length !== 0);
-  const isMounted = useRef(true);
+  const [paginationState, setPaginationState] = useState({ page: 1, limit: 10 });
 
+  const { user } = useAuthStore();
   const { getVehicles } = useVehicleStore();
 
   const getData = async () => {
-    const newData = await getVehicles('vehicles');
+    const url = user?.role === IUserRole.Editor ? `vehicles/status/active` : 'vehicles';
+    const newData = await getVehicles(`${url}?page=${paginationState.page}&limit=${paginationState.limit}`);
     setVehiclesData(newData);
     setDisplay(newData.vehicles.length !== 0);
   };
 
   useEffect(() => {
     getData();
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  }, [paginationState]);
 
   const fetchNextPage = async () => {
     if (vehiclesData.next) {
-      const data = await getVehicles(vehiclesData.next);
-      setVehiclesData(data);
-      setDisplay(data.vehicles.length !== 0);
+      setPaginationState(prevState => ({ ...prevState, page: prevState.page + 1 }));
     }
   };
 
   const fetchPrevPage = async () => {
     if (vehiclesData.prev) {
-      const data = await getVehicles(vehiclesData.prev);
-      setVehiclesData(data);
-      setDisplay(data.vehicles.length !== 0);
+      setPaginationState(prevState => ({ ...prevState, page: prevState.page - 1 }));
     }
+  };
+
+  const updateVehicleStatus = async (updatedVehicle: IVehicle) => {
+    const updatedVehicles = vehiclesData.vehicles.map(vehicle =>
+      vehicle.nickname === updatedVehicle.nickname ? updatedVehicle : vehicle
+    );
+    setVehiclesData(prevData => ({
+      ...prevData,
+      vehicles: updatedVehicles
+    }));
   };
 
   return {
@@ -53,6 +58,7 @@ export const useVehiclesData = () => {
     vehiclesData,
     fetchNextPage,
     fetchPrevPage,
-    getData
+    getData,
+    updateVehicleStatus
   };
 };
