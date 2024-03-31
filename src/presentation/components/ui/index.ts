@@ -1,6 +1,7 @@
 export * from './AddButton';
 export * from './Back';
 export * from './Callout';
+export * from './CalloutBold';
 export * from './Caption';
 export * from './CustomIcon';
 export * from './DeleteButton';
