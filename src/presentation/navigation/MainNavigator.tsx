@@ -39,16 +39,15 @@ export const MainNavigator = () => {
     <>
       <StatusBarComponent color={globalColors.background} theme='dark-content' />
       <Stack.Navigator
-        initialRouteName='LoginScreen'
         screenOptions={{
           headerShown: false
         }}
       >
-        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BudgetScreen" component={BudgetScreen} />
-        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoginScreen" component={LoginScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ResetPasswordScreen" component={ResetPasswordScreen} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BudgetScreen" component={BudgetScreen} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="SearchScreen" component={SearchScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BottomNavigator" component={BottomNavigator} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="UpdateProfileScreen" component={UpdateProfileScreen} />
