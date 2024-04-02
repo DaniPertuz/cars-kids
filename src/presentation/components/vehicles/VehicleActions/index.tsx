@@ -6,7 +6,7 @@ import { styles } from './styles';
 export const VehicleActions = ({ vehicle }: { vehicle: IVehicle; }) => {
   return (
     <Layout style={styles.container}>
-      <EditButton iconSize={25} />
+      <EditButton iconSize={25} vehicle={vehicle} />
       <DeleteButton iconSize={25} vehicle={vehicle} />
     </Layout>
   );
