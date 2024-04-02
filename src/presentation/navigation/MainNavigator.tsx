@@ -5,6 +5,7 @@ import { LoadingScreen } from '../screens/LoadingScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen';
+import { BudgetScreen } from '../screens/budget/BudgetScreen';
 import { SearchScreen } from '../screens/profile/SearchScreen';
 import { UpdateProfileScreen } from '../screens/profile/UpdateProfileScreen';
 import { VehiclesScreen } from '../screens/profile/VehiclesScreen';
@@ -12,6 +13,7 @@ import { BottomNavigator } from './BottomNavigator';
 import { globalColors } from '../theme/globalColors';
 
 export type RootStackParams = {
+  BudgetScreen: undefined,
   LoadingScreen: undefined,
   LoginScreen: undefined,
   RegisterScreen: undefined,
@@ -42,6 +44,7 @@ export const MainNavigator = () => {
           headerShown: false
         }}
       >
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BudgetScreen" component={BudgetScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoginScreen" component={LoginScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
