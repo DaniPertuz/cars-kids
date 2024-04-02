@@ -26,6 +26,18 @@ export const addVehicle = async (vehicle: IVehicle) => {
   }
 };
 
+export const updateVehicle = async (vehicleNickname: string, vehicle: IVehicle) => {
+  try {
+    const { data } = await carskidsApi.put<VehiclesResponse>(`vehicles/${vehicleNickname}`, vehicle);
+
+    return data;
+  } catch (error: any) {
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+};
+
 export const deleteVehicle = async (vehicle: IVehicle) => {
   try {
     const { data } = await carskidsApi.delete<VehiclesResponse>(`vehicles/${vehicle.nickname}`);
