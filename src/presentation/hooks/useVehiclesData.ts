@@ -14,7 +14,7 @@ export const useVehiclesData = () => {
   };
 
   const [vehiclesData, setVehiclesData] = useState<VehiclesResponse>(init);
-  const [display, setDisplay] = useState(vehiclesData.vehicles.length !== 0);
+  const [display, setDisplay] = useState(false);
   const [paginationState, setPaginationState] = useState({ page: 1, limit: 10 });
 
   const { user } = useAuthStore();
@@ -24,11 +24,11 @@ export const useVehiclesData = () => {
     const url = user?.role === IUserRole.Editor ? `vehicles/status/active` : 'vehicles';
     const newData = await getVehicles(`${url}?page=${paginationState.page}&limit=${paginationState.limit}`);
     setVehiclesData(newData);
-    setDisplay(newData.vehicles.length !== 0);
+    setDisplay(true);
   };
-
+  
   useEffect(() => {
-    getData();
+    getData();   
   }, [paginationState]);
 
   const fetchNextPage = async () => {
