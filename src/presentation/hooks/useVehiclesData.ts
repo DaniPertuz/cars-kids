@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IUserRole, IVehicle, VehiclesResponse } from '../../infrastructure/interfaces';
+import { IUserRole, VehiclesResponse } from '../../infrastructure/interfaces';
 import { useAuthStore } from '../store/auth/useAuthStore';
 import { useVehicleStore } from '../store/vehicles/useVehicleStore';
 
@@ -43,22 +43,11 @@ export const useVehiclesData = () => {
     }
   };
 
-  const updateVehicleStatus = async (updatedVehicle: IVehicle) => {
-    const updatedVehicles = vehiclesData.vehicles.map(vehicle =>
-      vehicle.nickname === updatedVehicle.nickname ? updatedVehicle : vehicle
-    );
-    setVehiclesData(prevData => ({
-      ...prevData,
-      vehicles: updatedVehicles
-    }));
-  };
-
   return {
     display,
     vehiclesData,
     fetchNextPage,
     fetchPrevPage,
-    getData,
-    updateVehicleStatus
+    getData
   };
 };
