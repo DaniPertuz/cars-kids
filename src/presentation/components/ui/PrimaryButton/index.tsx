@@ -25,8 +25,10 @@ export const PrimaryButton = ({ text, disabled, onPress }: Props) => {
 
 const styles = StyleSheet.create({
   button: {
+    alignSelf: 'center',
     backgroundColor: globalColors.primaryRed,
     borderColor: globalColors.primaryRed,
-    borderRadius: 15
+    borderRadius: 15,
+    width: '50%'
   }
 });
