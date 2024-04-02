@@ -3,25 +3,25 @@ import { Layout } from '@ui-kitten/components';
 import ColorPicker from 'react-native-wheel-color-picker';
 
 interface Props {
+  initialValue: string;
   handleSelection: (value: string) => void;
 }
 
-export const VehicleColorPicker = ({ handleSelection }: Props) => {
-  const [selectedColor, setSelectedColor] = useState<string>('#FFFFFF');
-
-  const onColorChange = (color: string) => {
-    setSelectedColor(color);
-  };
+export const VehicleColorPicker = ({ initialValue, handleSelection }: Props) => {
+  const [selectedColor, setSelectedColor] = useState<string>(initialValue);
 
   useEffect(() => {
+    handleSelection(initialValue);
+  }, []);
+  
+  const onColorChange = (color: string) => {
+    setSelectedColor(color);
     handleSelection(selectedColor);
-  }, [selectedColor]);
+  };
 
   return (
     <Layout style={{ padding: 20 }}>
-      <ColorPicker
-        onColorChangeComplete={onColorChange}
-      />
+      <ColorPicker color={selectedColor} onColorChangeComplete={onColorChange} />
     </Layout>
   );
 };

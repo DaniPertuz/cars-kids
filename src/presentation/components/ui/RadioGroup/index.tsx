@@ -2,12 +2,13 @@ import { Radio, RadioGroup } from '@ui-kitten/components';
 import { useEffect, useState } from 'react';
 
 interface Props {
+  initialValue: number;
   list: string[];
   handleSelection: (value: number) => void;
 }
 
-export const RadioGroupComponent = ({ list, handleSelection }: Props) => {
-  const [selectedItem, setSelectedItem] = useState(0);
+export const RadioGroupComponent = ({ initialValue, list, handleSelection }: Props) => {
+  const [selectedItem, setSelectedItem] = useState(initialValue);
 
   useEffect(() => {
     handleSelection(selectedItem);

@@ -3,14 +3,15 @@ import { IndexPath, Select, SelectItem } from '@ui-kitten/components';
 import { styles } from './styles';
 
 interface Props {
+  initialValue: string;
   options: string[];
   placeholder: string;
   handleSelection: (value: string) => void;
 }
 
-export const SelectComponent = ({ options, placeholder, handleSelection }: Props) => {
+export const SelectComponent = ({ initialValue, options, placeholder, handleSelection }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>();
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(initialValue);
 
   useEffect(() => {
     if (selectedIndex !== undefined && !Array.isArray(selectedIndex)) {
