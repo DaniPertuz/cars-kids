@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
@@ -18,11 +18,18 @@ interface Props {
 }
 
 export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
+  const init = {
+    _id: '',
+    nickname: '',
+    category: '',
+    size: '',
+    color: '',
+  };
   const [loading, setLoading] = useState(false);
   const [vehicleState, setVehicleState] = useState<IVehicle>({
     _id: vehicle?._id || '',
     nickname: vehicle?.nickname || '',
-    category: vehicle?.category || '',
+    category: vehicle?.category || IVehicleCategory.Car,
     size: vehicle?.size || '',
     color: vehicle?.color || '',
   });
@@ -62,39 +69,41 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
   };
 
   const handleNicknameChange = (nickname: string) => {
-    if (vehicle) {
-      setVehicleState({ ...vehicle, nickname });
-    } else {
-      setVehicleState({ ...vehicleState, nickname });
-    }
-  };  
+    setVehicleState(vehicle ? { ...vehicle, nickname } : { ...vehicleState, nickname });
+  };
 
   const onSubmit = async () => {
     setLoading(true);
-    
+    if ((vehicleState.category === IVehicleCategory.Cycle && vehicleState.size !== IVehicleSize.Medium) ||
+      (vehicleState.category === IVehicleCategory.Car && vehicleState.size === IVehicleSize.Medium)) {
+      setLoading(false);
+      Snackbar.show({ text: vehicleState.category === IVehicleCategory.Cycle ? 'Tamaño no válido para moto' : 'Tamaño no válido para carro', duration: Snackbar.LENGTH_SHORT });
+      return;
+    }
+
     const resp = vehicle ? await updateVehicle(vehicle.nickname, vehicleState) : await addVehicle(vehicleState);
-    
+
     if (resp.error) {
       setLoading(false);
       Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
       return;
     }
-    
+
     const actionText = vehicle ? 'actualizado' : 'registrado';
     const successMessage = `Vehículo ${actionText} exitosamente`;
-    
+
     setLoading(false);
     setReload(true);
     Snackbar.show({ text: successMessage, duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
-    setVehicleState(vehicle ? vehicle : {
-      _id: '',
-      nickname: '',
-      category: '',
-      size: '',
-      color: '',
-    });
+    setVehicleState(vehicle ? vehicle : init);
   };
+
+  useEffect(() => {
+    if (!vehicle && !visible) {
+      setVehicleState({ ...vehicleState, nickname: '' });
+    }
+  }, [vehicle, visible]);
 
   return (
     <Modal
@@ -105,14 +114,10 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
       <Card>
         <Layout style={styles.container}>
           <Headline text={vehicle ? 'Actualizar vehículo' : 'Nuevo vehículo'} textColor={globalStyles.colorOnyx} />
-          <DefaultInput
-            caption='Este valor es único'
-            placeholder={'Nombre o apodo'}
-            value={vehicleState.nickname}
-            onChangeText={handleNicknameChange} />
+          <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleState.nickname} onChangeText={handleNicknameChange} />
           <RadioGroupComponent initialValue={initialCategoryIndex} list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
           <SelectComponent placeholder='Tamaño' options={['Pequeño', 'Estándar', 'Grande']} handleSelection={handleVehicleSize} initialValue={initialSizeValue} />
-          <VehicleColorPicker handleSelection={handleVehicleColor} initialValue={vehicle?.color || '#FFFFFF'} />
+          <VehicleColorPicker handleSelection={handleVehicleColor} initialValue={vehicle?.color || '#ffffff'} />
           <PrimaryButton disabled={loading} text={vehicle ? 'Actualizar' : 'Agregar'} onPress={onSubmit} />
         </Layout>
       </Card>
