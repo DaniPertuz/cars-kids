@@ -11,10 +11,10 @@ interface Props {
 
 export const VehicleDescription = ({ item }: Props) => {
   const { user } = useAuthStore();
-  const isAdmin = item.status === IStatus.Active;
+  const isAdmin = user?.role === IUserRole.Admin;
 
   return (
-    <Layout style={{ ...styles.descriptionContainer, width: isAdmin ? '30%' : '50%'}}>
+    <Layout style={{ ...styles.descriptionContainer, width: isAdmin ? '50%' : '30%'}}>
       <Caption textColor={globalStyles.colorOnyx} text={(item.category === 'car' ? 'Carro' : 'Moto')} />
       {user?.role === IUserRole.Admin && <CalloutBold text={(isAdmin ? 'Activo' : 'Inactivo')} />}
       <Layout style={{ backgroundColor: item.color, ...styles.itemColor }} />
