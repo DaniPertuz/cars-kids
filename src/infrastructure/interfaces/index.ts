@@ -50,3 +50,20 @@ export interface IVehicle {
   size:     string;
   status?:  IStatus;
 }
+
+export interface BudgetResponse {
+  page:    number;
+  limit:   number;
+  total:   number;
+  next:    null;
+  prev:    null;
+  budgets: IBudget[];
+}
+
+export interface IBudget {
+  _id?:     string;
+  base:     number;
+  expenses: number;
+  loans:    number;
+  date:     string;
+}
