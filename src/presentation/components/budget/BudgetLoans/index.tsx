@@ -4,8 +4,8 @@ import { Callout } from '../../ui';
 import { styles } from './styles';
 
 interface Props {
-  value: string;
-  onChangeText: (value: string) => void;
+  value: number;
+  onChangeText: (value: number) => void;
 }
 
 export const BudgetLoans = ({ value, onChangeText }: Props) => {
