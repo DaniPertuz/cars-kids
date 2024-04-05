@@ -16,6 +16,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: globalColors.background
   },
   flexAlignJustifyCenter: {
+    backgroundColor: globalColors.background,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
