@@ -23,12 +23,12 @@ export const useVehiclesData = () => {
   const getData = async () => {
     const url = user?.role === IUserRole.Editor ? `vehicles/status/active` : 'vehicles';
     const newData = await getVehicles(`${url}?page=${paginationState.page}&limit=${paginationState.limit}`);
-    setVehiclesData(newData);
+    setVehiclesData(newData.response!);
     setDisplay(true);
   };
-  
+
   useEffect(() => {
-    getData();   
+    getData();
   }, [paginationState]);
 
   const fetchNextPage = async () => {
