@@ -27,6 +27,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
       : (await StorageAdapter.setItem('token', resp.token),
+        await StorageAdapter.setItem('user', JSON.stringify(resp.user)),
         set({ status: 'authenticated', token: resp.token, user: resp.user }));
 
     return resp;
@@ -37,6 +38,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
       : (await StorageAdapter.setItem('token', resp.token),
+        await StorageAdapter.setItem('user', JSON.stringify(resp.user)),
         set({ status: 'authenticated', token: resp.token, user: resp.user }));
 
     return resp;
@@ -75,7 +77,10 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     return await updateUserPassword(email, password);
   },
   logout: async () => {
-    await StorageAdapter.removeItem('token');
+    Promise.all([
+      StorageAdapter.removeItem('token'),
+      StorageAdapter.removeItem('user')
+    ]);
     set({ status: 'unauthenticated', token: undefined, user: undefined });
   }
 }));
