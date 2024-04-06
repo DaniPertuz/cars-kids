@@ -7,16 +7,16 @@ import { useAuthStore } from '../store/auth/useAuthStore';
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
-  const { status, token } = useAuthStore();
+  const { status, user } = useAuthStore();
 
-  const checkToken = async () => {
-    const storedToken = await StorageAdapter.getItem('token');
-    return storedToken;
+  const checkUser = async () => {
+    const storedUser = await StorageAdapter.getItem('user');
+    return storedUser;
   };
 
-  const handleTokenCheck = async () => {
-    const storedToken = await checkToken();
-    if (status === 'authenticated' || storedToken) {
+  const handleUserCheck = async () => {
+    const storedUser = await checkUser();
+    if (status === 'authenticated' || storedUser) {
       navigation.reset({ index: 0, routes: [{ name: 'BottomNavigator' }] });
     } else {
       navigation.reset({ index: 0, routes: [{ name: 'LoginScreen' }] });
@@ -24,8 +24,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
   
   useEffect(() => {
-    handleTokenCheck();
-  }, [status, token, navigation]);
+    handleUserCheck();
+  }, [status, user, navigation]);
 
   return (
     <>{children}</>
