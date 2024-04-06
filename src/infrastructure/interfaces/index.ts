@@ -32,6 +32,7 @@ export interface IUser {
   role:     IUserRole;
   status:   IStatus;
 }
+
 export interface VehiclesResponse {
   page:     number;
   limit:    number;
@@ -49,6 +50,13 @@ export interface IVehicle {
   img?:     string;
   size:     string;
   status?:  IStatus;
+}
+
+export interface VehicleAPIResponse {
+  error?:    string;
+  response?: VehiclesResponse;
+  status?:   string;
+  vehicle?:  IVehicle;
 }
 
 export interface BudgetResponse {
