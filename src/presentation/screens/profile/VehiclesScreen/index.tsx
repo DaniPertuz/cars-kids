@@ -14,6 +14,7 @@ import { VehicleTitleHeader } from '../../../components/vehicles/VehicleTitleHea
 import { useVehiclesData } from '../../../hooks';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
+import { LoadingScreen } from '../../LoadingScreen';
 
 import { globalStyles } from '../../../styles/global.styles';
 
@@ -33,19 +34,26 @@ export const VehiclesScreen = () => {
 
   return (
     <Layout style={globalStyles.container}>
-      <Layout style={{ paddingTop: height * 0.042, ...globalStyles.mainLayout }}>
-        <Back top={top} />
-        <VehicleTitleHeader />
-        <Search top={top} onPress={() => navigation.navigate('SearchScreen')} />
-        <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
-      </Layout>
-      {vehiclesData.total !== 0 &&
-        <TotalVehiclesMessage bottom={bottom} total={vehiclesData.total} />
+      {!vehiclesData
+        ?
+        <LoadingScreen />
+        :
+        <>
+          <Layout style={{ paddingTop: height * 0.042, ...globalStyles.mainLayout }}>
+            <Back top={top} />
+            <VehicleTitleHeader />
+            <Search top={top} onPress={() => navigation.navigate('SearchScreen')} />
+            <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
+          </Layout>
+          {vehiclesData.total !== 0 &&
+            <TotalVehiclesMessage bottom={bottom} total={vehiclesData.total} />
+          }
+          {vehiclesData.total !== 0 &&
+            <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+          }
+          <VehicleAddButton top={top} />
+        </>
       }
-      {vehiclesData.total !== 0 &&
-        <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
-      }
-      <VehicleAddButton top={top} />
     </Layout>
   );
 };
