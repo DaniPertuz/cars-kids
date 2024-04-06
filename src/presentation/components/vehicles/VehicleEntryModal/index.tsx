@@ -96,7 +96,7 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
     setReload(true);
     Snackbar.show({ text: successMessage, duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
-    setVehicleState(vehicle ? vehicle : init);
+    setVehicleState(vehicle ? vehicleState : init);
   };
 
   useEffect(() => {
