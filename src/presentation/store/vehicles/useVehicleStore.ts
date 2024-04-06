@@ -1,33 +1,21 @@
 import { create } from 'zustand';
-import { IVehicle } from '../../../infrastructure/interfaces';
+import { IVehicle, VehicleAPIResponse, VehiclesResponse } from '../../../infrastructure/interfaces';
 import { addVehicle, getVehicles, deleteVehicle, updateVehicle } from '../../../actions/vehicles';
 
 export interface VehicleState {
   reload: boolean;
-  getVehicles: (url: string) => Promise<any>;
-  addVehicle: (vehicle: IVehicle) => Promise<any>;
-  updateVehicle: (vehicleNickname: string, vehicle: IVehicle) => Promise<any>;
-  deleteVehicle: (vehicle: IVehicle) => Promise<any>;
+  getVehicles: (url: string) => Promise<VehicleAPIResponse>;
+  addVehicle: (vehicle: IVehicle) => Promise<VehicleAPIResponse>;
+  updateVehicle: (vehicleNickname: string, vehicle: IVehicle) => Promise<VehicleAPIResponse>;
+  deleteVehicle: (vehicle: IVehicle) => Promise<VehicleAPIResponse>;
   setReload: (value: boolean) => void;
 }
 
 export const useVehicleStore = create<VehicleState>()((set, get) => ({
   reload: false,
-  getVehicles: async (url: string) => {
-    const resp = await getVehicles(url);
-    return resp;
-  },
-  addVehicle: async (vehicle: IVehicle) => {
-    const resp = await addVehicle(vehicle);
-    return resp;
-  },
-  updateVehicle: async (vehicleNickname: string, vehicle: IVehicle) => {
-    const resp = await updateVehicle(vehicleNickname, vehicle);
-    return resp;
-  },
-  deleteVehicle: async (vehicle: IVehicle) => {
-    const resp = await deleteVehicle(vehicle);
-
-    return resp;  },
+  getVehicles: async (url: string) => await getVehicles(url),
+  addVehicle: async (vehicle: IVehicle) => await addVehicle(vehicle),
+  updateVehicle: async (vehicleNickname: string, vehicle: IVehicle) => await updateVehicle(vehicleNickname, vehicle),
+  deleteVehicle: async (vehicle: IVehicle) => await deleteVehicle(vehicle),
   setReload: (value: boolean) => set({ reload: value })
 }));
