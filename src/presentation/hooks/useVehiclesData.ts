@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IUserRole, VehiclesResponse } from '../../infrastructure/interfaces';
-import { useAuthStore } from '../store/auth/useAuthStore';
+import { StorageAdapter } from '../../config/adapters/storage-adapter';
 import { useVehicleStore } from '../store/vehicles/useVehicleStore';
 
 export const useVehiclesData = () => {
@@ -17,11 +17,12 @@ export const useVehiclesData = () => {
   const [display, setDisplay] = useState(false);
   const [paginationState, setPaginationState] = useState({ page: 1, limit: 10 });
 
-  const { user } = useAuthStore();
   const { getVehicles } = useVehicleStore();
 
   const getData = async () => {
-    const url = user?.role === IUserRole.Editor ? `vehicles/status/active` : 'vehicles';
+    const user = await StorageAdapter.getItem('user');
+    const userJson = JSON.parse(user!);
+    const url = userJson?.role === IUserRole.Editor ? `vehicles/status/active` : 'vehicles';
     const newData = await getVehicles(`${url}?page=${paginationState.page}&limit=${paginationState.limit}`);
     setVehiclesData(newData.response!);
     setDisplay(true);
