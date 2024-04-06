@@ -30,9 +30,11 @@ export const DeleteModal = ({ vehicle, visible, setVisible }: Props) => {
       return;
     }
 
-    setReload(true);
-    Snackbar.show({ text: 'Vehículo desactivado', duration: Snackbar.LENGTH_SHORT });
-    setVisible(false);
+    if (resp.status) {
+      setReload(true);
+      Snackbar.show({ text: 'Vehículo desactivado', duration: Snackbar.LENGTH_SHORT });
+      setVisible(false);
+    }
   };
 
   return (
