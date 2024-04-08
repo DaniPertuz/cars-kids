@@ -13,13 +13,15 @@ export const BudgetScreen = () => {
   const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
 
-  const { loading, base, loans, expenses, payroll, onSubmit, setDayBudget } = useBudgetData();
+  const { loading, dayBudget, onSubmit, setDayBudget } = useBudgetData();
+
+  const { base, loans, expenses, payroll } = dayBudget;
 
   return (
     <Layout style={{ paddingTop: height * 0.042, ...styles.container }}>
       <Back top={top} />
       <HeaderFive text={'Presupuesto'} />
-      {(base === -1 && loans === -1 && expenses === -1)
+      {(!dayBudget) || (base === -1 && loans === -1 && expenses === -1)
         ?
         <LoadingScreen />
         :
