@@ -5,7 +5,7 @@ import Snackbar from 'react-native-snackbar';
 import { DefaultInput } from '../../forms';
 import { Headline, PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
 import { IVehicle, IVehicleCategory, IVehicleSize } from '../../../../infrastructure/interfaces';
-import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
+import { addVehicle, updateVehicle } from '../../../../actions/vehicles';
 import { VehicleColorPicker } from '../VehicleColorPicker';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -35,9 +35,6 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
   });
   const initialCategoryIndex = vehicle ? vehicle.category === IVehicleCategory.Car ? 0 : 1 : 0;
   const initialSizeValue = vehicle ? vehicle.size === IVehicleSize.Large ? 'Grande' : vehicle.size === IVehicleSize.Medium ? 'Estándar' : 'Pequeño' : '';
-
-  const { addVehicle, updateVehicle } = useVehicleStore();
-  const setReload = useVehicleStore(state => state.setReload);
 
   const handleVehicleCategory = (category: number) => {
     switch (category) {
@@ -93,7 +90,6 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
     const successMessage = `Vehículo ${actionText} exitosamente`;
 
     setLoading(false);
-    setReload(true);
     Snackbar.show({ text: successMessage, duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
     setVehicleState(vehicle ? vehicleState : init);

@@ -5,8 +5,8 @@ import { Layout, Spinner } from '@ui-kitten/components';
 
 import { DefaultInput } from '../../forms';
 import { useDebouncedValue } from '../../../hooks';
+import { getVehicles } from '../../../../actions/vehicles';
 import { IVehicle } from '../../../../infrastructure/interfaces';
-import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
 import { EmptyVehiclesListMessage } from '../EmptyVehiclesListMessage';
 import { VehiclesList } from '../VehiclesList';
 
@@ -20,16 +20,14 @@ export const VehiclesSearch = () => {
   const [loading, setLoading] = useState(false);
   const debouncedValue = useDebouncedValue(search);
 
-  const { getVehicles } = useVehicleStore();
-
   const getTotalVehicles = async () => {
     const resp = await getVehicles('vehicles');
-    setTotal(resp.total);
+    setTotal(resp.response?.total || 0);
   };
 
   const getVehiclesData = async (limit: number) => {
     const resp = await getVehicles(`vehicles?limit=${limit}`);
-    setVehiclesList(resp.vehicles);
+    setVehiclesList(resp.response?.vehicles || []);
   };
 
   const fetchData = async () => {

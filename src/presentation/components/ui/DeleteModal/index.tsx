@@ -3,8 +3,8 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
+import { deleteVehicle } from '../../../../actions/vehicles';
 import { IVehicle } from '../../../../infrastructure/interfaces';
-import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
 
 import { styles } from './styles';
 
@@ -16,8 +16,6 @@ interface Props {
 
 export const DeleteModal = ({ vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
-
-  const { deleteVehicle, setReload } = useVehicleStore();
 
   const handleDeleteVehicle = async () => {
     setLoading(true);
@@ -31,7 +29,6 @@ export const DeleteModal = ({ vehicle, visible, setVisible }: Props) => {
     }
 
     if (resp.status) {
-      setReload(true);
       Snackbar.show({ text: 'Vehículo desactivado', duration: Snackbar.LENGTH_SHORT });
       setVisible(false);
     }
