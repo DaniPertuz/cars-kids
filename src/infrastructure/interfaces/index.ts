@@ -73,5 +73,6 @@ export interface IBudget {
   base:     number;
   expenses: number;
   loans:    number;
+  payroll:  number;
   date:     string;
 }

@@ -20,10 +20,11 @@ export const useBudgetData = () => {
     base: -1,
     expenses: -1,
     loans: -1,
+    payroll: -1,
     date: ""
   });
 
-  const { base, loans, expenses } = dayBudget;
+  const { base, loans, expenses, payroll } = dayBudget;
 
   const { getBudgetsByDay, updateBudget } = useBudgetStore();
 
@@ -48,6 +49,7 @@ export const useBudgetData = () => {
       base: dayBudget.base,
       loans: dayBudget.loans,
       expenses: dayBudget.expenses,
+      payroll: dayBudget.payroll,
       date: dateToString
     });
 
@@ -72,6 +74,7 @@ export const useBudgetData = () => {
     base,
     loans,
     expenses,
+    payroll,
     onSubmit,
     setDayBudget
   };
