@@ -76,3 +76,10 @@ export interface IBudget {
   payroll:  number;
   date:     string;
 }
+
+export interface BudgetAPIResponse {
+  error?:    string;
+  response?: BudgetResponse;
+  status?:   string;
+  budget?:   IBudget;
+}
