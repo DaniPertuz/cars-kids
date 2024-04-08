@@ -13,7 +13,6 @@ import { VehicleAddButton } from '../../../components/vehicles/VehicleAddButton'
 import { VehicleTitleHeader } from '../../../components/vehicles/VehicleTitleHeader';
 import { useVehiclesData } from '../../../hooks';
 import { RootStackParams } from '../../../navigation/MainNavigator';
-import { useVehicleStore } from '../../../store/vehicles/useVehicleStore';
 import { LoadingScreen } from '../../LoadingScreen';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -22,15 +21,11 @@ export const VehiclesScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
   const { top, bottom } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const { reload, setReload } = useVehicleStore();
   const { display, vehiclesData, fetchNextPage, fetchPrevPage, getData } = useVehiclesData();
 
   useEffect(() => {
-    if (reload) {
-      getData();
-      setReload(false);
-    }
-  }, [vehiclesData, reload]);
+    getData();
+  }, [vehiclesData]);
 
   return (
     <Layout style={globalStyles.container}>
