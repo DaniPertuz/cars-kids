@@ -2,7 +2,7 @@ import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
-import { BudgetBase, BudgetExpenses, BudgetLoans } from '../../../components/budget';
+import { BudgetBase, BudgetExpenses, BudgetLoans, BudgetPayroll } from '../../../components/budget';
 import { Back, HeaderFive, PrimaryButton } from '../../../components/ui';
 import { useBudgetData } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
@@ -13,7 +13,7 @@ export const BudgetScreen = () => {
   const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
 
-  const { loading, base, loans, expenses, onSubmit, setDayBudget } = useBudgetData();
+  const { loading, base, loans, expenses, payroll, onSubmit, setDayBudget } = useBudgetData();
 
   return (
     <Layout style={{ paddingTop: height * 0.042, ...styles.container }}>
@@ -27,6 +27,7 @@ export const BudgetScreen = () => {
           <BudgetBase value={base} onChangeText={(newBase: number) => setDayBudget(prev => ({ ...prev, base: newBase }))} />
           <BudgetLoans value={loans} onChangeText={(newLoans: number) => setDayBudget(prev => ({ ...prev, loans: newLoans }))} />
           <BudgetExpenses value={expenses} onChangeText={(newExpenses: number) => setDayBudget(prev => ({ ...prev, expenses: newExpenses }))} />
+          <BudgetPayroll value={payroll} onChangeText={(newPayroll: number) => setDayBudget(prev => ({ ...prev, payroll: newPayroll }))} />
           <PrimaryButton text='Actualizar' onPress={onSubmit} disabled={loading} />
         </>
       }
