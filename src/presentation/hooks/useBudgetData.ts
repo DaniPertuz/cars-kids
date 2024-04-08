@@ -24,16 +24,20 @@ export const useBudgetData = () => {
     date: ""
   });
 
-  const { base, loans, expenses, payroll } = dayBudget;
-
-  const setBudgets = async () => {
+  const setBudgetsByDay = async () => {
     const curr = new Date();
     const day = curr.getDate().toString().padStart(2, '0');
     const month = (curr.getMonth() + 1).toString().padStart(2, '0');
     const year = curr.getFullYear().toString();
-    const { budgets } = await getBudgetsByDay(day, month, year);
+    const { response } = await getBudgetsByDay(day, month, year);
     setCurrentDate({ day, month, year });
-    setDayBudget(budgets[0]);
+    setDayBudget(response?.budgets[0] ? response?.budgets[0] : {
+      base: 0,
+      expenses: 0,
+      loans: 0,
+      payroll: 0,
+      date: `${year}-${month}-${day}`
+    });
   };
 
   const onSubmit = async () => {
@@ -63,16 +67,12 @@ export const useBudgetData = () => {
   };
 
   useEffect(() => {
-    setBudgets();
+    setBudgetsByDay();
   }, []);
 
   return {
     loading,
     dayBudget,
-    base,
-    loans,
-    expenses,
-    payroll,
     onSubmit,
     setDayBudget
   };
