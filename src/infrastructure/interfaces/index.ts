@@ -63,8 +63,8 @@ export interface BudgetResponse {
   page:    number;
   limit:   number;
   total:   number;
-  next:    null;
-  prev:    null;
+  next:    string | null;
+  prev:    string | null;
   budgets: IBudget[];
 }
 
