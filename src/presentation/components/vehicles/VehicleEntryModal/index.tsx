@@ -4,7 +4,8 @@ import Snackbar from 'react-native-snackbar';
 
 import { DefaultInput } from '../../forms';
 import { Headline, PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
-import { IVehicle, IVehicleCategory, IVehicleSize } from '../../../../infrastructure/interfaces';
+import { useUserInfo } from '../../../hooks';
+import { IStatus, IUserRole, IVehicle, IVehicleCategory, IVehicleSize } from '../../../../infrastructure/interfaces';
 import { addVehicle, updateVehicle } from '../../../../actions/vehicles';
 import { VehicleColorPicker } from '../VehicleColorPicker';
 
@@ -33,6 +34,8 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
     size: vehicle?.size || '',
     color: vehicle?.color || '',
   });
+  const { user } = useUserInfo();
+  const isAdmin = user?.role === IUserRole.Admin;
   const initialCategoryIndex = vehicle ? vehicle.category === IVehicleCategory.Car ? 0 : 1 : 0;
   const initialSizeValue = vehicle ? vehicle.size === IVehicleSize.Large ? 'Grande' : vehicle.size === IVehicleSize.Medium ? 'Estándar' : 'Pequeño' : '';
 
@@ -57,6 +60,23 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
         break;
       case 'Grande':
         setVehicleState({ ...vehicleState, size: IVehicleSize.Large });
+        break;
+    }
+  };
+
+  const handleStatus = (status: number) => {
+    switch (status) {
+      case 0:
+        setVehicleState({
+          ...vehicleState,
+          status: IStatus.Active
+        });
+        break;
+      case 1:
+        setVehicleState({
+          ...vehicleState,
+          status: IStatus.Inactive
+        });
         break;
     }
   };
@@ -114,6 +134,7 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
           <RadioGroupComponent initialValue={initialCategoryIndex} list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
           <SelectComponent placeholder='Tamaño' options={['Pequeño', 'Estándar', 'Grande']} handleSelection={handleVehicleSize} initialValue={initialSizeValue} />
           <VehicleColorPicker handleSelection={handleVehicleColor} initialValue={vehicle?.color || '#ffffff'} />
+          {isAdmin && <RadioGroupComponent initialValue={vehicle ? vehicle.status === IStatus.Active ? 0 : 1 : 0} list={['Activo', 'Inactivo']} handleSelection={handleStatus} />}
           <PrimaryButton disabled={loading} text={vehicle ? 'Actualizar' : 'Agregar'} onPress={onSubmit} />
         </Layout>
       </Card>

@@ -4,8 +4,9 @@ import Snackbar from 'react-native-snackbar';
 
 import { addProduct, updateProduct } from '../../../../actions/products';
 import { DefaultInput, NumericInput } from '../../forms';
-import { Headline, PrimaryButton } from '../../ui';
-import { IProduct, IStatus } from '../../../../infrastructure/interfaces';
+import { Headline, PrimaryButton, RadioGroupComponent } from '../../ui';
+import { useUserInfo } from '../../../hooks';
+import { IProduct, IStatus, IUserRole } from '../../../../infrastructure/interfaces';
 
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
@@ -32,12 +33,31 @@ export const ProductEntryModal = ({ product, visible, setVisible }: Props) => {
     price: product?.price || 0,
     status: product?.status || IStatus.Active
   });
+  const { user } = useUserInfo();
+  const isAdmin = user?.role === IUserRole.Admin;
 
   const handleFieldChange = (fieldName: keyof IProduct, value: string | number) => {
     setProductState(prevState => ({
       ...prevState,
       [fieldName]: value
     }));
+  };
+
+  const handleStatus = (status: number) => {
+    switch (status) {
+      case 0:
+        setProductState({
+          ...productState,
+          status: IStatus.Active
+        });
+        break;
+      case 1:
+        setProductState({
+          ...productState,
+          status: IStatus.Inactive
+        });
+        break;
+    }
   };
 
   const onSubmit = async () => {
@@ -78,6 +98,7 @@ export const ProductEntryModal = ({ product, visible, setVisible }: Props) => {
           <DefaultInput caption='Este valor es único' placeholder={'Nombre'} value={productState.name} onChangeText={(name) => handleFieldChange('name', name)} />
           <NumericInput caption='Costo' placeholder='' value={productState.cost} onChangeText={(cost) => handleFieldChange('cost', cost)} />
           <NumericInput caption='Precio de venta' placeholder='' value={productState.price} onChangeText={(price) => handleFieldChange('price', price)} />
+          {!isAdmin && <RadioGroupComponent initialValue={product ? product.status === IStatus.Active ? 0 : 1 : 0} list={['Activo', 'Inactivo']} handleSelection={handleStatus} />}
           <PrimaryButton disabled={loading} text={product ? 'Actualizar' : 'Agregar'} onPress={onSubmit} />
         </Layout>
       </Card>
