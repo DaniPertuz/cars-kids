@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Layout } from '@ui-kitten/components';
-import { VehiclesResponse } from '../../../../infrastructure/interfaces';
 import { HeaderFive, NextButton, PrevButton } from '../../ui';
 import { styles } from './styles';
 
-interface Props {
+interface PaginationProps<T> {
   bottom: number;
-  vehiclesData: VehiclesResponse;
+  data: T;
   fetchNextPage: (url: string) => void;
   fetchPrevPage: (url: string) => void;
 }
 
-export const VehiclesListPagination = ({ bottom, vehiclesData, fetchPrevPage, fetchNextPage }: Props) => {
+export const ListPagination = <T extends { prev: string | null; next: string | null; page: number }>(
+  { bottom, data, fetchPrevPage, fetchNextPage }: PaginationProps<T>
+) => {
   const [prevUrl, setPrevUrl] = useState<string | null>(null);
   const [nextUrl, setNextUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    setPrevUrl(vehiclesData.prev);
-    setNextUrl(vehiclesData.next);
-  }, [vehiclesData.prev, vehiclesData.next]);
+    setPrevUrl(data.prev);
+    setNextUrl(data.next);
+  }, [data.prev, data.next]);
 
   const handlePrevClick = () => {
     if (prevUrl) {
@@ -35,7 +36,7 @@ export const VehiclesListPagination = ({ bottom, vehiclesData, fetchPrevPage, fe
   return (
     <Layout style={{ ...styles.container, bottom: bottom + 20 }}>
       <PrevButton iconSize={30} prevUrl={prevUrl} onPress={handlePrevClick} />
-      <HeaderFive text={String(vehiclesData.page)} />
+      <HeaderFive text={String(data.page)} />
       <NextButton iconSize={30} nextUrl={nextUrl} onPress={handleNextClick} />
     </Layout>
   );
