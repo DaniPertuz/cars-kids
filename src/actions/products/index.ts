@@ -2,9 +2,9 @@ import { AxiosError } from 'axios';
 import carskidsApi from '../../config/api/carskidsApi';
 import { IProduct, ProductAPIResponse, ProductResponse } from '../../infrastructure/interfaces';
 
-export const getProducts = async (): Promise<ProductAPIResponse> => {
+export const getProducts = async (url: string): Promise<ProductAPIResponse> => {
   try {
-    const { data } = await carskidsApi.get<ProductResponse>('products');
+    const { data } = await carskidsApi.get<ProductResponse>(url);
     return { response: data };
   } catch (error: any) {
     if (error instanceof AxiosError) {
