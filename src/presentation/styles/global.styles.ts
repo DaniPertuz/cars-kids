@@ -45,6 +45,9 @@ export const globalStyles = StyleSheet.create({
   mainMargin: {
     marginHorizontal: 40
   },
+  platinumBackground: {
+    backgroundColor: globalColors.platinum
+  },
   redBorder: {
     borderColor: globalColors.primaryRed
   },
