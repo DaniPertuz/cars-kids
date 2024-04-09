@@ -83,3 +83,27 @@ export interface BudgetAPIResponse {
   status?:   string;
   budget?:   IBudget;
 }
+
+export interface IProduct {
+  _id?:   string;
+  name:   string;
+  cost:   number;
+  price:  number;
+  status: string;
+}
+
+export interface ProductResponse {
+  page:     number;
+  limit:    number;
+  total:    number;
+  next:     string | null;
+  prev:     string | null;
+  products: IProduct[];
+}
+
+export interface ProductAPIResponse {
+  error?:    string;
+  response?: ProductResponse;
+  status?:   string;
+  product?:  IProduct;
+}
