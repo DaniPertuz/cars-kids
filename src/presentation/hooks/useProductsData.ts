@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getProducts } from '../../actions/products';
-import { ProductResponse } from '../../infrastructure/interfaces';
+import { IStatus, IUserRole, ProductResponse } from '../../infrastructure/interfaces';
+import { useUserInfo } from './useUserInfo';
 
 export const useProductsData = () => {
   const init = {
@@ -15,9 +16,11 @@ export const useProductsData = () => {
   const [productsData, setProductsData] = useState<ProductResponse>(init);
   const [display, setDisplay] = useState(false);
   const [paginationState, setPaginationState] = useState({ page: 1, limit: 10 });
+  const { user } = useUserInfo();
 
   const getData = async () => {
-    const newData = await getProducts(`products?page=${paginationState.page}&limit=${paginationState.limit}`);
+    const isAdmin = user?.role === IUserRole.Admin;
+    const newData = await getProducts(`${!isAdmin ? `products/status/${IStatus.Active}` : 'products'}?page=${paginationState.page}&limit=${paginationState.limit}`);
     setProductsData(newData.response!);
     setDisplay(true);
   };
