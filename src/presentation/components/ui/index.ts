@@ -7,6 +7,7 @@ export * from './CustomIcon';
 export * from './DeleteButton';
 export * from './DeleteModal';
 export * from './EditButton';
+export * from './EmptyListMessage';
 export * from './Footnote';
 export * from './HeaderFive';
 export * from './HeaderSix';
