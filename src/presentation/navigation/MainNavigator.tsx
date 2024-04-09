@@ -13,14 +13,14 @@ import { BottomNavigator } from './BottomNavigator';
 import { globalColors } from '../theme/globalColors';
 
 export type RootStackParams = {
-  BudgetScreen: undefined,
-  LoadingScreen: undefined,
-  LoginScreen: undefined,
-  RegisterScreen: undefined,
-  ResetPasswordScreen: undefined,
-  SearchScreen: undefined,
-  UpdateProfileScreen: undefined,
-  VehiclesScreen: undefined,
+  BudgetScreen: undefined;
+  LoadingScreen: undefined;
+  LoginScreen: undefined;
+  RegisterScreen: undefined;
+  ResetPasswordScreen: undefined;
+  SearchScreen: { entity: 'products' | 'vehicles' };
+  UpdateProfileScreen: undefined;
+  VehiclesScreen: undefined;
   BottomNavigator: undefined;
 };
 
