@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { globalColors } from '../../../theme/globalColors';
+import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   descriptionContainer: {
+    ...globalStyles.platinumBackground,
     alignItems: 'center',
-    backgroundColor: globalColors.platinum,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10
