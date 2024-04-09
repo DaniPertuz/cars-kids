@@ -1,11 +1,11 @@
 import { Layout } from '@ui-kitten/components';
-import { HeaderSix } from '../../ui';
+import { HeaderSix } from '..';
 import { styles } from './styles';
 
-export const VehicleTitleHeader = () => {
+export const TitleHeader = ({ text }: { text: string }) => {
   return (
     <Layout style={styles.titleContainer}>
-      <HeaderSix text='Vehículos' />
+      <HeaderSix text={text} />
     </Layout>
   );
 };
