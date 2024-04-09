@@ -1,5 +1,5 @@
 import { Layout } from '@ui-kitten/components';
-import { EmptyVehiclesListMessage } from '../EmptyVehiclesListMessage';
+import { EmptyListMessage } from '../../ui';
 import { VehiclesList } from '../VehiclesList';
 import { VehiclesResponse } from '../../../../infrastructure/interfaces';
 import { LoadingScreen } from '../../../screens/LoadingScreen';
@@ -20,7 +20,7 @@ export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) =
         :
         (vehiclesData.total === 0)
           ?
-          <EmptyVehiclesListMessage text='No hay vehículos registrados' />
+          <EmptyListMessage text='No hay vehículos registrados' />
           :
           <VehiclesList vehicles={vehiclesData.vehicles} />
       }
