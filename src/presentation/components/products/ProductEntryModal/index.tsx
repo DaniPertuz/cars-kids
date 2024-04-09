@@ -76,8 +76,8 @@ export const ProductEntryModal = ({ product, visible, setVisible }: Props) => {
         <Layout style={styles.container}>
           <Headline text={`${product ? 'Actualizar' : 'Nuevo'} producto`} textColor={globalStyles.colorOnyx} />
           <DefaultInput caption='Este valor es único' placeholder={'Nombre'} value={productState.name} onChangeText={(name) => handleFieldChange('name', name)} />
-          <NumericInput placeholder='Costo' value={productState.cost} onChangeText={(cost) => handleFieldChange('cost', cost)} />
-          <NumericInput placeholder='Precio de venta' value={productState.price} onChangeText={(price) => handleFieldChange('price', price)} />
+          <NumericInput caption='Costo' placeholder='' value={productState.cost} onChangeText={(cost) => handleFieldChange('cost', cost)} />
+          <NumericInput caption='Precio de venta' placeholder='' value={productState.price} onChangeText={(price) => handleFieldChange('price', price)} />
           <PrimaryButton disabled={loading} text={product ? 'Actualizar' : 'Agregar'} onPress={onSubmit} />
         </Layout>
       </Card>
