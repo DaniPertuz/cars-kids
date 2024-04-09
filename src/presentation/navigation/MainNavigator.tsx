@@ -8,6 +8,7 @@ import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen';
 import { BudgetScreen } from '../screens/budget/BudgetScreen';
 import { SearchScreen } from '../screens/profile/SearchScreen';
 import { UpdateProfileScreen } from '../screens/profile/UpdateProfileScreen';
+import { ProductsScreen } from '../screens/products/ProductsScreen';
 import { VehiclesScreen } from '../screens/profile/VehiclesScreen';
 import { BottomNavigator } from './BottomNavigator';
 import { globalColors } from '../theme/globalColors';
@@ -21,6 +22,7 @@ export type RootStackParams = {
   SearchScreen: { entity: 'products' | 'vehicles' };
   UpdateProfileScreen: undefined;
   VehiclesScreen: undefined;
+  ProductsScreen: undefined;
   BottomNavigator: undefined;
 };
 
@@ -51,6 +53,7 @@ export const MainNavigator = () => {
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="SearchScreen" component={SearchScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BottomNavigator" component={BottomNavigator} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="UpdateProfileScreen" component={UpdateProfileScreen} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ProductsScreen" component={ProductsScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="VehiclesScreen" component={VehiclesScreen} />
       </Stack.Navigator>
     </>
