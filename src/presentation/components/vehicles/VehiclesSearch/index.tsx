@@ -4,10 +4,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout, Spinner } from '@ui-kitten/components';
 
 import { DefaultInput } from '../../forms';
+import { EmptyListMessage } from '../../ui';
 import { useDebouncedValue } from '../../../hooks';
 import { getVehicles } from '../../../../actions/vehicles';
 import { IVehicle } from '../../../../infrastructure/interfaces';
-import { EmptyVehiclesListMessage } from '../EmptyVehiclesListMessage';
 import { VehiclesList } from '../VehiclesList';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -56,7 +56,7 @@ export const VehiclesSearch = () => {
         <Spinner style={globalStyles.redBorder} />
       }
       {(vehicles.length === 0 && debouncedValue.length > 2) &&
-        <EmptyVehiclesListMessage text={`No hay vehículos con nombre/apodo "${debouncedValue}"`} />
+        <EmptyListMessage text={`No hay vehículos con nombre/apodo "${debouncedValue}"`} />
       }
       <Layout style={styles.fullWidth}>
         <VehiclesList vehicles={vehicles} />
