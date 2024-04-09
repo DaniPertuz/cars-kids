@@ -1,5 +1,5 @@
 import { Layout } from '@ui-kitten/components';
-import { IStatus, IUserRole, IVehicle } from '../../../../infrastructure/interfaces';
+import { IUserRole, IVehicle } from '../../../../infrastructure/interfaces';
 import { CalloutBold, Caption } from '../../ui';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 import { globalStyles } from '../../../styles/global.styles';
