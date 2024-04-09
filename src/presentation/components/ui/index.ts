@@ -19,4 +19,5 @@ export * from './RadioGroup';
 export * from './Search';
 export * from './SelectComponent';
 export * from './Title';
+export * from './TitleHeader';
 export * from './spacer';
