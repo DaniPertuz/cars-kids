@@ -5,14 +5,13 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
 
-import { Back, Search, TitleHeader } from '../../../components/ui';
-import { TotalVehiclesMessage } from '../../../components/vehicles/TotalVehiclesMessage';
+import { LoadingScreen } from '../../LoadingScreen';
+import { Back, ListPagination, Search, TitleHeader, TotalListMessage } from '../../../components/ui';
 import { VehicleListComponent } from '../../../components/vehicles/VehiclesListComponent';
-import { VehiclesListPagination } from '../../../components/vehicles/VehiclesListPagination';
 import { VehicleAddButton } from '../../../components/vehicles/VehicleAddButton';
 import { useVehiclesData } from '../../../hooks';
 import { RootStackParams } from '../../../navigation/MainNavigator';
-import { LoadingScreen } from '../../LoadingScreen';
+import { VehiclesResponse } from '../../../../infrastructure/interfaces';
 
 import { globalStyles } from '../../../styles/global.styles';
 
@@ -40,10 +39,10 @@ export const VehiclesScreen = () => {
             <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
           </Layout>
           {vehiclesData.total !== 0 &&
-            <TotalVehiclesMessage bottom={bottom} total={vehiclesData.total} />
+            <TotalListMessage bottom={bottom} item='vehículo' total={vehiclesData.total} />
           }
           {vehiclesData.total !== 0 &&
-            <VehiclesListPagination bottom={bottom} vehiclesData={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+            <ListPagination<VehiclesResponse> bottom={bottom} data={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
           }
           <VehicleAddButton top={top} />
         </>
