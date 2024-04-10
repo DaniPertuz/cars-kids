@@ -11,6 +11,9 @@ export const globalStyles = StyleSheet.create({
     left: 15,
     backgroundColor: globalColors.background
   },
+  backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   container: {
     flex: 1,
     backgroundColor: globalColors.background
@@ -44,6 +47,10 @@ export const globalStyles = StyleSheet.create({
   },
   mainMargin: {
     marginHorizontal: 40
+  },
+  modalContainer: {
+    gap: 10,
+    width: 320
   },
   platinumBackground: {
     backgroundColor: globalColors.platinum
