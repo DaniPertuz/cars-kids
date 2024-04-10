@@ -15,10 +15,13 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
     _id: '',
     nickname: '',
     category: '',
+    img: '',
     size: '',
     color: '',
+    status: IStatus.Active
   };
   const [loading, setLoading] = useState(false);
+  const [vehicleObject, setVehicleObject] = useState({});
   const [vehicleState, setVehicleState] = useState<IVehicle>({
     _id: vehicle?._id || '',
     nickname: vehicle?.nickname || '',
@@ -31,13 +34,26 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   const initialCategoryIndex = vehicle ? vehicle.category === IVehicleCategory.Car ? 0 : 1 : 0;
   const initialSizeValue = vehicle ? vehicle.size === IVehicleSize.Large ? 'Grande' : vehicle.size === IVehicleSize.Medium ? 'Estándar' : 'Pequeño' : '';
 
+  const handleFieldChange = (fieldName: keyof IVehicle, value: string | number) => {
+    if (!visible) setVehicleObject({});
+
+    setVehicleObject(prevState => ({
+      ...prevState,
+      [fieldName]: value
+    }));
+    setVehicleState(prevState => ({
+      ...prevState,
+      [fieldName]: value
+    }));
+  };
+
   const handleVehicleCategory = (category: number) => {
     switch (category) {
       case 0:
-        setVehicleState({ ...vehicleState, category: IVehicleCategory.Car });
+        handleFieldChange('category', IVehicleCategory.Car);
         break;
       case 1:
-        setVehicleState({ ...vehicleState, category: IVehicleCategory.Cycle });
+        handleFieldChange('category', IVehicleCategory.Cycle);
         break;
     }
   };
@@ -45,13 +61,13 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   const handleVehicleSize = (size: string) => {
     switch (size) {
       case 'Pequeño':
-        setVehicleState({ ...vehicleState, size: IVehicleSize.Small });
+        handleFieldChange('size', IVehicleSize.Small);
         break;
       case 'Estándar':
-        setVehicleState({ ...vehicleState, size: IVehicleSize.Medium });
+        handleFieldChange('size', IVehicleSize.Medium);
         break;
       case 'Grande':
-        setVehicleState({ ...vehicleState, size: IVehicleSize.Large });
+        handleFieldChange('size', IVehicleSize.Large);
         break;
     }
   };
@@ -59,26 +75,20 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   const handleStatus = (status: number) => {
     switch (status) {
       case 0:
-        setVehicleState({
-          ...vehicleState,
-          status: IStatus.Active
-        });
+        handleFieldChange('status', IStatus.Active);
         break;
       case 1:
-        setVehicleState({
-          ...vehicleState,
-          status: IStatus.Inactive
-        });
+        handleFieldChange('status', IStatus.Inactive);
         break;
     }
   };
 
   const handleVehicleColor = (color: string) => {
-    setVehicleState({ ...vehicleState, color });
+    handleFieldChange('color', color);
   };
 
   const handleNicknameChange = (nickname: string) => {
-    setVehicleState(vehicle ? { ...vehicle, nickname } : { ...vehicleState, nickname });
+    handleFieldChange('nickname', nickname);
   };
 
   const onSubmit = async () => {
@@ -90,7 +100,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
       return;
     }
 
-    const resp = vehicle ? await updateVehicle(vehicle.nickname, vehicleState) : await addVehicle(vehicleState);
+    const resp = vehicle ? await updateVehicle(vehicle.nickname, vehicleObject as IVehicle) : await addVehicle(vehicleState);
 
     if (resp.error) {
       setLoading(false);
@@ -125,5 +135,5 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
     handleVehicleSize,
     handleNicknameChange,
     onSubmit
-  }
-}
+  };
+};

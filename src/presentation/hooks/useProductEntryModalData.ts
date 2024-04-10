@@ -19,6 +19,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
     status: IStatus.Active,
   };
   const [loading, setLoading] = useState(false);
+  const [productObject, setProductObject] = useState({});
   const [productState, setProductState] = useState<IProduct>({
     _id: product?._id || '',
     name: product?.name || '',
@@ -30,6 +31,12 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const isAdmin = user?.role === IUserRole.Admin;
 
   const handleFieldChange = (fieldName: keyof IProduct, value: string | number) => {
+    if (!visible) setProductObject({});
+
+    setProductObject(prevState => ({
+      ...prevState,
+      [fieldName]: value
+    }));
     setProductState(prevState => ({
       ...prevState,
       [fieldName]: value
@@ -56,7 +63,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const onSubmit = async () => {
     setLoading(true);
 
-    const resp = product ? await updateProduct(product.name, productState) : await addProduct(productState);
+    const resp = product ? await updateProduct(product.name, productObject as IProduct) : await addProduct(productState);
 
     if (resp.error) {
       setLoading(false);
@@ -78,6 +85,10 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
       setProductState({ ...productState, name: '' });
     }
   }, [product, visible]);
+
+  useEffect(() => {
+    console.log(productObject)
+  }, [productObject]);
 
   return {
     loading,
