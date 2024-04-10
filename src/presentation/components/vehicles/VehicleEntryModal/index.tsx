@@ -7,7 +7,6 @@ import { IStatus, IVehicle } from '../../../../infrastructure/interfaces';
 import { VehicleColorPicker } from '../VehicleColorPicker';
 
 import { globalStyles } from '../../../styles/global.styles';
-import { styles } from './styles';
 
 interface Props {
   vehicle?: IVehicle;
@@ -31,9 +30,9 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
   } = useVehicleEntryModalData({ vehicle, visible, setVisible });
 
   return (
-    <Modal visible={visible} backdropStyle={styles.backdrop} onBackdropPress={() => setVisible(false)}>
+    <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
       <Card>
-        <Layout style={styles.container}>
+        <Layout style={globalStyles.modalContainer}>
           <Headline text={vehicle ? 'Actualizar vehículo' : 'Nuevo vehículo'} textColor={globalStyles.colorOnyx} />
           <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleState.nickname} onChangeText={handleNicknameChange} />
           <RadioGroupComponent initialValue={initialCategoryIndex} list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
