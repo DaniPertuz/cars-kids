@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { authLogin, authRegister } from '../../../actions/auth';
 import { AuthStatus, IUser } from '../../../infrastructure/interfaces';
 import { StorageAdapter } from '../../../config/adapters/storage-adapter';
-import { updateUserEmail, updateUserName, updateUserPassword } from '../../../actions/users';
+import { updateUserEmail, updateUserImage, updateUserName, updateUserPassword } from '../../../actions/users';
 
 export interface AuthState {
   status: AuthStatus;
@@ -11,6 +11,7 @@ export interface AuthState {
   login: (email: string, password: string) => Promise<any>;
   register: (name: string, email: string, password: string, role: string) => Promise<any>;
   updateName: (email: string, name: string) => Promise<any>;
+  updateImage: (email: string, img: string) => Promise<any>;
   updateEmail: (email: string, newEmail: string) => Promise<any>;
   updatePassword: (email: string, password: string) => Promise<any>;
   logout: () => Promise<void>;
@@ -55,7 +56,23 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
       }
     }
     );
+    await StorageAdapter.setItem('user', JSON.stringify(resp))
+    return resp;
+  },
+  updateImage: async (email: string, img: string) => {
+    const resp = await updateUserImage(email, img);
 
+    set({
+      status: 'authenticated',
+      token: resp.token,
+      user: {
+        ...resp,
+        img: resp.img
+      }
+    }
+    );
+
+    await StorageAdapter.setItem('user', JSON.stringify(resp))
     return resp;
   },
   updateEmail: async (email: string, newEmail: string) => {
@@ -71,6 +88,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     }
     );
 
+    await StorageAdapter.setItem('user', JSON.stringify(resp))
     return resp;
   },
   updatePassword: async (email: string, password: string) => {
