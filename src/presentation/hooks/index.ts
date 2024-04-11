@@ -4,6 +4,7 @@ export * from './useCloudinaryOperation';
 export * from './useEmptyFieldValidation';
 export * from './useProductEntryModalData';
 export * from './useProductsData';
+export * from './useProfileUserImage';
 export * from './useResetProfile';
 export * from './useUserInfo';
 export * from './useVehicleEntryModalData';
