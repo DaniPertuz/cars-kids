@@ -4,16 +4,17 @@ import { LoadingIndicator } from '../';
 import { globalColors } from '../../../theme/globalColors';
 
 interface Props {
+  color?: string;
   text: string;
   disabled: boolean;
   onPress: () => void;
 }
 
-export const PrimaryButton = ({ text, disabled, onPress }: Props) => {
+export const PrimaryButton = ({ color, text, disabled, onPress }: Props) => {
 
   return (
     <Button
-      style={styles.button}
+      style={[styles.button, { backgroundColor: color ? color : globalColors.primaryRed, borderColor: color ? color : globalColors.primaryRed }]}
       disabled={disabled}
       onPress={onPress}
       accessoryLeft={disabled ? LoadingIndicator : undefined}
@@ -26,8 +27,6 @@ export const PrimaryButton = ({ text, disabled, onPress }: Props) => {
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
-    backgroundColor: globalColors.primaryRed,
-    borderColor: globalColors.primaryRed,
     borderRadius: 15,
     width: '50%'
   }
