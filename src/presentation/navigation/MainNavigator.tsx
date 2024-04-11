@@ -1,4 +1,5 @@
 import { StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 import StatusBarComponent from '../components/ui/status-bar';
 import { LoadingScreen } from '../screens/LoadingScreen';
@@ -10,7 +11,7 @@ import { SearchScreen } from '../screens/profile/SearchScreen';
 import { UpdateProfileScreen } from '../screens/profile/UpdateProfileScreen';
 import { ProductsScreen } from '../screens/products/ProductsScreen';
 import { VehiclesScreen } from '../screens/profile/VehiclesScreen';
-import { BottomNavigator } from './BottomNavigator';
+import { BottomNavigator, MainStackParams } from './BottomNavigator';
 import { globalColors } from '../theme/globalColors';
 
 export type RootStackParams = {
@@ -23,7 +24,7 @@ export type RootStackParams = {
   UpdateProfileScreen: undefined;
   VehiclesScreen: undefined;
   ProductsScreen: undefined;
-  BottomNavigator: undefined;
+  BottomNavigator: NavigatorScreenParams<MainStackParams> | undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -40,11 +41,7 @@ export const MainNavigator = () => {
   return (
     <>
       <StatusBarComponent color={globalColors.background} theme='dark-content' />
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false
-        }}
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoginScreen" component={LoginScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ResetPasswordScreen" component={ResetPasswordScreen} />
