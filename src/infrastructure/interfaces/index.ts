@@ -29,6 +29,7 @@ export enum IVehicleSize {
 export interface IUser {
   email:    string;
   name:     string;
+  img?:     string;
   role:     IUserRole;
   status:   IStatus;
 }
