@@ -13,6 +13,18 @@ export const updateUserName = async (email: string, name: string) => {
   }
 };
 
+export const updateUserImage = async (email: string, img: string) => {
+  try {
+    const { data } = await carskidsApi.put<IUser>('users/image', { email, img });
+
+    return data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+};
+
 export const updateUserEmail = async (email: string, newEmail: string) => {
   try {
     const { data } = await carskidsApi.put<IUser>('users/email', { email, newEmail });
