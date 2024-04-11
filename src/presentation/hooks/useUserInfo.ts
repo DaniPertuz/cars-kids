@@ -13,6 +13,7 @@ export const useUserInfo = () => {
 
     setUser({
       name: userStore ? userStore.name : userJson.name,
+      img: userStore ? userStore.img : userJson.img,
       email: userStore ? userStore.email : userJson.email,
       role: userStore ? userStore.role : userJson.role,
       status: userStore ? userStore.status : userJson.status
