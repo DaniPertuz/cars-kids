@@ -5,6 +5,7 @@ import { useProfileUserImage, useUserInfo } from '../../../hooks';
 import { globalStyles } from '../../../styles/global.styles';
 import { globalColors } from '../../../theme/globalColors';
 import { useEffect, useState } from 'react';
+import { styles } from './styles';
 
 interface Props {
   visible: boolean;
@@ -38,9 +39,9 @@ export const ProfileUserImageModal = ({ visible, setVisible }: Props) => {
         <Layout style={globalStyles.modalContainer}>
           <Headline text={'Imagen'} textColor={globalStyles.colorOnyx} />
           <Layout style={globalStyles.alignJustifyCenter}>
-            <Image style={{ height: 320, width: 320, borderRadius: 50 }} source={profileImagePath} />
+            <Image style={styles.profileImage} source={profileImagePath} />
           </Layout>
-          <Layout style={{ justifyContent: 'center', flexDirection: 'row', gap: 20 }}>
+          <Layout style={styles.buttonsContainer}>
             <PrimaryButton disabled={false} text={'Foto'} color={globalColors.warning} onPress={takePicture} />
             <PrimaryButton disabled={false} text={'Galería'} color={globalColors.success} onPress={selectPicture} />
           </Layout>
