@@ -6,6 +6,10 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>carkids</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Seleccionar imágenes desde galería</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Tomar fotos</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
