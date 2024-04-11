@@ -86,10 +86,6 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
     }
   }, [product, visible]);
 
-  useEffect(() => {
-    console.log(productObject)
-  }, [productObject]);
-
   return {
     loading,
     productState,
