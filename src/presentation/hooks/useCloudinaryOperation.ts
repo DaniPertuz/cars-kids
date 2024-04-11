@@ -8,43 +8,37 @@ const headers = {
 
 export const useCloudinaryOperation = () => {
 
-    const handleUpdateCloudinaryPic = async (data: ImagePickerResponse, deleteExisting: boolean = false, existingImg: string | undefined = undefined): Promise<string[]> => {
+    const handleUpdateCloudinaryPic = async (data: ImagePickerResponse, deleteExisting: boolean = false, existingImg: string | undefined = undefined): Promise<string> => {
 
         try {
-            let pics: string[] = [];
-
             if (deleteExisting && existingImg) {
                 await deleteCloudinaryPic(existingImg);
             }
 
-            for (let i = 0; i < data.assets!.length; i++) {
-                const element = data.assets![i];
-                const { uri, type, fileName } = element;
+            const element = data.assets![0];
+            const { uri, type, fileName } = element;
 
-                const fileToUpload = {
-                    uri,
-                    type,
-                    name: fileName
-                };
-                const uploadData = new FormData();
-                uploadData.append('file', fileToUpload);
-                uploadData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            const fileToUpload = {
+                uri,
+                type,
+                name: fileName
+            };
+            const uploadData = new FormData();
+            uploadData.append('file', fileToUpload);
+            uploadData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-                const upload = await fetch('https://api.cloudinary.com/v1_1/dpertuzo/upload', {
-                    method: 'POST',
-                    headers,
-                    body: uploadData
-                });
+            const upload = await fetch('https://api.cloudinary.com/v1_1/dpertuzo/upload', {
+                method: 'POST',
+                headers,
+                body: uploadData
+            });
 
-                const { secure_url } = await upload.json();
+            const { secure_url } = await upload.json();
 
-                pics.push(secure_url);
-            }
-
-            return pics;
+            return secure_url;
         } catch (error) {
             console.error(error);
-            return [];
+            return '';
         }
     };
 
