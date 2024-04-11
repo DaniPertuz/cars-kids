@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import { ImagePickerResponse } from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import Snackbar from 'react-native-snackbar';
 
 import { useCloudinaryOperation, useUserInfo } from './';
 import { ImagePickerAdapter } from '../../config/adapters/image-picker.adapter';
-import { updateUserImage } from '../../actions/users';
+import { useAuthStore } from '../store/auth/useAuthStore';
+import { RootStackParams } from '../navigation/MainNavigator';
 
 export const useProfileUserImage = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
   const [loading, setLoading] = useState<boolean>(false);
   const [profilePicture, setProfilePicture] = useState<ImagePickerResponse>();
 
   const { user } = useUserInfo();
   const { handleUpdateCloudinaryPic } = useCloudinaryOperation();
+  const updateUserImage = useAuthStore(state => state.updateImage);
 
   const selectPicture = async () => {
     const picture = await ImagePickerAdapter.getPicturesFromLibrary();
@@ -38,7 +43,7 @@ export const useProfileUserImage = () => {
       return;
     }
 
-    const img = await handleUpdateCloudinaryPic(profilePicture);
+    const img = await handleUpdateCloudinaryPic(profilePicture, true, user?.img);
 
     const resp = await updateUserImage(user?.email!, img);
 
@@ -48,6 +53,7 @@ export const useProfileUserImage = () => {
       return;
     }
 
+    navigation.push('BottomNavigator', { screen: 'ProfileScreen' });
     Snackbar.show({ text: 'Foto actualizada', duration: Snackbar.LENGTH_SHORT });
     setLoading(false);
   };
