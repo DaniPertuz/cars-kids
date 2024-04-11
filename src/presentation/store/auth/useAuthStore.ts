@@ -17,7 +17,7 @@ export interface AuthState {
   logout: () => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>()((set, get) => ({
+export const useAuthStore = create<AuthState>()((set) => ({
   status: 'checking',
   token: undefined,
   user: undefined,
@@ -47,48 +47,49 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
   updateName: async (email: string, name: string) => {
     const resp = await updateUserName(email, name);
 
-    set({
-      status: 'authenticated',
-      token: resp.token,
-      user: {
-        ...resp,
-        name: resp.name
-      }
+    if (!resp.error) {
+      set((state) => ({
+        ...state,
+        user: {
+          ...state.user!,
+          name: name
+        }
+      }));
+      await StorageAdapter.setItem('user', JSON.stringify(resp.user));
     }
-    );
-    await StorageAdapter.setItem('user', JSON.stringify(resp))
+  
     return resp;
   },
   updateImage: async (email: string, img: string) => {
     const resp = await updateUserImage(email, img);
 
-    set({
-      status: 'authenticated',
-      token: resp.token,
-      user: {
-        ...resp,
-        img: resp.img
-      }
+    if (!resp.error) {
+      set((state) => ({
+        ...state,
+        user: {
+          ...state.user!,
+          img: img
+        }
+      }));
+      await StorageAdapter.setItem('user', JSON.stringify(resp.user));
     }
-    );
-
-    await StorageAdapter.setItem('user', JSON.stringify(resp))
+  
     return resp;
   },
   updateEmail: async (email: string, newEmail: string) => {
     const resp = await updateUserEmail(email, newEmail);
 
-    set({
-      status: 'authenticated',
-      token: resp.token,
-      user: {
-        ...resp,
-        email: resp.email
-      }
+    if (!resp.error) {
+      set((state) => ({
+        ...state,
+        user: {
+          ...state.user!,
+          email: newEmail
+        }
+      }));
+      await StorageAdapter.setItem('user', JSON.stringify(resp.user));
     }
-    );
-
-    await StorageAdapter.setItem('user', JSON.stringify(resp))
+  
     return resp;
   },
   updatePassword: async (email: string, password: string) => {
