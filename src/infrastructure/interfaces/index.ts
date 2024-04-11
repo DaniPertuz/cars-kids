@@ -34,6 +34,22 @@ export interface IUser {
   status:   IStatus;
 }
 
+export interface UsersResponse {
+  page:  number;
+  limit: number;
+  total: number;
+  next:  string | null;
+  prev:  string | null;
+  users: IUser[];
+}
+
+export interface UserAPIResponse {
+  error?:    string;
+  response?: UsersResponse;
+  status?:   string;
+  user?:     IUser;
+}
+
 export interface VehiclesResponse {
   page:     number;
   limit:    number;
