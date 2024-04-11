@@ -3,20 +3,21 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Snackbar from 'react-native-snackbar';
 
+import { useEmptyFieldValidation, useUserInfo } from './';
 import { RootStackParams } from '../navigation/MainNavigator';
 import { useAuthStore } from '../store/auth/useAuthStore';
-import { useEmptyFieldValidation } from './useEmptyFieldValidation';
 
 export const useResetProfile = () => {
   const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
+  const { user } = useUserInfo();
 
-  const emailStore = useAuthStore(state => state.user?.email || '');
-  const nameStore = useAuthStore(state => state.user?.name || '');
+  const emailStore = user?.email!;
+  const nameStore = user?.name!;
   const { updateEmail, updateName, updatePassword } = useAuthStore();
 
   const [form, setForm] = useState({
-    name: nameStore,
-    email: emailStore,
+    name: '',
+    email: '',
     password: '',
     confirmPassword: ''
   });
@@ -27,19 +28,39 @@ export const useResetProfile = () => {
   const { isEmpty: isPasswordEmpty, checkEmptyFields: checkPasswordEmpty } = useEmptyFieldValidation();
   const { isEmpty: isConfirmedPasswordEmpty, checkEmptyFields: checkConfirmedPasswordEmpty } = useEmptyFieldValidation();
 
+  const setData = () => {
+    setForm(prevState => ({
+      ...prevState,
+      name: nameStore,
+      email: emailStore
+    }));
+  };
+
   const onUpdateProfile = async () => {
     if (nameStore.length !== 0 && emailStore.length !== 0) {
       if (nameStore !== name) {
-        updateName(emailStore, name);
+        const resp = await updateName(emailStore, name);
+
+        if (resp.error) {
+          Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+          return;
+        }
+
         Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
-        navigator.goBack();
+        navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
         return;
       }
 
       if (emailStore !== email) {
-        updateEmail(emailStore, email);
+        const resp = await updateEmail(emailStore, email);
+        
+        if (resp.error) {
+          Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+          return;
+        }
+        
         Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
-        navigator.goBack();
+        navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
         return;
       }
     }
@@ -62,9 +83,13 @@ export const useResetProfile = () => {
       }
 
       Snackbar.show({ text: 'Contraseña restablecida', duration: Snackbar.LENGTH_SHORT });
-      navigator.goBack();
+      navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
     }
   };
+
+  useEffect(() => {
+    setData();
+  }, [user]);
 
   return {
     form,
