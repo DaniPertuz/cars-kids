@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getVehicles } from '../../actions/vehicles';
-import { IUserRole, VehiclesResponse } from '../../infrastructure/interfaces';
+import * as VehicleUseCases from '../../core/use-cases/vehicles'
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
+import { IUserRole, VehiclesResponse } from '../../infrastructure/interfaces';
 
 export const useVehiclesData = () => {
   const init = {
@@ -21,7 +21,7 @@ export const useVehiclesData = () => {
     const user = await StorageAdapter.getItem('user');
     const userJson = JSON.parse(user!);
     const url = userJson?.role === IUserRole.Editor ? `vehicles/status/active` : 'vehicles';
-    const newData = await getVehicles(`${url}?page=${paginationState.page}&limit=${paginationState.limit}`);
+    const newData = await VehicleUseCases.getVehiclesUseCase(`${url}?page=${paginationState.page}&limit=${paginationState.limit}`);
     setVehiclesData(newData.response!);
     setDisplay(true);
   };

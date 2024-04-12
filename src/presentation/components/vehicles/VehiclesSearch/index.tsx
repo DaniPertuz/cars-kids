@@ -6,9 +6,9 @@ import { Layout, Spinner } from '@ui-kitten/components';
 import { DefaultInput } from '../../forms';
 import { EmptyListMessage } from '../../ui';
 import { useDebouncedValue } from '../../../hooks';
-import { getVehicles } from '../../../../actions/vehicles';
-import { IVehicle } from '../../../../infrastructure/interfaces';
+import { Vehicle } from '../../../../core/entities';
 import { VehiclesList } from '../VehiclesList';
+import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
 
 import { globalStyles } from '../../../styles/global.styles';
 
@@ -16,17 +16,17 @@ export const VehiclesSearch = () => {
   const { top } = useSafeAreaInsets();
   const [search, setSearch] = useState('');
   const [total, setTotal] = useState<number>(0);
-  const [vehiclesList, setVehiclesList] = useState<IVehicle[]>([]);
+  const [vehiclesList, setVehiclesList] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(false);
   const debouncedValue = useDebouncedValue(search);
 
   const getTotalVehicles = async () => {
-    const resp = await getVehicles('vehicles');
+    const resp = await VehicleUseCases.getVehiclesUseCase('vehicles');
     setTotal(resp.response?.total || 0);
   };
 
   const getVehiclesData = async (limit: number) => {
-    const resp = await getVehicles(`vehicles?limit=${limit}`);
+    const resp = await VehicleUseCases.getVehiclesUseCase(`vehicles?limit=${limit}`);
     setVehiclesList(resp.response?.vehicles || []);
   };
 

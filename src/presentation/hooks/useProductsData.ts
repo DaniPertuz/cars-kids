@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts } from '../../actions/products';
+import * as ProductUseCases from '../../core/use-cases/products';
 import { IStatus, IUserRole, ProductResponse } from '../../infrastructure/interfaces';
 import { useUserInfo } from './useUserInfo';
 
@@ -20,7 +20,7 @@ export const useProductsData = () => {
 
   const getData = async () => {
     const isAdmin = user?.role === IUserRole.Admin;
-    const newData = await getProducts(`${!isAdmin ? `products/status/${IStatus.Active}` : 'products'}?page=${paginationState.page}&limit=${paginationState.limit}`);
+    const newData = await ProductUseCases.getProductsUseCase(`${!isAdmin ? `products/status/${IStatus.Active}` : 'products'}?page=${paginationState.page}&limit=${paginationState.limit}`);
     setProductsData(newData.response!);
     setDisplay(true);
   };

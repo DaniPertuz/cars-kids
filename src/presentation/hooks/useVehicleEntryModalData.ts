@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { updateVehicle, addVehicle } from '../../actions/vehicles';
+
 import { Vehicle } from '../../core/entities';
+import * as VehicleUseCases from '../../core/use-cases/vehicles';
 import { IVehicleCategory, IUserRole, IVehicleSize, IStatus } from '../../infrastructure/interfaces';
 import { useUserInfo } from './useUserInfo';
 
@@ -101,7 +102,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
       return;
     }
 
-    const resp = vehicle ? await updateVehicle(vehicle.nickname, vehicleObject as Vehicle) : await addVehicle(vehicleState);
+    const resp = vehicle ? await VehicleUseCases.updateVehicleUseCase(vehicle.nickname, vehicleObject as Vehicle) : await VehicleUseCases.addVehicleUseCase(vehicleState);
 
     if (resp.error) {
       setLoading(false);

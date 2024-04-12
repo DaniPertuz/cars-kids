@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { authLogin, authRegister } from '../../../actions/auth';
 import { User } from '../../../core/entities';
 import { AuthStatus } from '../../../infrastructure/interfaces';
 import { StorageAdapter } from '../../../config/adapters/storage-adapter';
-import { updateUserEmail, updateUserImage, updateUserName, updateUserPassword } from '../../../actions/users';
+import * as AuthUseCases from '../../../core/use-cases/auth';
+import * as UserUseCases from '../../../core/use-cases/users';
 
 export interface AuthState {
   status: AuthStatus;
@@ -24,7 +24,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
   user: undefined,
 
   login: async (email: string, password: string) => {
-    const resp = await authLogin(email, password);
+    const resp = await AuthUseCases.authLoginUseCase(email, password);
 
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
@@ -35,7 +35,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     return resp;
   },
   register: async (name: string, email: string, password: string, role: string) => {
-    const resp = await authRegister(name, email, password, role);
+    const resp = await AuthUseCases.authRegisterUseCase(name, email, password, role);
 
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     return resp;
   },
   updateName: async (email: string, name: string) => {
-    const resp = await updateUserName(email, name);
+    const resp = await UserUseCases.updateUserNameUseCase(email, name);
 
     if (!resp.error) {
       set((state) => ({
@@ -58,11 +58,11 @@ export const useAuthStore = create<AuthState>()((set) => ({
       }));
       await StorageAdapter.setItem('user', JSON.stringify(resp.user));
     }
-  
+
     return resp;
   },
   updateImage: async (email: string, img: string) => {
-    const resp = await updateUserImage(email, img);
+    const resp = await UserUseCases.updateUserImageUseCase(email, img);
 
     if (!resp.error) {
       set((state) => ({
@@ -74,11 +74,11 @@ export const useAuthStore = create<AuthState>()((set) => ({
       }));
       await StorageAdapter.setItem('user', JSON.stringify(resp.user));
     }
-  
+
     return resp;
   },
   updateEmail: async (email: string, newEmail: string) => {
-    const resp = await updateUserEmail(email, newEmail);
+    const resp = await UserUseCases.updateUserEmailUseCase(email, newEmail);
 
     if (!resp.error) {
       set((state) => ({
@@ -90,11 +90,11 @@ export const useAuthStore = create<AuthState>()((set) => ({
       }));
       await StorageAdapter.setItem('user', JSON.stringify(resp.user));
     }
-  
+
     return resp;
   },
   updatePassword: async (email: string, password: string) => {
-    return await updateUserPassword(email, password);
+    return await UserUseCases.updateUserPasswordUseCase(email, password);
   },
   logout: async () => {
     Promise.all([

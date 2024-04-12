@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { updateProduct, addProduct } from '../../actions/products';
 import { Product } from '../../core/entities';
+import * as ProductUseCases from '../../core/use-cases/products';
 import { IStatus, IUserRole } from '../../infrastructure/interfaces';
 import { useUserInfo } from './useUserInfo';
 
@@ -64,7 +64,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const onSubmit = async () => {
     setLoading(true);
 
-    const resp = product ? await updateProduct(product.name, productObject as Product) : await addProduct(productState);
+    const resp = product ? await ProductUseCases.updateProductUseCase(product.name, productObject as Product) : await ProductUseCases.addProductUseCase(productState);
 
     if (resp.error) {
       setLoading(false);

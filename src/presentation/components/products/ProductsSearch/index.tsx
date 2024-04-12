@@ -6,9 +6,9 @@ import { Layout, Spinner } from '@ui-kitten/components';
 import { DefaultInput } from '../../forms';
 import { EmptyListMessage } from '../../ui';
 import { useDebouncedValue } from '../../../hooks';
-import { getProducts } from '../../../../actions/products';
 import { Product } from '../../../../core/entities';
 import { ProductsList } from '../ProductsList';
+import * as ProductUseCases from '../../../../core/use-cases/products';
 
 import { globalStyles } from '../../../styles/global.styles';
 
@@ -21,12 +21,12 @@ export const ProductsSearch = () => {
   const debouncedValue = useDebouncedValue(search);
 
   const getTotalProducts = async () => {
-    const resp = await getProducts('products');
+    const resp = await ProductUseCases.getProductsUseCase('products');
     setTotal(resp.response?.total || 0);
   };
 
   const getProductsData = async (limit: number) => {
-    const resp = await getProducts(`products?limit=${limit}`);
+    const resp = await ProductUseCases.getProductsUseCase(`products?limit=${limit}`);
     setProductsList(resp.response?.products || []);
   };
 

@@ -3,9 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Snackbar from 'react-native-snackbar';
 
-import { getBudgetsByDay, updateBudget } from '../../actions/budgets';
-import { Budget } from '../../core/entities';
 import { RootStackParams } from '../navigation/MainNavigator';
+import { Budget } from '../../core/entities';
+import * as BudgetUseCases from '../../core/use-cases/budget';
 
 export const useBudgetData = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
@@ -29,7 +29,7 @@ export const useBudgetData = () => {
     const day = curr.getDate().toString().padStart(2, '0');
     const month = (curr.getMonth() + 1).toString().padStart(2, '0');
     const year = curr.getFullYear().toString();
-    const { response } = await getBudgetsByDay(day, month, year);
+    const { response } = await BudgetUseCases.getBudgetsByDayUseCase(day, month, year);
     setCurrentDate({ day, month, year });
     setDayBudget(response?.budgets[0] ? response?.budgets[0] : {
       base: 0,
@@ -46,7 +46,7 @@ export const useBudgetData = () => {
     const { day, month, year } = currentDate;
     const dateToString = `${year}-${month}-${day}`;
 
-    const resp = await updateBudget({
+    const resp = await BudgetUseCases.updateBudgetUseCase({
       _id: dayBudget._id,
       base: dayBudget.base,
       loans: dayBudget.loans,

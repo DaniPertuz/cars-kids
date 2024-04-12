@@ -3,8 +3,8 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
-import { deleteProduct } from '../../../../actions/products';
 import { Product, Vehicle } from '../../../../core/entities';
+import * as ProductUseCases from '../../../../core/use-cases/products';
 import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
 
 import { styles } from './styles';
@@ -22,7 +22,7 @@ export const DeleteModal = ({ product, vehicle, visible, setVisible }: Props) =>
   const handleDeleteProduct = async () => {
     setLoading(true);
 
-    const resp = await deleteProduct(product!);
+    const resp = await ProductUseCases.deleteProductUseCase(product!);
 
     if (resp.error) {
       setLoading(false);
