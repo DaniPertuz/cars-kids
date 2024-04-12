@@ -7,7 +7,7 @@ import { DefaultInput } from '../../forms';
 import { EmptyListMessage } from '../../ui';
 import { useDebouncedValue } from '../../../hooks';
 import { getProducts } from '../../../../actions/products';
-import { IProduct } from '../../../../infrastructure/interfaces';
+import { Product } from '../../../../core/entities';
 import { ProductsList } from '../ProductsList';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -16,7 +16,7 @@ export const ProductsSearch = () => {
   const { top } = useSafeAreaInsets();
   const [search, setSearch] = useState('');
   const [total, setTotal] = useState<number>(0);
-  const [productsList, setProductsList] = useState<IProduct[]>([]);
+  const [productsList, setProductsList] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const debouncedValue = useDebouncedValue(search);
 

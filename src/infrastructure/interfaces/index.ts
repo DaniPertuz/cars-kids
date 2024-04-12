@@ -1,5 +1,7 @@
+import { Budget, Product, User, Vehicle } from '../../core/entities';
+
 export interface AuthResponse {
-  user:  IUser;
+  user:  User;
   token: string;
 }
 
@@ -26,28 +28,20 @@ export enum IVehicleSize {
   Large  = 'L'
 }
 
-export interface IUser {
-  email:    string;
-  name:     string;
-  img?:     string;
-  role:     IUserRole;
-  status:   IStatus;
-}
-
 export interface UsersResponse {
   page:  number;
   limit: number;
   total: number;
   next:  string | null;
   prev:  string | null;
-  users: IUser[];
+  users: User[];
 }
 
 export interface UserAPIResponse {
   error?:    string;
   response?: UsersResponse;
   status?:   string;
-  user?:     IUser;
+  user?:     User;
 }
 
 export interface VehiclesResponse {
@@ -56,24 +50,14 @@ export interface VehiclesResponse {
   total:    number;
   next:     string | null;
   prev:     string | null;
-  vehicles: IVehicle[];
-}
-
-export interface IVehicle {
-  _id?:     string;
-  nickname: string;
-  category: string;
-  color:    string;
-  img?:     string;
-  size:     string;
-  status?:  IStatus;
+  vehicles: Vehicle[];
 }
 
 export interface VehicleAPIResponse {
   error?:    string;
   response?: VehiclesResponse;
   status?:   string;
-  vehicle?:  IVehicle;
+  vehicle?:  Vehicle;
 }
 
 export interface BudgetResponse {
@@ -82,31 +66,14 @@ export interface BudgetResponse {
   total:   number;
   next:    string | null;
   prev:    string | null;
-  budgets: IBudget[];
-}
-
-export interface IBudget {
-  _id?:     string;
-  base:     number;
-  expenses: number;
-  loans:    number;
-  payroll:  number;
-  date:     string;
+  budgets: Budget[];
 }
 
 export interface BudgetAPIResponse {
   error?:    string;
   response?: BudgetResponse;
   status?:   string;
-  budget?:   IBudget;
-}
-
-export interface IProduct {
-  _id?:   string;
-  name:   string;
-  cost:   number;
-  price:  number;
-  status: string;
+  budget?:   Budget;
 }
 
 export interface ProductResponse {
@@ -115,12 +82,12 @@ export interface ProductResponse {
   total:    number;
   next:     string | null;
   prev:     string | null;
-  products: IProduct[];
+  products: Product[];
 }
 
 export interface ProductAPIResponse {
   error?:    string;
   response?: ProductResponse;
   status?:   string;
-  product?:  IProduct;
+  product?:  Product;
 }

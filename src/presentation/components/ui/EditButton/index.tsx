@@ -3,17 +3,17 @@ import { TouchableOpacity } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
 import { CustomIcon } from '../';
-import { IProduct, IVehicle } from '../../../../infrastructure/interfaces';
 import { ProductEntryModal } from '../../products/ProductEntryModal';
 import { VehicleEntryModal } from '../../vehicles/VehicleEntryModal';
+import { Product, Vehicle } from '../../../../core/entities';
 
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
   iconSize: number;
-  product?: IProduct;
-  vehicle?: IVehicle;
+  product?: Product;
+  vehicle?: Vehicle;
 }
 
 export const EditButton = ({ iconSize, product, vehicle }: Props) => {

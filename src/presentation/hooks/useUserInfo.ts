@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
+import { User } from '../../core/entities';
 import { useAuthStore } from '../store/auth/useAuthStore';
-import { IUser } from '../../infrastructure/interfaces';
 
 export const useUserInfo = () => {
-  const [user, setUser] = useState<IUser>();
+  const [user, setUser] = useState<User>();
   const userStore = useAuthStore(state => state.user);
 
   const setUserData = async () => {

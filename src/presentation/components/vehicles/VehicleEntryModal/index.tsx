@@ -3,13 +3,14 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import { DefaultInput } from '../../forms';
 import { Headline, PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
 import { useVehicleEntryModalData } from '../../../hooks';
-import { IStatus, IVehicle } from '../../../../infrastructure/interfaces';
+import { Vehicle } from '../../../../core/entities';
+import { IStatus } from '../../../../infrastructure/interfaces';
 import { VehicleColorPicker } from '../VehicleColorPicker';
 
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
-  vehicle?: IVehicle;
+  vehicle?: Vehicle;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }

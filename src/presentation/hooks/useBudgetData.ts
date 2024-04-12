@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Snackbar from 'react-native-snackbar';
 
 import { getBudgetsByDay, updateBudget } from '../../actions/budgets';
-import { IBudget } from '../../infrastructure/interfaces';
+import { Budget } from '../../core/entities';
 import { RootStackParams } from '../navigation/MainNavigator';
 
 export const useBudgetData = () => {
@@ -15,7 +15,7 @@ export const useBudgetData = () => {
     month: '',
     year: ''
   });
-  const [dayBudget, setDayBudget] = useState<IBudget>({
+  const [dayBudget, setDayBudget] = useState<Budget>({
     _id: "",
     base: -1,
     expenses: -1,

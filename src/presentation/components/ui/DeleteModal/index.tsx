@@ -4,14 +4,14 @@ import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
 import { deleteProduct } from '../../../../actions/products';
-import { deleteVehicle } from '../../../../actions/vehicles';
-import { IProduct, IVehicle } from '../../../../infrastructure/interfaces';
+import { Product, Vehicle } from '../../../../core/entities';
+import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
 
 import { styles } from './styles';
 
 interface Props {
-  product?: IProduct;
-  vehicle?: IVehicle;
+  product?: Product;
+  vehicle?: Vehicle;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
@@ -39,7 +39,7 @@ export const DeleteModal = ({ product, vehicle, visible, setVisible }: Props) =>
   const handleDeleteVehicle = async () => {
     setLoading(true);
 
-    const resp = await deleteVehicle(vehicle!);
+    const resp = await VehicleUseCases.deleteVehicleUseCase(vehicle!);
 
     if (resp.error) {
       setLoading(false);

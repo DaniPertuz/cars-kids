@@ -1,10 +1,10 @@
 import { Layout } from '@ui-kitten/components';
-import { IProduct, IVehicle } from '../../../../infrastructure/interfaces';
 import { Callout } from '../../ui';
+import { Product } from '../../../../core/entities';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
-  item: IProduct;
+  item: Product;
 }
 
 export const ProductTitle = ({ item }: Props) => {

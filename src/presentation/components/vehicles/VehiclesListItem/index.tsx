@@ -5,12 +5,12 @@ import { VehicleDescription } from '../VehicleDescription';
 import { VehicleImage } from '../VehicleImage';
 import { VehicleTitle } from '../VehicleTitle';
 
-import { IVehicle } from '../../../../infrastructure/interfaces';
+import { Vehicle } from '../../../../core/entities';
 
 import { styles } from './styles';
 
 interface Props {
-  item: IVehicle;
+  item: Vehicle;
 }
 
 export const VehiclesListItem = ({ item }: Props) => {

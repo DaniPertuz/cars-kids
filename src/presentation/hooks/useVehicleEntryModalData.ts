@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import Snackbar from 'react-native-snackbar';
 import { updateVehicle, addVehicle } from '../../actions/vehicles';
-import { IVehicle, IVehicleCategory, IUserRole, IVehicleSize, IStatus } from '../../infrastructure/interfaces';
+import { Vehicle } from '../../core/entities';
+import { IVehicleCategory, IUserRole, IVehicleSize, IStatus } from '../../infrastructure/interfaces';
 import { useUserInfo } from './useUserInfo';
 
 interface Props {
-  vehicle?: IVehicle;
+  vehicle?: Vehicle;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
@@ -22,7 +23,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   };
   const [loading, setLoading] = useState(false);
   const [vehicleObject, setVehicleObject] = useState({});
-  const [vehicleState, setVehicleState] = useState<IVehicle>({
+  const [vehicleState, setVehicleState] = useState<Vehicle>({
     _id: vehicle?._id || '',
     nickname: vehicle?.nickname || '',
     category: vehicle?.category || IVehicleCategory.Car,
@@ -34,7 +35,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   const initialCategoryIndex = vehicle ? vehicle.category === IVehicleCategory.Car ? 0 : 1 : 0;
   const initialSizeValue = vehicle ? vehicle.size === IVehicleSize.Large ? 'Grande' : vehicle.size === IVehicleSize.Medium ? 'Estándar' : 'Pequeño' : '';
 
-  const handleFieldChange = (fieldName: keyof IVehicle, value: string | number) => {
+  const handleFieldChange = (fieldName: keyof Vehicle, value: string | number) => {
     if (!visible) setVehicleObject({});
 
     setVehicleObject(prevState => ({
@@ -100,7 +101,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
       return;
     }
 
-    const resp = vehicle ? await updateVehicle(vehicle.nickname, vehicleObject as IVehicle) : await addVehicle(vehicleState);
+    const resp = vehicle ? await updateVehicle(vehicle.nickname, vehicleObject as Vehicle) : await addVehicle(vehicleState);
 
     if (resp.error) {
       setLoading(false);

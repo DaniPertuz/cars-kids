@@ -1,10 +1,10 @@
 import { Layout, List } from '@ui-kitten/components';
 import { VehiclesListItem } from '../VehiclesListItem';
-import { IVehicle } from '../../../../infrastructure/interfaces';
+import { Vehicle } from '../../../../core/entities';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
-  vehicles: IVehicle[];
+  vehicles: Vehicle[];
 }
 
 export const VehiclesList = ({ vehicles }: Props) => {

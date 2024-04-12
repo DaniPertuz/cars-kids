@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import Snackbar from 'react-native-snackbar';
 import { updateProduct, addProduct } from '../../actions/products';
-import { IProduct, IStatus, IUserRole } from '../../infrastructure/interfaces';
+import { Product } from '../../core/entities';
+import { IStatus, IUserRole } from '../../infrastructure/interfaces';
 import { useUserInfo } from './useUserInfo';
 
 interface Props {
-  product?: IProduct;
+  product?: Product;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
 
 export const useProductEntryModalData = ({ product, visible, setVisible }: Props) => {
-  const init: IProduct = {
+  const init: Product = {
     _id: '',
     name: '',
     cost: 0,
@@ -20,7 +21,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   };
   const [loading, setLoading] = useState(false);
   const [productObject, setProductObject] = useState({});
-  const [productState, setProductState] = useState<IProduct>({
+  const [productState, setProductState] = useState<Product>({
     _id: product?._id || '',
     name: product?.name || '',
     cost: product?.cost || 0,
@@ -30,7 +31,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const { user } = useUserInfo();
   const isAdmin = user?.role === IUserRole.Admin;
 
-  const handleFieldChange = (fieldName: keyof IProduct, value: string | number) => {
+  const handleFieldChange = (fieldName: keyof Product, value: string | number) => {
     if (!visible) setProductObject({});
 
     setProductObject(prevState => ({
@@ -63,7 +64,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const onSubmit = async () => {
     setLoading(true);
 
-    const resp = product ? await updateProduct(product.name, productObject as IProduct) : await addProduct(productState);
+    const resp = product ? await updateProduct(product.name, productObject as Product) : await addProduct(productState);
 
     if (resp.error) {
       setLoading(false);

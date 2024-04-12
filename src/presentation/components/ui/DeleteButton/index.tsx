@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { CustomIcon, DeleteModal } from '../';
-import { IProduct, IVehicle } from '../../../../infrastructure/interfaces';
+import { Product, Vehicle } from '../../../../core/entities';
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
   iconSize: number;
-  product?: IProduct;
-  vehicle?: IVehicle;
+  product?: Product;
+  vehicle?: Vehicle;
 }
 
 export const DeleteButton = ({ iconSize, product, vehicle }: Props) => {

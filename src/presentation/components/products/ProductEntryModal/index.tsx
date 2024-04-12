@@ -3,12 +3,13 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import { DefaultInput, NumericInput } from '../../forms';
 import { Headline, PrimaryButton, RadioGroupComponent } from '../../ui';
 import { useProductEntryModalData } from '../../../hooks';
-import { IProduct, IStatus } from '../../../../infrastructure/interfaces';
+import { IStatus } from '../../../../infrastructure/interfaces';
+import { Product } from '../../../../core/entities';
 
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
-  product?: IProduct;
+  product?: Product;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }

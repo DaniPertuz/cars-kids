@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import { authLogin, authRegister } from '../../../actions/auth';
-import { AuthStatus, IUser } from '../../../infrastructure/interfaces';
+import { User } from '../../../core/entities';
+import { AuthStatus } from '../../../infrastructure/interfaces';
 import { StorageAdapter } from '../../../config/adapters/storage-adapter';
 import { updateUserEmail, updateUserImage, updateUserName, updateUserPassword } from '../../../actions/users';
 
 export interface AuthState {
   status: AuthStatus;
   token?: string;
-  user?: IUser;
+  user?: User;
   login: (email: string, password: string) => Promise<any>;
   register: (name: string, email: string, password: string, role: string) => Promise<any>;
   updateName: (email: string, name: string) => Promise<any>;

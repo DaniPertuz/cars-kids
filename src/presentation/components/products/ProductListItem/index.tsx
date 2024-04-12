@@ -3,12 +3,12 @@ import { ListItem } from '@ui-kitten/components';
 import { ProductActions } from '../ProductActions';
 import { ProductDescription } from '../ProductDescription';
 import { ProductTitle } from '../ProductTitle';
-import { IProduct } from '../../../../infrastructure/interfaces';
+import { Product } from '../../../../core/entities';
 
 import { styles } from './styles';
 
 interface Props {
-  item: IProduct;
+  item: Product;
 }
 
 export const ProductListItem = ({ item }: Props) => {

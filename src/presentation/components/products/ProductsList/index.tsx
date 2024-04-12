@@ -1,12 +1,12 @@
 import { Layout, List } from '@ui-kitten/components';
 
-import { IProduct } from '../../../../infrastructure/interfaces';
+import { Product } from '../../../../core/entities';
 import { ProductListItem } from '../ProductListItem';
 
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
-  products: IProduct[];
+  products: Product[];
 }
 
 export const ProductsList = ({ products }: Props) => {

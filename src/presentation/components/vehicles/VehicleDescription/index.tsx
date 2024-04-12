@@ -1,12 +1,13 @@
 import { Layout } from '@ui-kitten/components';
-import { IUserRole, IVehicle } from '../../../../infrastructure/interfaces';
+import { IUserRole } from '../../../../infrastructure/interfaces';
 import { CalloutBold, Caption } from '../../ui';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
+import { Vehicle } from '../../../../core/entities';
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 interface Props {
-  item: IVehicle;
+  item: Vehicle;
 }
 
 export const VehicleDescription = ({ item }: Props) => {
