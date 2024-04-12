@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Layout, Spinner } from '@ui-kitten/components';
+import { Layout, Spinner, Text } from '@ui-kitten/components';
 
 import { DefaultInput } from '../../forms';
 import { EmptyListMessage } from '../../ui';
@@ -52,6 +52,11 @@ export const VehiclesSearch = () => {
   return (
     <Layout style={{ ...styles.container, marginTop: top }}>
       <DefaultInput placeholder={'Buscar vehículos'} value={search} onChangeText={setSearch} />
+      {!loading && debouncedValue.length < 2 &&
+        <Layout style={styles.initialBackground}>
+          <Image source={require('../../../../assets/carkids-removebg.png')} style={styles.initialBackgroundImage} />
+        </Layout>
+      }
       {(loading && debouncedValue.length > 2) &&
         <Spinner style={globalStyles.redBorder} />
       }
@@ -70,6 +75,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 30,
     ...globalStyles.mainBackground,
+  },
+  initialBackground: {
+    ...globalStyles.mainBackground,
+    height: '85%',
+    justifyContent: 'center'
+  },
+  initialBackgroundImage: {
+    height: 300,
+    opacity: 0.4,
+    width: 380
   },
   fullWidth: {
     width: '100%'
