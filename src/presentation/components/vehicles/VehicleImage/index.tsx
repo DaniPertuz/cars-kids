@@ -1,15 +1,25 @@
-import { Image } from 'react-native';
+import { useState } from 'react';
+import { Image, TouchableOpacity } from 'react-native';
+import { VehicleImageModal } from '../VehicleImageModal';
+import { Vehicle } from '../../../../core/entities';
 import { styles } from './styles';
 
 interface Props {
-  img?: string;
+  vehicle: Vehicle;
 }
 
-export const VehicleImage = ({ img }: Props) => {
+export const VehicleImage = ({ vehicle }: Props) => {
+  const [visible, setVisible] = useState(false);
+
   return (
-    <Image
-      source={img ? img : require('../../../../assets/logo2.png')}
-      style={styles.itemPic}
-    />
+    <>
+      <TouchableOpacity activeOpacity={1.0} onPress={() => setVisible(true)}>
+        <Image
+          source={vehicle.img ? { uri: vehicle.img } : require('../../../../assets/logo2.png')}
+          style={styles.itemPic}
+        />
+      </TouchableOpacity>
+      <VehicleImageModal vehicle={vehicle} visible={visible} setVisible={setVisible} />
+    </>
   );
 };
