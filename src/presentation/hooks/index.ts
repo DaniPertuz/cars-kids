@@ -8,4 +8,5 @@ export * from './useProfileUserImage';
 export * from './useResetProfile';
 export * from './useUserInfo';
 export * from './useVehicleEntryModalData';
+export * from './useVehicleImage';
 export * from './useVehiclesData';
