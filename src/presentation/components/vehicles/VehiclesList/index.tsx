@@ -15,7 +15,7 @@ export const VehiclesList = ({ vehicles }: Props) => {
       style={globalStyles.mainBackground}
       renderItem={({ item }) => (
         <Layout style={globalStyles.mainBackground}>
-          <VehiclesListItem item={item} />
+          <VehiclesListItem vehicle={item} />
         </Layout>
       )}
     />

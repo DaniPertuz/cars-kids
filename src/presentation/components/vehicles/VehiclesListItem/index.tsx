@@ -10,17 +10,17 @@ import { Vehicle } from '../../../../core/entities';
 import { styles } from './styles';
 
 interface Props {
-  item: Vehicle;
+  vehicle: Vehicle;
 }
 
-export const VehiclesListItem = ({ item }: Props) => {
+export const VehiclesListItem = ({ vehicle }: Props) => {
   return (
     <ListItem
       style={styles.container}
-      title={<VehicleTitle item={item} />}
-      description={<VehicleDescription item={item} />}
-      accessoryLeft={<VehicleImage />}
-      accessoryRight={<VehicleActions vehicle={item} />}
+      title={<VehicleTitle vehicle={vehicle} />}
+      description={<VehicleDescription vehicle={vehicle} />}
+      accessoryLeft={<VehicleImage vehicle={vehicle} />}
+      accessoryRight={<VehicleActions vehicle={vehicle} />}
     />
   );
 };

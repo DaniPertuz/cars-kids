@@ -7,18 +7,18 @@ import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 interface Props {
-  item: Vehicle;
+  vehicle: Vehicle;
 }
 
-export const VehicleDescription = ({ item }: Props) => {
+export const VehicleDescription = ({ vehicle }: Props) => {
   const { user } = useAuthStore();
   const isAdmin = user?.role === IUserRole.Admin;
 
   return (
     <Layout style={{ ...styles.descriptionContainer, width: isAdmin ? '50%' : '30%'}}>
-      <Caption textColor={globalStyles.colorOnyx} text={(item.category === 'car' ? 'Carro' : 'Moto')} />
+      <Caption textColor={globalStyles.colorOnyx} text={(vehicle.category === 'car' ? 'Carro' : 'Moto')} />
       {user?.role === IUserRole.Admin && <CalloutBold text={(isAdmin ? 'Activo' : 'Inactivo')} />}
-      <Layout style={{ backgroundColor: item.color, ...styles.itemColor }} />
+      <Layout style={{ backgroundColor: vehicle.color, ...styles.itemColor }} />
     </Layout>
   );
 };

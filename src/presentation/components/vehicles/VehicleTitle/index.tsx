@@ -4,13 +4,13 @@ import { Vehicle } from '../../../../core/entities';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
-  item: Vehicle;
+  vehicle: Vehicle;
 }
 
-export const VehicleTitle = ({ item }: Props) => {
+export const VehicleTitle = ({ vehicle }: Props) => {
   return (
     <Layout style={globalStyles.platinumBackground}>
-      <Callout text={item.nickname} />
+      <Callout text={vehicle.nickname} />
     </Layout>
   );
 };
