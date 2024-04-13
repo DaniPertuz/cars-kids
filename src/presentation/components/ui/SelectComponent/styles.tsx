@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 2,
-    borderColor: globalColors.darkDisabled,
+    borderColor: globalColors.background,
     borderRadius: 5,
     borderWidth: 1
   }
