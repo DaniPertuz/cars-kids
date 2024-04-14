@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Layout, Spinner, Text } from '@ui-kitten/components';
+import { Layout, Spinner } from '@ui-kitten/components';
 
 import { DefaultInput } from '../../forms';
-import { EmptyListMessage } from '../../ui';
+import { BackgroundImage, EmptyListMessage } from '../../ui';
 import { useDebouncedValue } from '../../../hooks';
 import { Vehicle } from '../../../../core/entities';
 import { VehiclesList } from '../VehiclesList';
@@ -50,12 +49,10 @@ export const VehiclesSearch = () => {
   }, [debouncedValue, vehiclesList]);
 
   return (
-    <Layout style={{ ...styles.container, marginTop: top }}>
+    <Layout style={{ ...globalStyles.searchContainer, marginTop: top }}>
       <DefaultInput placeholder={'Buscar vehículos'} value={search} onChangeText={setSearch} />
       {!loading && debouncedValue.length < 2 &&
-        <Layout style={styles.initialBackground}>
-          <Image source={require('../../../../assets/carkids-removebg.png')} style={styles.initialBackgroundImage} />
-        </Layout>
+        <BackgroundImage customHeight={85} />
       }
       {(loading && debouncedValue.length > 2) &&
         <Spinner style={globalStyles.redBorder} />
@@ -63,30 +60,9 @@ export const VehiclesSearch = () => {
       {(vehicles.length === 0 && debouncedValue.length > 2) &&
         <EmptyListMessage text={`No hay vehículos con nombre/apodo "${debouncedValue}"`} />
       }
-      <Layout style={styles.fullWidth}>
+      <Layout style={globalStyles.fullWidth}>
         <VehiclesList vehicles={vehicles} />
       </Layout>
     </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    marginHorizontal: 30,
-    ...globalStyles.mainBackground,
-  },
-  initialBackground: {
-    ...globalStyles.mainBackground,
-    height: '85%',
-    justifyContent: 'center'
-  },
-  initialBackgroundImage: {
-    height: 300,
-    opacity: 0.4,
-    width: 380
-  },
-  fullWidth: {
-    width: '100%'
-  }
-});
