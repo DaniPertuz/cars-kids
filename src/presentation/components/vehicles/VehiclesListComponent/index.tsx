@@ -13,7 +13,7 @@ interface Props {
 
 export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) => {
   return (
-    <Layout style={{ ...globalStyles.mainBackground, marginHorizontal: 20, paddingBottom: bottom + 150 }}>
+    <Layout style={{ ...globalStyles.mainBackground, marginHorizontal: 20, paddingBottom: bottom + 200 }}>
       {(!display)
         ?
         <LoadingScreen />
