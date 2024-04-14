@@ -18,6 +18,10 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: globalColors.background
   },
+  divider: {
+    backgroundColor: globalColors.backgroundDark,
+    marginHorizontal: 30
+  },
   flexAlignJustifyCenter: {
     backgroundColor: globalColors.background,
     flex: 1,
