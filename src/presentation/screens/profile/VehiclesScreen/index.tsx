@@ -3,7 +3,7 @@ import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Layout } from '@ui-kitten/components';
+import { Divider, Layout } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { Back, ListPagination, Search, TitleHeader, TotalListMessage } from '../../../components/ui';
@@ -36,6 +36,7 @@ export const VehiclesScreen = () => {
             <Back top={top} />
             <TitleHeader text='Vehículos' />
             <Search top={top} onPress={() => navigation.navigate('SearchScreen', { entity: 'vehicles' })} />
+            <Divider style={globalStyles.divider} />
             <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
           </Layout>
           {vehiclesData.total !== 0 &&

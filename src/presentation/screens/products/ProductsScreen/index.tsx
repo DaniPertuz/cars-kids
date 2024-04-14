@@ -3,7 +3,7 @@ import { useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Layout } from '@ui-kitten/components';
+import { Divider, Layout } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { ProductAddButton } from '../../../components/products/ProductAddButton';
@@ -37,6 +37,7 @@ export const ProductsScreen = () => {
             <Back top={top} />
             <TitleHeader text='Productos' />
             <Search top={top} onPress={() => navigation.navigate('SearchScreen', { entity: 'products' })} />
+            <Divider style={globalStyles.divider} />
             <ProductListComponent bottom={bottom} display={display} productsData={productsData} />
           </Layout>
           {productsData.total !== 0 &&
