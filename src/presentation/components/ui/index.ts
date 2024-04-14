@@ -1,5 +1,6 @@
 export * from './AddButton';
 export * from './Back';
+export * from './BackgroundImage';
 export * from './Callout';
 export * from './CalloutBold';
 export * from './Caption';
