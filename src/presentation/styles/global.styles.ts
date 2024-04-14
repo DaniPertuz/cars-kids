@@ -65,6 +65,14 @@ export const globalStyles = StyleSheet.create({
   whiteBorder: {
     borderColor: globalColors.white
   },
+  searchContainer: {
+    alignItems: 'center',
+    backgroundColor: globalColors.background,
+    marginHorizontal: 30
+  },
+  fullWidth: {
+    width: '100%'
+  },
   colorPrimaryRed: {
     color: globalColors.primaryRed
   },
