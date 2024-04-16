@@ -1,4 +1,4 @@
-import { Budget, Product, Purchase, User, Vehicle } from '../../core/entities';
+import { Budget, Product, Purchase, Rental, User, Vehicle } from '../../core/entities';
 
 export interface AuthResponse {
   user:  User;
@@ -106,4 +106,21 @@ export interface PurchaseAPIResponse {
   error?:    string;
   response?: PurchaseResponse;
   purchase?: Purchase;
+}
+
+export interface RentalResponse {
+  page:    number;
+  limit:   number;
+  total:   number;
+  sum:     number;
+  next:    string | null;
+  prev:    string | null;
+  rentals: Rental[];
+}
+
+export interface RentalAPIResponse {
+  error?:    string;
+  response?: RentalResponse;
+  status?:   string;
+  rental?:   Rental;
 }
