@@ -2,6 +2,7 @@ export * from './useBudgetData';
 export * from './useDebouncedValue';
 export * from './useCloudinaryOperation';
 export * from './useEmptyFieldValidation';
+export * from './useFormattedDate';
 export * from './useProductEntryModalData';
 export * from './useProductsData';
 export * from './useProfileUserImage';
