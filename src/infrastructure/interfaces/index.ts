@@ -28,6 +28,11 @@ export enum IVehicleSize {
   Large  = 'L'
 }
 
+export interface Pagination {
+  page:  number;
+  limit: number;
+}
+
 export interface UsersResponse {
   page:  number;
   limit: number;
