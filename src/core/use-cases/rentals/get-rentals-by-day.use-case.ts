@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
 import carskidsApi from '../../../config/api/carskidsApi';
-import { RentalAPIResponse, RentalResponse } from '../../../infrastructure/interfaces';
+import { Pagination, RentalAPIResponse, RentalResponse } from '../../../infrastructure/interfaces';
 
-export const getRentalsByDayUseCase = async (day: string, month: string, year: string): Promise<RentalAPIResponse> => {
+export const getRentalsByDayUseCase = async (url: string, day: string, month: string, year: string, pagination: Pagination): Promise<RentalAPIResponse> => {
   try {
-    const { data } = await carskidsApi.get<RentalResponse>(`rentals/dates/day/${day}/${month}/${year}`);
+    const { data } = await carskidsApi.get<RentalResponse>(`${url}/${day}/${month}/${year}?page=${pagination.page}&limit=${pagination.limit}`);
     return { response: data };
   } catch (error: any) {
     if (error instanceof AxiosError) {

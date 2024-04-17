@@ -1,11 +1,10 @@
 import { AxiosError } from 'axios';
 import carskidsApi from '../../../config/api/carskidsApi';
-import { BudgetAPIResponse, BudgetResponse } from '../../../infrastructure/interfaces';
+import { BudgetAPIResponse, BudgetResponse, Pagination } from '../../../infrastructure/interfaces';
 
-export const getBudgetsByMonthUseCase = async (url: string, date: string): Promise<BudgetAPIResponse> => {
+export const getBudgetsByMonthUseCase = async (url: string, month: string, year: string, pagination: Pagination): Promise<BudgetAPIResponse> => {
   try {
-    const split = date.split('-');
-    const { data } = await carskidsApi.get<BudgetResponse>(`${url}/${split[1]}/${split[2]}`);
+    const { data } = await carskidsApi.get<BudgetResponse>(`${url}/${month}/${year}?page=${pagination.page}&limit=${pagination.limit}`);
     return { response: data };
   } catch (error: any) {
     if (error instanceof AxiosError) {
