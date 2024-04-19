@@ -28,6 +28,13 @@ export enum IVehicleSize {
   Large  = 'L'
 }
 
+export enum IPayment {
+  Cash        = 'cash',
+  Nequi       = 'nequi',
+  Bancolombia = 'bancolombia',
+  Daviplata   = 'daviplata'
+}
+
 export interface Pagination {
   page:  number;
   limit: number;
