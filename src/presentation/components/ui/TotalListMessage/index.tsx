@@ -11,7 +11,7 @@ interface Props {
 export const TotalListMessage = ({ bottom, item, total }: Props) => {
   return (
     <Layout style={{ ...styles.container, bottom: bottom + 20 }}>
-      <Callout text={`${String(total)} ${total === 1 ? item : `${item}s`}`} />
+      <Callout text={`${total} ${total === 1 ? (item === 'Alquileres' ? 'Alquiler' : item.slice(0, -1)) : (item === 'Alquileres' ? 'Alquileres' : `${item}s`)}`} />
     </Layout>
   );
 };
