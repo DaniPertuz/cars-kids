@@ -39,7 +39,7 @@ export interface UsersResponse {
   total: number;
   next:  string | null;
   prev:  string | null;
-  users: User[];
+  data:  User[];
 }
 
 export interface UserAPIResponse {
@@ -71,7 +71,7 @@ export interface BudgetResponse {
   total:   number;
   next:    string | null;
   prev:    string | null;
-  budgets: Budget[];
+  data:    Budget[];
 }
 
 export interface BudgetAPIResponse {
@@ -104,7 +104,7 @@ export interface PurchaseResponse {
   sum:       number;
   next:      string | null;
   prev:      string | null;
-  purchases: Purchase[];
+  data:      Purchase[];
 }
 
 export interface PurchaseAPIResponse {
@@ -120,7 +120,7 @@ export interface RentalResponse {
   sum:     number;
   next:    string | null;
   prev:    string | null;
-  rentals: Rental[];
+  data:    Rental[];
 }
 
 export interface RentalAPIResponse {
@@ -129,3 +129,28 @@ export interface RentalAPIResponse {
   status?:   string;
   rental?:   Rental;
 }
+
+export type ValidDataKeys = 'users' | 'vehicles' | 'budgets' | 'products' | 'purchases' | 'rentals';
+
+export type DataKeys = keyof ApiResponse & {
+  users?: User[];
+  vehicles?: Vehicle[];
+  budgets?: Budget[];
+  products?: Product[];
+  purchases?: Purchase[];
+  rentals?: Rental[];
+};
+
+export interface ApiResponse {
+  limit: number;
+  next: string | null;
+  page: number;
+  prev: string | null;
+  sum?: number;
+  total: number;
+  data?: User | Vehicle | Budget | Product | Purchase | Rental;
+};
+
+export type AnyApiResponse = UsersResponse | BudgetResponse | PurchaseResponse | RentalResponse;
+
+export type DataItem = User | Vehicle | Budget | Product | Purchase | Rental;
