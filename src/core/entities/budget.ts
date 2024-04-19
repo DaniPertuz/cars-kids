@@ -4,5 +4,5 @@ export interface Budget {
   expenses: number;
   loans:    number;
   payroll:  number;
-  date:     string;
+  date:     Date;
 }

@@ -1,8 +1,11 @@
+import { Product } from './product';
+import { User } from './user';
+
 export interface Purchase {
   _id?:         string;
   price:        number;
-  product:      string;
+  product:      Product;
   purchaseDate: Date;
   quantity:     number;
-  user:         string;
+  user:         User;
 }
