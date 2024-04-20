@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as VehicleUseCases from '../../core/use-cases/vehicles'
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
-import { IUserRole, VehiclesResponse } from '../../infrastructure/interfaces';
+import { IUserRole, Pagination, VehiclesResponse } from '../../infrastructure/interfaces';
 
 export const useVehiclesData = () => {
   const init = {
@@ -15,7 +15,7 @@ export const useVehiclesData = () => {
 
   const [vehiclesData, setVehiclesData] = useState<VehiclesResponse>(init);
   const [display, setDisplay] = useState(false);
-  const [paginationState, setPaginationState] = useState({ page: 1, limit: 10 });
+  const [paginationState, setPaginationState] = useState<Pagination>({ page: 1, limit: 10 });
 
   const getData = async () => {
     const user = await StorageAdapter.getItem('user');
