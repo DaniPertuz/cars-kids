@@ -3,6 +3,8 @@ export * from './EditSelectedDate';
 export * from './MonthPicker';
 export * from './PeriodPicker';
 export * from './PickerComponent';
+export * from './ReportsEntitiesList';
 export * from './ReportsList';
 export * from './ReportsListComponent';
+export * from './ReportsListPagination';
 export * from './ReportsSelectComponentsGroup';
