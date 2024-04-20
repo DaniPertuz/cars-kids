@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { CustomIcon, DeleteModal } from '../';
-import { Product, Vehicle } from '../../../../core/entities';
+import { Product, User, Vehicle } from '../../../../core/entities';
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
   iconSize: number;
   product?: Product;
+  user?: User;
   vehicle?: Vehicle;
 }
 
-export const DeleteButton = ({ iconSize, product, vehicle }: Props) => {
+export const DeleteButton = ({ iconSize, product, user, vehicle }: Props) => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -23,7 +24,7 @@ export const DeleteButton = ({ iconSize, product, vehicle }: Props) => {
       >
         <CustomIcon name='trash-outline' size={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
       </TouchableOpacity>
-      <DeleteModal visible={visible} setVisible={setVisible} product={product} vehicle={vehicle} />
+      <DeleteModal visible={visible} setVisible={setVisible} product={product} vehicle={vehicle} user={user} />
     </Layout>
   );
 };
