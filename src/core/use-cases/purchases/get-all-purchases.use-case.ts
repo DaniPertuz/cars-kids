@@ -4,7 +4,7 @@ import { PurchaseAPIResponse, PurchaseResponse } from '../../../infrastructure/i
 
 export const getAllPurchasesUseCase = async (url: string): Promise<PurchaseAPIResponse> => {
   try {
-    const { data } = await carskidsApi.post<PurchaseResponse>(url);
+    const { data } = await carskidsApi.get<PurchaseResponse>(url);
     return { response: data };
   } catch (error: any) {
     if (error instanceof AxiosError) {
