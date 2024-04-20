@@ -70,6 +70,10 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: globalColors.background,
     marginHorizontal: 30
   },
+  searchListContainer: {
+    height: '92%',
+    width: '100%'
+  },
   fullWidth: {
     width: '100%'
   },
