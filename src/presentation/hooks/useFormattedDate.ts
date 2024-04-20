@@ -7,6 +7,11 @@ export const useFormattedDate = (initialDateValue = undefined) => {
   const [dateText, setDateText] = useState('');
   const [dateNumbersText, setDateNumbersText] = useState('');
 
+  const months = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+
   const formatDateString = (date: Date | undefined) => {
     if (!date) return '';
 
@@ -22,10 +27,26 @@ export const useFormattedDate = (initialDateValue = undefined) => {
     if (!date) return '';
 
     return [
-      date.getFullYear(),
-      padTo2Digits(date.getMonth() + 1),
       padTo2Digits(date.getDate()),
+      padTo2Digits(date.getMonth() + 1),
+      date.getFullYear()
     ].join('-');
+  };
+
+  const formatDateTime = (date: Date | undefined) => {
+    if (!date) return '';
+
+    const utcDate = new Date(date);
+
+    utcDate.setHours(utcDate.getHours());
+
+    const day = padTo2Digits(utcDate.getDate());
+    const monthIndex = utcDate.getMonth();
+    const year = utcDate.getFullYear();
+    const hour = padTo2Digits(utcDate.getHours());
+    const minute = padTo2Digits(utcDate.getMinutes());
+
+    return `${day} de ${months[monthIndex]} de ${year} ${hour}:${minute}`;
   };
 
   useEffect(() => {
@@ -33,5 +54,5 @@ export const useFormattedDate = (initialDateValue = undefined) => {
     setDateNumbersText(formatDateNumbersOnly(date));
   }, [date]);
 
-  return { date, setDate, dateNumbersText, dateText };
+  return { date, setDate, dateNumbersText, dateText, formatDateTime, formatDateNumbersOnly, formatDateString };
 };
