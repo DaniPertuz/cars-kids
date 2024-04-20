@@ -9,7 +9,7 @@ export const useUserInfo = () => {
 
   const setUserData = async () => {
     const userStorage = await StorageAdapter.getItem('user');
-    const userJson = JSON.parse(userStorage!);
+    const userJson = userStorage ? JSON.parse(userStorage) : {};
 
     setUser({
       name: userStore ? userStore.name : userJson.name,
