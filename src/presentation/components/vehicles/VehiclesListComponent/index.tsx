@@ -20,7 +20,7 @@ export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) =
         :
         (vehiclesData.total === 0)
           ?
-          <EmptyListMessage text='No hay vehículos registrados' />
+          <EmptyListMessage heightBy={0.7} text='No hay vehículos registrados' />
           :
           <VehiclesList vehicles={vehiclesData.vehicles} />
       }

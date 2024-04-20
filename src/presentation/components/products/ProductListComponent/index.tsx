@@ -20,7 +20,7 @@ export const ProductListComponent = ({ bottom, display, productsData }: Props) =
         :
         (productsData.total === 0)
           ?
-          <EmptyListMessage text='No hay productos registrados' />
+          <EmptyListMessage heightBy={0.7} text='No hay productos registrados' />
           :
           <ProductsList products={productsData.products} />
       }

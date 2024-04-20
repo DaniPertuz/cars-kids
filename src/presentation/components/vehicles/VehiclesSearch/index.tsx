@@ -58,7 +58,7 @@ export const VehiclesSearch = () => {
         <Spinner style={globalStyles.redBorder} />
       }
       {(vehicles.length === 0 && debouncedValue.length > 2) &&
-        <EmptyListMessage text={`No hay vehículos con nombre/apodo "${debouncedValue}"`} />
+        <EmptyListMessage heightBy={0.7} text={`No hay vehículos con nombre/apodo "${debouncedValue}"`} />
       }
       <Layout style={globalStyles.fullWidth}>
         <VehiclesList vehicles={vehicles} />

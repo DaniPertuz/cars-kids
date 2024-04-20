@@ -58,7 +58,7 @@ export const ProductsSearch = () => {
         <Spinner style={globalStyles.redBorder} />
       }
       {(products.length === 0 && debouncedValue.length > 2) &&
-        <EmptyListMessage text={`No hay productos con nombre "${debouncedValue}"`} />
+        <EmptyListMessage heightBy={0.7} text={`No hay productos con nombre "${debouncedValue}"`} />
       }
       <Layout style={globalStyles.fullWidth}>
         <ProductsList products={products} />
