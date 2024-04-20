@@ -60,7 +60,7 @@ export const VehiclesSearch = () => {
       {(vehicles.length === 0 && debouncedValue.length > 2) &&
         <EmptyListMessage heightBy={0.7} text={`No hay vehículos con nombre/apodo "${debouncedValue}"`} />
       }
-      <Layout style={globalStyles.fullWidth}>
+      <Layout style={globalStyles.searchListContainer}>
         <VehiclesList vehicles={vehicles} />
       </Layout>
     </Layout>

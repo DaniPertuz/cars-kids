@@ -60,7 +60,7 @@ export const ProductsSearch = () => {
       {(products.length === 0 && debouncedValue.length > 2) &&
         <EmptyListMessage heightBy={0.7} text={`No hay productos con nombre "${debouncedValue}"`} />
       }
-      <Layout style={globalStyles.fullWidth}>
+      <Layout style={globalStyles.searchListContainer}>
         <ProductsList products={products} />
       </Layout>
     </Layout>
