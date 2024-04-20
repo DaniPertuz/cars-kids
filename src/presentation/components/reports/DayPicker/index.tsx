@@ -24,6 +24,8 @@ export const DayPicker = ({ date, dateText, setDate }: Props) => {
           onSelect={setDate}
           dateService={localeDateService}
           placeholder='Ingrese fecha'
+          min={new Date('2023-01-01')}
+          max={new Date('2100-12-31')}
           accessoryRight={() => <CustomIcon name='calendar' fillColor={globalColors.darkDisabled} />}
         />
       )}
