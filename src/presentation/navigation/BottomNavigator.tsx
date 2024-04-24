@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CustomIcon } from '../components/ui/CustomIcon';
 import StatusBarComponent from '../components/ui/status-bar';
-import { ProductsScreen } from '../screens/products/ProductsScreen';
+import { BuyProductsScreen } from '../screens/products/BuyProductsScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { RentalsScreen } from '../screens/rentals/RentalsScreen';
 import { globalColors } from '../theme/globalColors';
@@ -25,7 +25,7 @@ export const BottomNavigator = () => {
               case 'RentalsScreen':
                 return <CustomIcon name='navigation-2-outline' fillColor={focused ? globalColors.white : globalColors.dark} />;
 
-              case 'ProductsScreen':
+              case 'BuyProductsScreen':
                 return <CustomIcon name='shopping-cart-outline' fillColor={focused ? globalColors.white : globalColors.dark} />;
 
               case 'ProfileScreen':
@@ -55,7 +55,7 @@ export const BottomNavigator = () => {
         })}
       >
         <Tab.Screen name="RentalsScreen" options={{ title: 'Alquileres' }} component={RentalsScreen} />
-        <Tab.Screen name="ProductsScreen" options={{ title: 'Productos' }} component={ProductsScreen} />
+        <Tab.Screen name="BuyProductsScreen" options={{ title: 'Productos' }} component={BuyProductsScreen} />
         <Tab.Screen name="ProfileScreen" options={{ title: 'Perfil' }} component={ProfileScreen} />
       </Tab.Navigator>
     </>
