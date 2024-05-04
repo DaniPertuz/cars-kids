@@ -3,19 +3,20 @@ import * as BudgetUseCases from '../../core/use-cases/budget';
 import * as PurchaseUseCases from '../../core/use-cases/purchases';
 import * as RentalUseCases from '../../core/use-cases/rentals';
 import * as UsersUseCases from '../../core/use-cases/users';
-import { Pagination } from '../../infrastructure/interfaces';
+import { DateRange, Pagination } from '../../infrastructure/interfaces';
 
 interface Props {
   category: string;
   rangeType: string;
-  range: { day?: string; month?: string; year?: string; startDate?: string; endDate?: string; };
+  range: DateRange;
+  pagination?: Pagination;
 }
 
-export const useEntityData = ({ category, rangeType, range }: Props) => {
+export const useEntityData = ({ category, rangeType, range, pagination }: Props) => {
   const [display, setDisplay] = useState(false);
   const [loadingPagination, setLoadingPagination] = useState(false);
   const [entityData, setEntityData] = useState<any | undefined>(null);
-  const [paginationState, setPaginationState] = useState<Pagination>({ page: 1, limit: 10 });
+  const [paginationState, setPaginationState] = useState<Pagination>(pagination ?? { page: 1, limit: 10 });
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
