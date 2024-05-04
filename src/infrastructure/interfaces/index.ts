@@ -35,6 +35,14 @@ export enum IPayment {
   Daviplata   = 'daviplata'
 }
 
+export interface DateRange {
+  day?:       string;
+  month?:     string;
+  year?:      string;
+  startDate?: string;
+  endDate?:   string; 
+}
+
 export interface Pagination {
   page:  number;
   limit: number;
