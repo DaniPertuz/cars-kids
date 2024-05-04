@@ -7,11 +7,6 @@ export const useFormattedDate = (initialDateValue = undefined) => {
   const [dateText, setDateText] = useState('');
   const [dateNumbersText, setDateNumbersText] = useState('');
 
-  const months = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-  ];
-
   const formatDateString = (date: Date | undefined) => {
     if (!date) return '';
 
@@ -42,11 +37,12 @@ export const useFormattedDate = (initialDateValue = undefined) => {
 
     const day = padTo2Digits(utcDate.getDate());
     const monthIndex = utcDate.getMonth();
+    const month = i18n.monthNames[TranslationWidth.LONG]?.at(monthIndex);
     const year = utcDate.getFullYear();
     const hour = padTo2Digits(utcDate.getHours());
     const minute = padTo2Digits(utcDate.getMinutes());
 
-    return `${day} de ${months[monthIndex]} de ${year} ${hour}:${minute}`;
+    return `${day} de ${month} de ${year} ${hour}:${minute}`;
   };
 
   useEffect(() => {
