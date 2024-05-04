@@ -45,10 +45,43 @@ export const useFormattedDate = (initialDateValue = undefined) => {
     return `${day} de ${month} de ${year} ${hour}:${minute}`;
   };
 
+  const extractTimeFromStringDate = (originalDateString: Date) => {
+    const originalDate = new Date(originalDateString);
+
+    const originalHours = originalDate.getHours();
+    const originalMinutes = originalDate.getMinutes();
+
+    let formattedHours = originalHours % 12 || 12;
+    const amPm = originalHours < 12 ? "AM" : "PM";
+
+    const formattedTime = `${formattedHours}:${originalMinutes < 10 ? '0' : ''}${originalMinutes} ${amPm}`;
+
+    return formattedTime;
+  };
+
+  const addedTime = (originalDateString: Date, additionalMinutes: number) => {
+    const originalDate = new Date(originalDateString);
+
+    const originalHours = originalDate.getHours();
+    const originalMinutes = originalDate.getMinutes();
+
+    const totalMinutes = originalMinutes + additionalMinutes;
+
+    const finalHours = originalHours + Math.floor(totalMinutes / 60);
+    const finalMinutes = totalMinutes % 60;
+
+    let formattedHours = finalHours % 12 || 12;
+    const amPm = finalHours < 12 ? "AM" : "PM";
+
+    const formattedTime = `${formattedHours}:${finalMinutes < 10 ? '0' : ''}${finalMinutes} ${amPm}`;
+
+    return formattedTime;
+  };
+
   useEffect(() => {
     setDateText(formatDateString(date));
     setDateNumbersText(formatDateNumbersOnly(date));
   }, [date]);
 
-  return { date, setDate, dateNumbersText, dateText, formatDateTime, formatDateNumbersOnly, formatDateString };
+  return { date, setDate, dateNumbersText, dateText, addedTime, extractTimeFromStringDate, formatDateTime, formatDateNumbersOnly, formatDateString };
 };
