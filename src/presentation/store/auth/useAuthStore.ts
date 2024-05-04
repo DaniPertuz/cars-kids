@@ -26,6 +26,10 @@ export const useAuthStore = create<AuthState>()((set) => ({
   login: async (email: string, password: string) => {
     const resp = await AuthUseCases.authLoginUseCase(email, password);
 
+    if (!resp) {
+      throw new Error("No connection");
+    }
+
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
       : (await StorageAdapter.setItem('token', resp.token),
