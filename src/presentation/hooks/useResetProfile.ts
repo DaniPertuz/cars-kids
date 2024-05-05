@@ -37,31 +37,33 @@ export const useResetProfile = () => {
   };
 
   const onUpdateProfile = async () => {
-    if (nameStore.length !== 0 && emailStore.length !== 0) {
-      if (nameStore !== name) {
-        const resp = await updateName(emailStore, name);
+    if (nameStore && emailStore) {
+      if (nameStore.length !== 0 && emailStore.length !== 0) {
+        if (nameStore !== name) {
+          const resp = await updateName(emailStore, name);
 
-        if (resp.error) {
-          Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+          if (resp.error) {
+            Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+            return;
+          }
+
+          Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
+          navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
           return;
         }
 
-        Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
-        navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
-        return;
-      }
+        if (emailStore !== email) {
+          const resp = await updateEmail(emailStore, email);
 
-      if (emailStore !== email) {
-        const resp = await updateEmail(emailStore, email);
-        
-        if (resp.error) {
-          Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+          if (resp.error) {
+            Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+            return;
+          }
+
+          Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
+          navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
           return;
         }
-        
-        Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
-        navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
-        return;
       }
     }
 
@@ -83,7 +85,7 @@ export const useResetProfile = () => {
       }
 
       Snackbar.show({ text: 'Contraseña restablecida', duration: Snackbar.LENGTH_SHORT });
-      navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
+      navigator.push('LoginScreen');
     }
   };
 
