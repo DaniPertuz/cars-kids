@@ -1,7 +1,9 @@
 import { ListItem } from '@ui-kitten/components';
 import { Budget, Purchase, Rental, User } from '../../../../core/entities';
-import { DataItem, IPayment, IStatus } from '../../../../infrastructure/interfaces';
+import { DataItem, IStatus } from '../../../../infrastructure/interfaces';
+import { paymentDescriptions } from '../../../../utils';
 import { useFormattedDate } from '../../../hooks';
+import { BudgetActions } from '../../budget/BudgetActions';
 import { ReportActions } from '../ReportActions';
 import { styles } from './styles';
 
@@ -23,8 +25,6 @@ export const ReportListItem = ({ item }: Props) => {
         return `Cliente: ${(item as Rental).client}`;
       case (item as Purchase).product !== undefined:
         return (item as Purchase).product.name;
-      default:
-        return 'Información no disponible';
     }
   };
 
@@ -34,12 +34,7 @@ export const ReportListItem = ({ item }: Props) => {
     switch (true) {
       case (item as Rental).client !== undefined:
         const rental = item as Rental;
-        const paymentDescriptions = {
-          [IPayment.Cash]: 'Efectivo',
-          [IPayment.Bancolombia]: 'Bancolombia',
-          [IPayment.Daviplata]: 'Daviplata',
-          [IPayment.Nequi]: 'Nequi'
-        };
+
         const payment = paymentDescriptions[rental.payment];
         return `Tiempo: ${safeAccess(rental.time)}\nPago: ${safeAccess(rental.amount)}\nMedio: ${payment}\nVehículo: ${safeAccess(rental.vehicle?.nickname)}\nFecha: ${formatDateTime(rental.date)}\nUsuario: ${safeAccess(rental.user?.name)}`;
 
@@ -56,8 +51,16 @@ export const ReportListItem = ({ item }: Props) => {
       case (item as User).role !== undefined:
         const user = item as User;
         return `Email: ${safeAccess(user.email)}\nRol: ${safeAccess(user.role)}\nEstado: ${user.status === IStatus.Active ? 'Activo' : 'Inactivo'}`;
-      default:
-        return 'Información no disponible';
+    }
+  };
+
+  const renderAccessoryRight = (item: DataItem) => {
+    if ((item as User).email !== undefined) {
+      return <ReportActions user={item as User} />;
+    } else if ((item as Budget).base !== undefined) {
+      return <BudgetActions budget={item as Budget} />;
+    } else {
+      return undefined;
     }
   };
 
@@ -66,7 +69,7 @@ export const ReportListItem = ({ item }: Props) => {
       style={styles.container}
       title={getTitle(item)}
       description={getDescription(item)}
-      accessoryRight={(item as User).email !== undefined ? <ReportActions user={item as User} /> : undefined}
+      accessoryRight={renderAccessoryRight(item)}
     />
   );
 };
