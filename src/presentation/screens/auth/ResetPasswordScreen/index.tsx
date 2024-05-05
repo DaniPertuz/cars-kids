@@ -17,7 +17,7 @@ export const ResetPasswordScreen = () => {
   const [loading, setLoading] = useState(false);
   const { form, email, password, confirmPassword, setForm, onUpdateProfile } = useResetProfile();
 
-  const onSubmit = () => {
+  const onSubmit = () => {    
     setLoading(true);
     onUpdateProfile();
     setLoading(false);
@@ -26,7 +26,7 @@ export const ResetPasswordScreen = () => {
   return (
     <Layout style={globalStyles.container}>
       <Back top={top} />
-      <ScrollView style={globalStyles.mainMargin}>
+      <ScrollView style={globalStyles.mainMargin} keyboardShouldPersistTaps='always'>
         <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
           <LoginMainImage />
           <Layout style={authStyles.welcomeTextContainer}>
