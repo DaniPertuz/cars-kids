@@ -1,4 +1,5 @@
 export * from './budget';
+export * from './desk';
 export * from './product';
 export * from './purchase';
 export * from './rental';
