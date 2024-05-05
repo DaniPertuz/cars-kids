@@ -4,7 +4,7 @@ import { UserAPIResponse } from '../../../infrastructure/interfaces';
 
 export const updateUserPasswordUseCase = async (email: string, password: string): Promise<UserAPIResponse> => {
   try {
-    const { data } = await carskidsApi.put('/users/password', { email, password });
+    const { data } = await carskidsApi.put('users/password', { email, password });
 
     return { user: data };
   } catch (error) {
