@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
   },
   listContainer: {
     ...globalStyles.mainBackground,
-    gap: 5
+    gap: 5,
+    height: '97%'
   }
 });
