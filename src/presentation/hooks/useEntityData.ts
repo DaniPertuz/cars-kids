@@ -19,6 +19,21 @@ export const useEntityData = ({ category, rangeType, range, pagination }: Props)
   const [paginationState, setPaginationState] = useState<Pagination>(pagination ?? { page: 1, limit: 10 });
   const [error, setError] = useState(null);
 
+  const dayRangeValidation = (dateRange: DateRange) => {
+    const { day, month, year } = dateRange;
+    return typeof day !== 'undefined' && typeof month !== 'undefined' && typeof year !== 'undefined';
+  };
+
+  const monthRangeValidation = (dateRange: DateRange) => {
+    const { month, year } = dateRange;
+    return typeof month !== 'undefined' && typeof year !== 'undefined';
+  };
+
+  const periodRangeValidation = (dateRange: DateRange) => {
+    const { startDate, endDate } = dateRange;
+    return typeof startDate !== 'undefined' && typeof endDate !== 'undefined';
+  };
+
   const fetchData = async () => {
     try {
       if (!loadingPagination) setDisplay(true);
@@ -27,39 +42,48 @@ export const useEntityData = ({ category, rangeType, range, pagination }: Props)
         case 'Alquileres':
           switch (rangeType) {
             case 'Día':
-              data = await RentalUseCases.getRentalsByDayUseCase('rentals/dates/day', range.day!, range.month!, range.year!, paginationState);
+              if (dayRangeValidation(range))
+                data = await RentalUseCases.getRentalsByDayUseCase('rentals/dates/day', range.day!, range.month!, range.year!, paginationState);
               break;
             case 'Mes':
-              data = await RentalUseCases.getRentalsByMonthUseCase(`rentals/dates/month`, range.month!, range.year!, paginationState);
+              if (monthRangeValidation(range))
+                data = await RentalUseCases.getRentalsByMonthUseCase(`rentals/dates/month`, range.month!, range.year!, paginationState);
               break;
             case 'Personalizado':
-              data = await RentalUseCases.getRentalsByPeriodUseCase(`rentals/dates/period`, range.startDate!, range.endDate!, paginationState);
+              if (periodRangeValidation(range))
+                data = await RentalUseCases.getRentalsByPeriodUseCase(`rentals/dates/period`, range.startDate!, range.endDate!, paginationState);
               break;
           }
           break;
         case 'Compras':
           switch (rangeType) {
             case 'Día':
-              data = await PurchaseUseCases.getPurchasesByDayUseCase('purchases/dates/day', range.day!, range.month!, range.year!, paginationState);
+              if (dayRangeValidation(range))
+                data = await PurchaseUseCases.getPurchasesByDayUseCase('purchases/dates/day', range.day!, range.month!, range.year!, paginationState);
               break;
             case 'Mes':
-              data = await PurchaseUseCases.getPurchasesByMonthUseCase(`purchases/dates/month`, range.month!, range.year!, paginationState);
+              if (monthRangeValidation(range))
+                data = await PurchaseUseCases.getPurchasesByMonthUseCase(`purchases/dates/month`, range.month!, range.year!, paginationState);
               break;
             case 'Personalizado':
-              data = await PurchaseUseCases.getPurchasesByPeriodUseCase(`purchases/dates/period`, range.startDate!, range.endDate!, paginationState);
+              if (periodRangeValidation(range))
+                data = await PurchaseUseCases.getPurchasesByPeriodUseCase(`purchases/dates/period`, range.startDate!, range.endDate!, paginationState);
               break;
           }
           break;
         case 'Presupuestos':
           switch (rangeType) {
             case 'Día':
-              data = await BudgetUseCases.getBudgetsByDayUseCase('budgets/dates/day', range.day!, range.month!, range.year!, paginationState);
+              if (dayRangeValidation(range))
+                data = await BudgetUseCases.getBudgetsByDayUseCase('budgets/dates/day', range.day!, range.month!, range.year!, paginationState);
               break;
             case 'Mes':
-              data = await BudgetUseCases.getBudgetsByMonthUseCase(`budgets/dates/month`, range.month!, range.year!, paginationState);
+              if (monthRangeValidation(range))
+                data = await BudgetUseCases.getBudgetsByMonthUseCase(`budgets/dates/month`, range.month!, range.year!, paginationState);
               break;
             case 'Personalizado':
-              data = await BudgetUseCases.getBudgetsByPeriodUseCase(`budgets/dates/period`, range.startDate!, range.endDate!, paginationState);
+              if (periodRangeValidation(range))
+                data = await BudgetUseCases.getBudgetsByPeriodUseCase(`budgets/dates/period`, range.startDate!, range.endDate!, paginationState);
               break;
           }
           break;
