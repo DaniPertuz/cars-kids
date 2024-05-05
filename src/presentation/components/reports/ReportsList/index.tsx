@@ -5,15 +5,14 @@ import { globalStyles } from '../../../styles/global.styles';
 
 interface ReportsListProps {
   data: DataItem[];
-  category: string;
 }
 
-export const ReportsList = ({ data, category }: ReportsListProps) => {
+export const ReportsList = ({ data }: ReportsListProps) => {
   return (
     <List
       data={data}
       showsVerticalScrollIndicator={false}
-      style={{ ...globalStyles.mainBackground, height: category === 'Usuarios' ? 590 : 480 }}
+      style={{ ...globalStyles.mainBackground, flex: 1 }}
       renderItem={({ item }) => (
         <Layout style={globalStyles.mainBackground}>
           <ReportListItem item={item} />
