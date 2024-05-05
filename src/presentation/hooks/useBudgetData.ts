@@ -21,7 +21,7 @@ export const useBudgetData = () => {
     expenses: -1,
     loans: -1,
     payroll: -1,
-    date: ""
+    date: new Date()
   });
 
   const setBudgetsByDay = async () => {
@@ -29,14 +29,14 @@ export const useBudgetData = () => {
     const day = curr.getDate().toString().padStart(2, '0');
     const month = (curr.getMonth() + 1).toString().padStart(2, '0');
     const year = curr.getFullYear().toString();
-    const { response } = await BudgetUseCases.getBudgetsByDayUseCase(day, month, year);
+    const { response } = await BudgetUseCases.getBudgetsByDayUseCase('budgets/dates/day', day, month, year, { page: 1, limit: 1 });
     setCurrentDate({ day, month, year });
-    setDayBudget(response?.budgets[0] ? response?.budgets[0] : {
+    setDayBudget(response?.data[0] ? response?.data[0] : {
       base: 0,
       expenses: 0,
       loans: 0,
       payroll: 0,
-      date: `${year}-${month}-${day}`
+      date: new Date(`${year}-${month}-${day}`)
     });
   };
 
@@ -52,7 +52,7 @@ export const useBudgetData = () => {
       loans: dayBudget.loans,
       expenses: dayBudget.expenses,
       payroll: dayBudget.payroll,
-      date: dateToString
+      date: new Date(dateToString)
     });
 
     if (resp.error) {
