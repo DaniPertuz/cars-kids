@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { EmptyListMessage } from '../../ui';
 import { AnyApiResponse } from '../../../../infrastructure/interfaces';
@@ -7,25 +8,32 @@ import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   data: AnyApiResponse;
-  category: string;
 }
 
-export const ReportsListComponent = ({ data, category }: Props) => {
+export const ReportsListComponent = ({ data }: Props) => {
   const isEmpty = data?.total === 0;
   const listData = data?.data || [];
 
   return (
-    <Layout style={{ ...globalStyles.mainBackground, marginTop: 10 }}>
-      {(!data)
+    <Layout style={styles.container}>
+      {(!listData)
         ?
         <LoadingScreen />
         :
         (isEmpty)
           ?
-          <EmptyListMessage heightBy={0.2} text='No hay información registrada' />
+          <EmptyListMessage heightBy={0.5} text='No hay información registrada' />
           :
-          <ReportsList data={listData} category={category} />
+          <ReportsList data={listData} />
       }
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    ...globalStyles.mainBackground,
+    flex: 1,
+    marginTop: 10
+  }
+});
