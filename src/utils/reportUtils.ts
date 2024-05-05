@@ -69,6 +69,23 @@ export const getPurchasesBalance = (data: Purchase[]) => {
   };
 };
 
+export const getTotalByDesk = (rentalsData: RentalResponse): { name: string; count: number; }[] => {
+  const result: { [name: string]: { count: number; }; } = {};
+
+  rentalsData.data.forEach(rental => {
+    const { desk } = rental;
+    const { name } = desk;
+
+    result[name] = result[name] || { count: 0, totalAmount: 0 };
+    result[name].count++;
+  });
+
+  return Object.entries(result).map(([name, { count }]) => ({
+    name,
+    count,
+  })).sort((a, b) => b.count - a.count);
+};
+
 export const getTotalByVehicleNickname = (rentalsData: RentalResponse): { nickname: string; count: number; totalAmount: number; }[] => {
   const result: { [nickname: string]: { count: number; totalAmount: number; }; } = {};
 
