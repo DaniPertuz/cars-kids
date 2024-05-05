@@ -13,6 +13,8 @@ export const TotalListMessage = ({ bottom, item, total }: Props) => {
     switch (word) {
       case 'Alquileres':
         return count === 1 ? 'Alquiler' : 'Alquileres';
+      case 'Compras':
+        return count === 1 ? 'Compra' : 'Compras';
       case 'Presupuestos':
         return count === 1 ? 'Presupuesto' : 'Presupuestos';
       case 'Usuarios':
