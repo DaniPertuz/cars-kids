@@ -3,7 +3,7 @@ import { globalColors } from '../../../theme/globalColors';
 
 export const styles = StyleSheet.create({
   baseContainer: {
-    backgroundColor: '#5ED795',
+    backgroundColor: globalColors.successLight,
     borderRadius: 20,
     borderColor: globalColors.darkLight,
     borderWidth: 1,
@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     width: '90%'
   },
   baseItemContainer: {
-    backgroundColor: '#5ED795',
+    backgroundColor: globalColors.successLight,
     marginTop: 10
   }
 })
