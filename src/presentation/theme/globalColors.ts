@@ -4,11 +4,13 @@ export const globalColors = {
   dark: '#33393C',
   darkDisabled: 'rgba(51, 57, 60, 0.7)',
   darkLight: '#7C6466',
+  greyLight: '#DEDEDE',
   primaryRed: '#E92E29',
   secondaryRed: '#D1544C',
   tertiaryRed: '#D46364',
   platinum: '#E7E7E7',
   success: '#5B8484',
+  successLight: '#4CAF50',
   warning: '#F47E36',
   white: '#FFFFFF'
 };
