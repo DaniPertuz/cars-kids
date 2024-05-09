@@ -38,7 +38,7 @@ export const MonthPicker = ({ handleMonthYear }: Props) => {
       const years = combinedData.map(item => item.getFullYear());
       const uniqueYears = Array.from(new Set(years)).sort((a, b) => a - b);
 
-      setYears(uniqueYears);
+      setYears(uniqueYears || [new Date().getFullYear()]);
     } catch (err: any) {
       console.error(err.message || 'Un error ha ocurrido');
     }
