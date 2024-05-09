@@ -7,7 +7,7 @@ export const VehicleActions = ({ vehicle }: { vehicle: Vehicle; }) => {
   return (
     <Layout style={styles.container}>
       <EditButton iconSize={25} vehicle={vehicle} />
-      <DeleteButton iconSize={25} vehicle={vehicle} />
+      <DeleteButton iconName='trash-outline' iconSize={25} vehicle={vehicle} />
     </Layout>
   );
 };

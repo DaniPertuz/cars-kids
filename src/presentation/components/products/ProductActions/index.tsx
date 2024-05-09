@@ -7,7 +7,7 @@ export const ProductActions = ({ product }: { product: Product; }) => {
   return (
     <Layout style={styles.container}>
       <EditButton iconSize={25} product={product} />
-      <DeleteButton iconSize={25} product={product} />
+      <DeleteButton iconName='trash-outline' iconSize={25} product={product} />
     </Layout>
   );
 };
