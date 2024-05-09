@@ -6,6 +6,7 @@ import { LoadingScreen } from '../../LoadingScreen';
 import { ProfileHeader, ProfileMenu, ProfileUserImage } from '../../../components/profile';
 import { Back } from '../../../components/ui';
 import { useUserInfo } from '../../../hooks';
+import { IUserRole } from '../../../../infrastructure/interfaces';
 
 import { globalStyles } from '../../../styles/global.styles';
 
@@ -21,7 +22,7 @@ export const ProfileScreen = () => {
         ?
         <LoadingScreen />
         :
-        <Layout style={{ paddingTop: height * 0.08, ...globalStyles.mainLayout }}>
+        <Layout style={{ paddingTop: user.role === IUserRole.Admin ? height * 0.05 : height * 0.08, ...globalStyles.mainLayout }}>
           <ProfileUserImage height={height} />
           <ProfileHeader />
           <ProfileMenu />
