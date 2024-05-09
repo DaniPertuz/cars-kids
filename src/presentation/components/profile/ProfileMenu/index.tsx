@@ -22,6 +22,7 @@ export const ProfileMenu = () => {
         <ProfileMenuItem iconName={'credit-card-outline'} label={'Presupuesto'} onPress={() => navigation.navigate('BudgetScreen')} />
         <ProfileMenuItem iconName={'archive-outline'} label={'Productos'} onPress={() => navigation.navigate('ProductsScreen')} />
         {user?.role === IUserRole.Admin && <ProfileMenuItem iconName={'file-text-outline'} label={'Reportes'} onPress={() => navigation.navigate('ReportsScreen')} />}
+        {user?.role === IUserRole.Admin && <ProfileMenuItem iconName={'people-outline'} label={'Usuarios'} onPress={() => navigation.navigate('UsersScreen')} />}
       </Layout>
       <LogoutComponent />
     </Layout>
