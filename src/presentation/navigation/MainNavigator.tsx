@@ -11,6 +11,7 @@ import { SearchScreen } from '../screens/profile/SearchScreen';
 import { UpdateProfileScreen } from '../screens/profile/UpdateProfileScreen';
 import { ProductsScreen } from '../screens/products/ProductsScreen';
 import { ReportsScreen } from '../screens/profile/ReportsScreen';
+import { UsersScreen } from '../screens/profile/UsersScreen';
 import { VehiclesScreen } from '../screens/profile/VehiclesScreen';
 import { BottomNavigator, MainStackParams } from './BottomNavigator';
 import { globalColors } from '../theme/globalColors';
@@ -26,6 +27,7 @@ export type RootStackParams = {
   VehiclesScreen: undefined;
   ProductsScreen: undefined;
   ReportsScreen: undefined;
+  UsersScreen: undefined;
   BottomNavigator: NavigatorScreenParams<MainStackParams> | undefined;
 };
 
@@ -54,6 +56,7 @@ export const MainNavigator = () => {
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="UpdateProfileScreen" component={UpdateProfileScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ProductsScreen" component={ProductsScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ReportsScreen" component={ReportsScreen} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="UsersScreen" component={UsersScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="VehiclesScreen" component={VehiclesScreen} />
       </Stack.Navigator>
     </>
