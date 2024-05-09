@@ -12,7 +12,7 @@ export const ReportsList = ({ data }: ReportsListProps) => {
     <List
       data={data}
       showsVerticalScrollIndicator={false}
-      style={{ ...globalStyles.mainBackground, flex: 1 }}
+      style={globalStyles.container}
       renderItem={({ item }) => (
         <Layout style={globalStyles.mainBackground}>
           <ReportListItem item={item} />
