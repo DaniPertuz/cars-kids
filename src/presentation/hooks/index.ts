@@ -13,6 +13,7 @@ export * from './useProfileUserImage';
 export * from './useReportsDataHandling';
 export * from './useResetProfile';
 export * from './useUserInfo';
+export * from './useUsersData';
 export * from './useVehicleEntryModalData';
 export * from './useVehicleImage';
 export * from './useVehiclesData';
