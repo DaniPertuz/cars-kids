@@ -7,6 +7,7 @@ import { Product, User, Vehicle } from '../../../../core/entities';
 import * as ProductUseCases from '../../../../core/use-cases/products';
 import * as UserUseCases from '../../../../core/use-cases/users';
 import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
+import { IStatus } from '../../../../infrastructure/interfaces';
 
 import { styles } from './styles';
 
@@ -33,15 +34,17 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
     }
 
     if (resp.product) {
-      Snackbar.show({ text: 'Producto eliminado', duration: Snackbar.LENGTH_SHORT });
+      setLoading(false);
+      Snackbar.show({ text: `Producto ${product?.name} eliminado`, duration: Snackbar.LENGTH_SHORT });
       setVisible(false);
+      return;
     }
   };
 
   const handleDeleteUser = async () => {
     setLoading(true);
 
-    const resp = await UserUseCases.deactivateUserUseCase(user?.email!);
+    const resp = user?.status === IStatus.Inactive ? await UserUseCases.updateUserStatusUseCase(user.email, IStatus.Active) :  await UserUseCases.deactivateUserUseCase(user?.email!);
 
     if (resp.error) {
       setLoading(false);
@@ -49,9 +52,18 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
       return;
     }
 
+    if (resp.user) {
+      setLoading(false);
+      Snackbar.show({ text: `Usuario ${user?.name} reactivado`, duration: Snackbar.LENGTH_SHORT });
+      setVisible(false);
+      return;
+    }
+
     if (resp.status) {
+      setLoading(false);
       Snackbar.show({ text: `Usuario ${user?.name} desactivado`, duration: Snackbar.LENGTH_SHORT });
       setVisible(false);
+      return;
     }
   };
 
@@ -67,8 +79,10 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
     }
 
     if (resp.status) {
-      Snackbar.show({ text: 'Vehículo desactivado', duration: Snackbar.LENGTH_SHORT });
+      setLoading(false);
+      Snackbar.show({ text: `Vehículo ${vehicle?.nickname} desactivado`, duration: Snackbar.LENGTH_SHORT });
       setVisible(false);
+      return;
     }
   };
 
@@ -81,9 +95,9 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
       <Card>
         <Layout style={styles.container}>
           {product && <Callout text={`¿Desea desactivar el producto ${product.name}?`} />}
-          {user && <Callout text={`¿Desea desactivar el usuario ${user.name}?`} />}
+          {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
           {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-          <PrimaryButton disabled={loading} text='Desactivar' onPress={product ? handleDeleteProduct : user ? handleDeleteUser : handleDeleteVehicle} />
+          <PrimaryButton disabled={loading} text={user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={product ? handleDeleteProduct : user ? handleDeleteUser : handleDeleteVehicle} />
         </Layout>
       </Card>
     </Modal>
