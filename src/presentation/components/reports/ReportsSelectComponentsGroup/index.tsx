@@ -1,7 +1,6 @@
 import { Layout } from '@ui-kitten/components';
 import { PickerComponent } from '../PickerComponent';
 import { SelectComponent } from '../../ui';
-import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 interface Props {
