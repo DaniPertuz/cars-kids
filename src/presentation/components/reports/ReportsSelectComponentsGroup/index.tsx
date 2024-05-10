@@ -19,8 +19,8 @@ interface Props {
 export const ReportsSelectComponentsGroup = ({ category, lapse, dayDate, dayDateText, setCategory, setDayDate, setLapse, handleMonthYear, handlePeriod }: Props) => {
   return (
     <Layout style={styles.container}>
-      <SelectComponent placeholder='Categoría' options={['Alquileres', 'Compras', 'Presupuestos', 'Usuarios']} initialValue='' handleSelection={setCategory} />
-      {(category.length !== 0 && category !== 'Usuarios') &&
+      <SelectComponent placeholder='Categoría' options={['Alquileres', 'Compras', 'Presupuestos']} initialValue='' handleSelection={setCategory} />
+      {(category.length !== 0) &&
         <>
           <SelectComponent placeholder='Lapso' options={['Día', 'Mes', 'Personalizado']} initialValue='' handleSelection={setLapse} />
           <PickerComponent lapse={lapse} dayDate={dayDate} dayDateText={dayDateText} setDayDate={setDayDate} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />

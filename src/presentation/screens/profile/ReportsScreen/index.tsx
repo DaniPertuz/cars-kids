@@ -39,18 +39,18 @@ export const ReportsScreen = () => {
         <Back top={0} />
         <TitleHeader text='Reportes' />
       </Layout>
-      <Layout style={{ flex: category === 'Usuarios' ? 3 : 7, ...globalStyles.mainBackground, gap: 15 }}>
+      <Layout style={{ flex: 7, ...globalStyles.mainBackground, gap: 15 }}>
         <ReportsSelectComponentsGroup category={category} lapse={lapse} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />
         {isButtonEnabled() &&
           <Layout style={{ ...styles.buttonsContainer, marginTop: lapse === '' ? top : 0 }}>
-            <PrimaryButton disabled={display} text={category === 'Usuarios' ? 'Listar' : 'Generar'} onPress={fetchData} />
+            <PrimaryButton disabled={display} text={'Generar'} onPress={fetchData} />
           </Layout>
         }
       </Layout>
       <Layout style={styles.dataContainer}>
         {entityData &&
           <Layout style={styles.container}>
-            <Layout style={{ flex: category === 'Usuarios' ? 12 : 10, ...globalStyles.mainBackground }}>
+            <Layout style={{ flex: 10, ...globalStyles.mainBackground }}>
               <ReportsEntitiesList category={category} entityData={entityData} />
             </Layout>
             <Layout style={styles.flexOne}>

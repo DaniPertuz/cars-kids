@@ -87,9 +87,6 @@ export const useEntityData = ({ category, rangeType, range, pagination }: Props)
               break;
           }
           break;
-        case 'Usuarios':
-          data = await UsersUseCases.getUsersUseCase(`users?page=${paginationState.page}&limit=${paginationState.limit}`);
-          break;
       }
       setEntityData(data);
       setDisplay(false);

@@ -10,13 +10,11 @@ interface Props {
 }
 
 export const ReportsEntitiesList = ({ entityData, category }: Props) => {
-  const hasCategorySum = category !== 'Usuarios' && category !== 'Presupuestos';
-
   return (
     <Layout style={styles.container}>
       {entityData &&
         <Layout style={styles.listContainer}>
-          {hasCategorySum && <CalloutBold text={`Total de venta: ${entityData.response.sum}`} />}
+          {category !== 'Presupuestos' && <CalloutBold text={`Total de venta: ${entityData.response.sum}`} />}
           <ReportsListComponent data={adaptApiResponse(entityData.response)} />
         </Layout>
       }
