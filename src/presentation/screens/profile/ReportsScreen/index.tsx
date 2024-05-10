@@ -39,7 +39,7 @@ export const ReportsScreen = () => {
         <Back top={0} />
         <TitleHeader text='Reportes' />
       </Layout>
-      <Layout style={{ flex: 7, ...globalStyles.mainBackground, gap: 15 }}>
+      <Layout style={styles.selectsButtonContainer}>
         <ReportsSelectComponentsGroup category={category} lapse={lapse} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />
         {isButtonEnabled() &&
           <Layout style={{ ...styles.buttonsContainer, marginTop: lapse === '' ? top : 0 }}>
@@ -50,7 +50,7 @@ export const ReportsScreen = () => {
       <Layout style={styles.dataContainer}>
         {entityData &&
           <Layout style={styles.container}>
-            <Layout style={{ flex: 10, ...globalStyles.mainBackground }}>
+            <Layout style={styles.listContainer}>
               <ReportsEntitiesList category={category} entityData={entityData} />
             </Layout>
             <Layout style={styles.flexOne}>

@@ -16,5 +16,14 @@ export const styles = StyleSheet.create({
   },
   flexOne: {
     flex: 1
+  },
+  listContainer: {
+    flex: 10,
+    ...globalStyles.mainBackground
+  },
+  selectsButtonContainer: {
+    flex: 7,
+    gap: 15,
+    ...globalStyles.mainBackground
   }
 });
