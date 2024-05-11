@@ -7,7 +7,7 @@ import { DateRange, Pagination } from '../../infrastructure/interfaces';
 
 interface Props {
   category: string;
-  rangeType: string;
+  rangeType: string | undefined;
   range: DateRange;
   pagination?: Pagination;
 }
