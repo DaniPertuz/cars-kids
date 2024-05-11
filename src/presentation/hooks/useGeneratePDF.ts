@@ -5,7 +5,7 @@ import { adaptApiResponse } from '../../config/adapters/api-response-adapter';
 import { Purchase, Rental } from '../../core/entities';
 import * as BudgetUseCases from '../../core/use-cases/budget';
 import { BudgetResponse, DateRange, PurchaseResponse, RentalResponse } from '../../infrastructure/interfaces';
-import { getCashPaymentTotal, getPurchasesBalance, getTotalByDesk, getTotalByVehicleNickname, getTransferPaymentTotal, imageUrl, paymentDescriptions } from '../../utils';
+import { getCashPaymentTotal, getPurchasesBalance, getTotalByDesk, getTotalByVehicleNickname, getTransferPaymentTotal, imageUrl, imageUrl2, paymentDescriptions } from '../../utils';
 import { useEntityData } from './useEntityData';
 import { useFormattedDate } from './useFormattedDate';
 import { globalColors } from '../theme/globalColors';
@@ -83,6 +83,13 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
           padding: 8px;
         }
 
+        #img-header {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
         @media print {
           .pagebreak { clear: both; break-after: always; }
         }
@@ -91,14 +98,14 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
   };
 
   const fileOptions = {
-    fileName: `${category} - ${reportLapse}`,
+    fileName: `${category === 'Alquileres' ? 'Pedidos' : 'Accesorios'} - ${reportLapse}`,
     directory: 'Documents/cars-kids',
     paddingBottom: 30,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 25,
     bgColor: globalColors.background
-  }
+  };
 
   const fetchRentalsData = (rentalsData: RentalResponse) => {
     const cashPaymentTotal = rentalsData ? getCashPaymentTotal(rentalsData.data) : { title: '', total: 0 };
@@ -118,12 +125,18 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
       html: `
         ${htmlStyles()}
         <div id='main' class='pagebreak'>
-          <div style='display: flex; flex-direction: row; justify-content: space-between; align-items: center;'>
-            <h4>${category} - ${reportLapse}</h4>
-            <img src="${imageUrl}" width="160" height="120" />
+          <div id='img-header'>
+            <img src="${imageUrl}" width="280" height="150" />
+            <img src="${imageUrl2}" width="360" height="120" />
+          </div>
+          <div style='display: flex; flex-direction: row; justify-content: center; align-self: start;'>
+            <h4>PEDIDOS - ${reportLapse}</h4>
           </div>
           <div style='width: auto; display: flex; flex-direction: row; justify-content: ${lapse === 'Día' ? 'space-between' : 'space-around'};'>
             <table style='width: auto;'>
+              <tr>
+                <th colspan="2">Consolidado de ventas</th>
+              </tr>
               <tr>
                 <td>Cantidad</td>
                 <td>${rentalsData.total}</td>
@@ -197,23 +210,23 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
               ${rentalsTableHeaders.map(header => `<th>${header}</th>`).join('')}
             </tr>          
             ${rentalsData.data.map((rental: Rental) => {
-              const payment = paymentDescriptions[rental.payment];
-              const startingHour = extractTimeFromStringDate(rental.date);
-              const endingHour = addedTime(rental.date, rental.time);
-              return `<tr>
-                        <td>${formatDateNumbersOnly(new Date(rental.date))}</td>
-                        <td>${rental.client}</td>
-                        <td>${rental.time}</td>
-                        <td>${startingHour}</td>
-                        <td>${endingHour}</td>
-                        <td>${rental.vehicle.nickname}</td>
-                        <td>${payment}</td>
-                        <td>${rental.amount}</td>
-                        <td>${rental.desk.name}</td>
-                        <td>${rental.user.name}</td>
-                        <td>${rental.exception ?? ''}</td>
-                      </tr>`;
-                }).join('')}
+          const payment = paymentDescriptions[rental.payment];
+          const startingHour = extractTimeFromStringDate(rental.date);
+          const endingHour = addedTime(rental.date, rental.time);
+          return `<tr>
+                    <td>${formatDateNumbersOnly(new Date(rental.date))}</td>
+                    <td>${rental.client}</td>
+                    <td>${rental.time}</td>
+                    <td>${startingHour}</td>
+                    <td>${endingHour}</td>
+                    <td>${rental.vehicle.nickname}</td>
+                    <td>${payment}</td>
+                    <td>${rental.amount}</td>
+                    <td>${rental.desk.name}</td>
+                    <td>${rental.user.name}</td>
+                    <td>${rental.exception ?? ''}</td>
+                  </tr>`;
+        }).join('')}
           </table>
         </div>
       `,
@@ -234,7 +247,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
       html: `
           ${htmlStyles()}
           <div id='main' class='pagebreak'>
-            <h4>${category} - ${reportLapse}</h4>
+            <h4>Accesorios - ${reportLapse}</h4>
             <div style='width: auto; display: flex; flex-direction: row; justify-content: space-around;'>
               <table style='width: auto;'>
                 <tr>
@@ -275,8 +288,8 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                 ${purchasesTableHeaders.map(header => `<th>${header}</th>`).join('')}
               </tr>          
               ${purchasesData.data.map((purchase: Purchase) => {
-                const payment = paymentDescriptions[purchase.payment];
-                return `<tr>
+        const payment = paymentDescriptions[purchase.payment];
+        return `<tr>
                           <td>${formatDateNumbersOnly(new Date(purchase.purchaseDate))}</td>
                           <td>${purchase.product.name}</td>
                           <td>${purchase.product.cost}</td>
@@ -286,7 +299,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                           <td>${purchase.desk.name}</td>
                           <td>${purchase.user.name}</td>
                         </tr>`;
-                }).join('')}
+      }).join('')}
             </table>
           </div>
       `,
@@ -312,7 +325,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
     const file = await RNHTMLtoPDF.convert(options);
 
     if (file.filePath) {
-      Snackbar.show({ text: `Archivo ${category} - ${reportLapse}.pdf generado exitosamente`, duration: Snackbar.LENGTH_SHORT });
+      Snackbar.show({ text: `Archivo ${category === 'Alquileres' ? 'Pedidos' : 'Accesorios'} - ${reportLapse}.pdf generado exitosamente`, duration: Snackbar.LENGTH_SHORT });
     }
   };
 
