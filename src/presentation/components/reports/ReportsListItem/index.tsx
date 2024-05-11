@@ -36,7 +36,11 @@ export const ReportListItem = ({ item }: Props) => {
         const rental = item as Rental;
 
         const payment = paymentDescriptions[rental.payment];
-        return `Tiempo: ${safeAccess(rental.time)}\nPago: ${safeAccess(rental.amount)}\nMedio: ${payment}\nVehículo: ${safeAccess(rental.vehicle?.nickname)}\nFecha: ${formatDateTime(rental.date)}\nUsuario: ${safeAccess(rental.user?.name)}`;
+        let description = `Tiempo: ${safeAccess(rental.time)}\nPago: ${safeAccess(rental.amount)}\nMedio: ${payment}\nVehículo: ${safeAccess(rental.vehicle?.nickname)}\nPuesto de trabajo: ${rental.desk.name}\nFecha: ${formatDateTime(rental.date)}\nUsuario: ${safeAccess(rental.user?.name)}`;
+        if (rental.exception) {
+          description += `\nObservación: ${rental.exception}`;
+        }
+        return description;
 
       case (item as Budget).base !== undefined:
         const budget = item as Budget;
