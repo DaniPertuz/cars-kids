@@ -8,7 +8,7 @@ interface Props {
   dayDateText: string;
   setDayDate: (value: Date | undefined) => void;
   handleMonthYear: (type: 'month' | 'year', value: string) => void;
-  handlePeriod: (startDate: string, endDate: string) => void;
+  handlePeriod: (startDate: string | undefined, endDate: string | undefined) => void;
 }
 
 export const PickerComponent = ({ lapse, dayDate, dayDateText, setDayDate, handleMonthYear, handlePeriod }: Props) => {
