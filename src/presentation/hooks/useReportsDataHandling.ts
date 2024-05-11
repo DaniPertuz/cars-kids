@@ -7,7 +7,7 @@ import { padTo2Digits, i18n } from '../../utils';
 
 export const useReportsDataHandling = () => {
   const [category, setCategory] = useState<string>('');
-  const [lapse, setLapse] = useState<string>('');
+  const [lapse, setLapse] = useState<string | undefined>('');
   const [reportLapse, setReportLapse] = useState<string>('');
   const [range, setRange] = useState<DateRange>({ day: undefined, month: undefined, year: undefined, startDate: undefined, endDate: undefined });
 
@@ -31,7 +31,7 @@ export const useReportsDataHandling = () => {
     }));
   };
 
-  const handlePeriod = (startDate: string, endDate: string) => {
+  const handlePeriod = (startDate: string | undefined, endDate: string | undefined) => {
     setRange(prev => ({
       ...prev,
       startDate,
@@ -69,7 +69,7 @@ export const useReportsDataHandling = () => {
       typeof range.startDate !== 'undefined' &&
       typeof range.endDate !== 'undefined';
 
-    if (!category || lapse.length === 0 || isRangeDefined)
+    if (!category || !lapse || isRangeDefined)
       return false;
 
     switch (lapse) {
@@ -91,8 +91,9 @@ export const useReportsDataHandling = () => {
 
   useEffect(() => {
     setEntityData(null);
+    setLapse(undefined);
     setRange({ day: undefined, month: undefined, year: undefined, startDate: undefined, endDate: undefined });
-  }, [category, lapse]);
+  }, [category]);
 
   useEffect(() => {
     handleReportLapse();

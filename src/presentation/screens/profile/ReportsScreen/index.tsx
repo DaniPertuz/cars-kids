@@ -6,7 +6,6 @@ import { ReportsEntitiesList, ReportsListPagination, ReportsSelectComponentsGrou
 import { Back, PrimaryButton, TitleHeader } from '../../../components/ui';
 import { useReportsDataHandling } from '../../../hooks';
 
-import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 export const ReportsScreen = () => {
@@ -40,7 +39,7 @@ export const ReportsScreen = () => {
         <TitleHeader text='Reportes' />
       </Layout>
       <Layout style={styles.selectsButtonContainer}>
-        <ReportsSelectComponentsGroup category={category} lapse={lapse} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />
+        <ReportsSelectComponentsGroup category={category} lapse={lapse!} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />
         {isButtonEnabled() &&
           <Layout style={{ ...styles.buttonsContainer, marginTop: lapse === '' ? top : 0 }}>
             <PrimaryButton disabled={display} text={'Generar'} onPress={fetchData} />
@@ -54,7 +53,7 @@ export const ReportsScreen = () => {
               <ReportsEntitiesList category={category} entityData={entityData} />
             </Layout>
             <Layout style={styles.flexOne}>
-              <ReportsListPagination bottom={bottom} category={category} entityData={entityData} lapse={lapse} reportLapse={reportLapse} range={range} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
+              <ReportsListPagination bottom={bottom} category={category} entityData={entityData} lapse={lapse!} reportLapse={reportLapse} range={range} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
             </Layout>
           </Layout>
         }
