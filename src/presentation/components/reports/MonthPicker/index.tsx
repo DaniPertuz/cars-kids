@@ -40,7 +40,7 @@ export const MonthPicker = ({ handleMonthYear }: Props) => {
 
       setYears(uniqueYears ?? [new Date().getFullYear()]);
     } catch (err: any) {
-      console.error(err.message || 'Un error ha ocurrido');
+      setYears([new Date().getFullYear()]);
     }
   };
 
