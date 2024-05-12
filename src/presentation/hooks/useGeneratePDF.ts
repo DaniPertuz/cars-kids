@@ -69,8 +69,16 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
         th, td {
           border: 1px solid black;
           font-size: 8px;
-          padding: 9px;
+          padding: 8px;
           text-align: left;
+        }
+
+        td {
+          white-space: nowrap;
+        }
+
+        td:last-child {
+          white-space: normal;
         }
 
         th {
@@ -83,7 +91,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
           padding: 8px;
         }
 
-        #img-header {
+        .img-header {
           align-items: center;
           display: flex;
           flex-direction: row;
@@ -97,10 +105,22 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
     `;
   };
 
+  const htmlHeader = (title: string) => {
+    return `
+      <div class='img-header'>
+        <img src="${imageUrl}" width="280" height="150" />
+        <img src="${imageUrl2}" width="360" height="120" />
+      </div>
+      <div style='display: flex; flex-direction: row; justify-content: center;'>
+        <h4>${title} - ${reportLapse}</h4>
+      </div>
+    `;
+  };
+
   const fileOptions = {
     fileName: `${category === 'Alquileres' ? 'Pedidos' : 'Accesorios'} - ${reportLapse}`,
     directory: 'Documents/cars-kids',
-    paddingBottom: 30,
+    paddingBottom: 40,
     paddingLeft: 8,
     paddingRight: 8,
     paddingTop: 25,
@@ -125,13 +145,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
       html: `
         ${htmlStyles()}
         <div id='main' class='pagebreak'>
-          <div id='img-header'>
-            <img src="${imageUrl}" width="280" height="150" />
-            <img src="${imageUrl2}" width="360" height="120" />
-          </div>
-          <div style='display: flex; flex-direction: row; justify-content: center; align-self: start;'>
-            <h4>PEDIDOS - ${reportLapse}</h4>
-          </div>
+          ${htmlHeader('PEDIDOS')}
           <div style='width: auto; display: flex; flex-direction: row; justify-content: ${lapse === 'Día' ? 'space-between' : 'space-around'};'>
             <table style='width: auto;'>
               <tr>
@@ -208,25 +222,25 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
           <table>
             <tr>
               ${rentalsTableHeaders.map(header => `<th>${header}</th>`).join('')}
-            </tr>          
+            </tr>
             ${rentalsData.data.map((rental: Rental) => {
-          const payment = paymentDescriptions[rental.payment];
-          const startingHour = extractTimeFromStringDate(rental.date);
-          const endingHour = addedTime(rental.date, rental.time);
-          return `<tr>
-                    <td>${formatDateNumbersOnly(new Date(rental.date))}</td>
-                    <td>${rental.client}</td>
-                    <td>${rental.time}</td>
-                    <td>${startingHour}</td>
-                    <td>${endingHour}</td>
-                    <td>${rental.vehicle.nickname}</td>
-                    <td>${payment}</td>
-                    <td>${rental.amount}</td>
-                    <td>${rental.desk.name}</td>
-                    <td>${rental.user.name}</td>
-                    <td>${rental.exception ?? ''}</td>
-                  </tr>`;
-        }).join('')}
+              const payment = paymentDescriptions[rental.payment];
+              const startingHour = extractTimeFromStringDate(rental.date);
+              const endingHour = addedTime(rental.date, rental.time);
+              return `<tr>
+                        <td>${formatDateNumbersOnly(new Date(rental.date))}</td>
+                        <td>${rental.client}</td>
+                        <td>${rental.time}</td>
+                        <td>${startingHour}</td>
+                        <td>${endingHour}</td>
+                        <td>${rental.vehicle.nickname}</td>
+                        <td>${payment}</td>
+                        <td>${rental.amount}</td>
+                        <td>${rental.desk.name}</td>
+                        <td>${rental.user.name}</td>
+                        <td>${rental.exception ?? ''}</td>
+                      </tr>`;
+                    }).join('')}
           </table>
         </div>
       `,
@@ -247,7 +261,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
       html: `
           ${htmlStyles()}
           <div id='main' class='pagebreak'>
-            <h4>Accesorios - ${reportLapse}</h4>
+            ${htmlHeader('ACCESORIOS')}
             <div style='width: auto; display: flex; flex-direction: row; justify-content: space-around;'>
               <table style='width: auto;'>
                 <tr>
@@ -288,8 +302,8 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                 ${purchasesTableHeaders.map(header => `<th>${header}</th>`).join('')}
               </tr>          
               ${purchasesData.data.map((purchase: Purchase) => {
-        const payment = paymentDescriptions[purchase.payment];
-        return `<tr>
+                const payment = paymentDescriptions[purchase.payment];
+                return `<tr>
                           <td>${formatDateNumbersOnly(new Date(purchase.purchaseDate))}</td>
                           <td>${purchase.product.name}</td>
                           <td>${purchase.product.cost}</td>
@@ -299,7 +313,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                           <td>${purchase.desk.name}</td>
                           <td>${purchase.user.name}</td>
                         </tr>`;
-      }).join('')}
+                }).join('')}
             </table>
           </div>
       `,
