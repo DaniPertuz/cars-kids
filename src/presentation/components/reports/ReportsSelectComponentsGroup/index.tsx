@@ -11,7 +11,7 @@ interface Props {
   setCategory: (value: string) => void;
   setDayDate: (value: Date | undefined) => void;
   setLapse: (value: string) => void;
-  handleMonthYear: (type: 'month' | 'year', value: string) => void;
+  handleMonthYear: (type: 'month' | 'year', value: string | undefined) => void;
   handlePeriod: (startDate: string | undefined, endDate: string | undefined) => void;
 }
 

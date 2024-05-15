@@ -13,12 +13,12 @@ import * as RentalsUseCases from '../../../../core/use-cases/rentals';
 import { styles } from './styles';
 
 interface Props {
-  handleMonthYear: (type: "month" | "year", value: string) => void;
+  handleMonthYear: (type: "month" | "year", value: string | undefined) => void;
 }
 
 export const MonthPicker = ({ handleMonthYear }: Props) => {
-  const [monthDate, setMonthDate] = useState('');
-  const [yearDate, setYearDate] = useState('');
+  const [monthDate, setMonthDate] = useState<string | undefined>();
+  const [yearDate, setYearDate] = useState<string | undefined>();
   const [years, setYears] = useState<number[]>([]);
 
   const fetchYears = async () => {
@@ -63,8 +63,10 @@ export const MonthPicker = ({ handleMonthYear }: Props) => {
   };
 
   const reset = () => {
-    setMonthDate('');
-    setYearDate('');
+    handleMonthYear('month', undefined);
+    handleMonthYear('year', undefined);
+    setMonthDate(undefined);
+    setYearDate(undefined);
   };
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export const MonthPicker = ({ handleMonthYear }: Props) => {
 
   return (
     <Layout style={styles.container}>
-      {monthDate !== '' && yearDate !== ''
+      {monthDate && yearDate
         ?
         <Layout style={styles.resetDataContainer}>
           <Footnote text={'Mes'} />

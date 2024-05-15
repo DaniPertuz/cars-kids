@@ -23,8 +23,8 @@ export const useReportsDataHandling = () => {
     });
   const { date: dayDate, setDate: setDayDate, dateNumbersText: dayDateNumbersText, dateText: dayDateText, formatDateString } = useFormattedDate();
 
-  const handleMonthYear = (type: 'month' | 'year', value: string) => {
-    const updatedMonth = type === 'month' ? String(padTo2Digits(i18n.monthNames[TranslationWidth.LONG]!.indexOf(value) + 1)) : range.month;
+  const handleMonthYear = (type: 'month' | 'year', value: string | undefined) => {
+    const updatedMonth = type === 'month' ? String(padTo2Digits(i18n.monthNames[TranslationWidth.LONG]!.indexOf(value!) + 1)) : range.month;
     setRange(prev => ({
       ...prev,
       [type]: type === 'month' ? updatedMonth : value

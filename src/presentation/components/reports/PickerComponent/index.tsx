@@ -7,7 +7,7 @@ interface Props {
   dayDate: Date | undefined;
   dayDateText: string;
   setDayDate: (value: Date | undefined) => void;
-  handleMonthYear: (type: 'month' | 'year', value: string) => void;
+  handleMonthYear: (type: 'month' | 'year', value: string | undefined) => void;
   handlePeriod: (startDate: string | undefined, endDate: string | undefined) => void;
 }
 
