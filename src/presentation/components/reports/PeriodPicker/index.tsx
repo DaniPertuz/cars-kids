@@ -23,7 +23,7 @@ export const PeriodPicker = ({ handleSelectedRange }: Props) => {
   const { setDate: setEndDate, dateNumbersText: endDateNumbersText, dateText: endDateText } = useFormattedDate();
 
   const onSelectedRange = () => {
-    if (range.startDate && range.endDate) {
+    if (typeof range.startDate !== 'undefined' && typeof range.endDate !== 'undefined') {
       setStartDate(range.startDate);
       setEndDate(range.endDate);
     }
