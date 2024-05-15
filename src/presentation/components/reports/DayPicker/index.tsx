@@ -14,11 +14,10 @@ interface Props {
 }
 
 export const DayPicker = ({ date, dateText, setDate }: Props) => {
-
   return (
     <Layout style={styles.container}>
       <Footnote text={'Fecha'} />
-      {!date && (
+      {!date ?
         <Datepicker
           date={date}
           onSelect={setDate}
@@ -28,9 +27,7 @@ export const DayPicker = ({ date, dateText, setDate }: Props) => {
           max={new Date('2100-12-31')}
           accessoryRight={() => <CustomIcon name='calendar' fillColor={globalColors.darkDisabled} />}
         />
-      )}
-      {date &&
-        <EditSelectedDate text={dateText} onPress={() => setDate(undefined)} />
+        : <EditSelectedDate text={dateText} onPress={() => setDate(undefined)} />
       }
     </Layout>
   );
