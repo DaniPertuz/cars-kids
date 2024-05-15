@@ -4,4 +4,5 @@ export * from './i18nConfig';
 export * from './localeDateService';
 export * from './padTo2Digits';
 export * from './PaymentDescription';
+export * from './rangeValidation';
 export * from './reportUtils';

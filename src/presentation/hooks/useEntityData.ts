@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import * as BudgetUseCases from '../../core/use-cases/budget';
 import * as PurchaseUseCases from '../../core/use-cases/purchases';
 import * as RentalUseCases from '../../core/use-cases/rentals';
-import * as UsersUseCases from '../../core/use-cases/users';
 import { DateRange, Pagination } from '../../infrastructure/interfaces';
+import { dayRangeValidation, monthRangeValidation, periodRangeValidation } from '../../utils';
 
 interface Props {
   category: string;
@@ -18,21 +18,6 @@ export const useEntityData = ({ category, rangeType, range, pagination }: Props)
   const [entityData, setEntityData] = useState<any | undefined>(null);
   const [paginationState, setPaginationState] = useState<Pagination>(pagination ?? { page: 1, limit: 10 });
   const [error, setError] = useState(null);
-
-  const dayRangeValidation = (dateRange: DateRange) => {
-    const { day, month, year } = dateRange;
-    return typeof day !== 'undefined' && typeof month !== 'undefined' && typeof year !== 'undefined';
-  };
-
-  const monthRangeValidation = (dateRange: DateRange) => {
-    const { month, year } = dateRange;
-    return typeof month !== 'undefined' && typeof year !== 'undefined';
-  };
-
-  const periodRangeValidation = (dateRange: DateRange) => {
-    const { startDate, endDate } = dateRange;
-    return typeof startDate !== 'undefined' && typeof endDate !== 'undefined';
-  };
 
   const fetchData = async () => {
     try {
