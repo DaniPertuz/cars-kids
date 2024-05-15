@@ -69,7 +69,7 @@ export const useReportsDataHandling = () => {
       typeof range.startDate !== 'undefined' &&
       typeof range.endDate !== 'undefined';
 
-    if (!category || !lapse || isRangeDefined)
+    if (!category || !lapse || !dayDate || isRangeDefined)
       return false;
 
     switch (lapse) {
@@ -86,6 +86,10 @@ export const useReportsDataHandling = () => {
     if (lapse === 'Día' && typeof dayDate !== 'undefined') {
       const sp = dayDateNumbersText.split('-');
       setRange({ day: sp[0], month: sp[1], year: sp[2] });
+    }
+
+    if (lapse === 'Día' && typeof dayDate === 'undefined') {
+      setRange({ day: undefined, month: undefined, year: undefined });
     }
   }, [dayDateNumbersText, lapse, dayDate]);
 
