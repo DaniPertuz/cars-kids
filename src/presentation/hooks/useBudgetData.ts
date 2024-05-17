@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Snackbar from 'react-native-snackbar';
 
 import { RootStackParams } from '../navigation/MainNavigator';
+import { adaptApiResponse } from '../../config/adapters/api-response-adapter';
 import { Budget } from '../../core/entities';
 import * as BudgetUseCases from '../../core/use-cases/budget';
 
@@ -31,7 +32,8 @@ export const useBudgetData = () => {
     const year = curr.getFullYear().toString();
     const { response } = await BudgetUseCases.getBudgetsByDayUseCase('budgets/dates/day', day, month, year, { page: 1, limit: 1 });
     setCurrentDate({ day, month, year });
-    setDayBudget(response?.data[0] ? response?.data[0] : {
+    const resp = adaptApiResponse(response);
+    setDayBudget(resp.data[0] ? resp.data[0] as Budget : {
       base: 0,
       expenses: 0,
       loans: 0,
