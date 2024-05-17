@@ -35,6 +35,11 @@ export enum IPayment {
   Daviplata   = 'daviplata'
 }
 
+export interface LayoutProps {
+  paddingTop?: number;
+  children?: React.JSX.Element | React.JSX.Element[];
+}
+
 export interface DateRange {
   day?:       string;
   month?:     string;
