@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { BudgetBase, BudgetExpenses, BudgetLoans, BudgetPayroll } from '../../../components/budget';
-import { Back, HeaderFive, PrimaryButton } from '../../../components/ui';
+import { PrimaryButton, TopNavigation } from '../../../components/ui';
 import { useBudgetData } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
 
@@ -19,8 +19,7 @@ export const BudgetScreen = () => {
 
   return (
     <Layout style={{ paddingTop: height * 0.042, ...styles.container }}>
-      <Back top={top} />
-      <HeaderFive text={'Presupuesto'} />
+      <TopNavigation top={top} title='Presupuesto' />
       {(!dayBudget) || (base === -1 && loans === -1 && expenses === -1)
         ?
         <LoadingScreen />

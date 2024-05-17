@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Divider, Layout } from '@ui-kitten/components';
+import { Divider } from '@ui-kitten/components';
 
-import { Back, TitleHeader } from '../../../components/ui';
+import { DataLayout, MainLayout, TopNavigation } from '../../../components/ui';
 import { UsersList } from '../../../components/users/UsersList';
 import { UserListFooter } from '../../../components/users/UsersListFooter';
 import { useUsersData } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
 
 import { globalStyles } from '../../../styles/global.styles';
-import { styles } from './styles';
 
 export const UsersScreen = () => {
   const { top } = useSafeAreaInsets();
@@ -23,21 +22,18 @@ export const UsersScreen = () => {
   }, [usersData]);
 
   return (
-    <Layout style={{ paddingTop: top, ...globalStyles.container }}>
-      <Back top={top} />
-      <TitleHeader text='Usuarios' />
-      <Layout style={{ ...styles.container, ...globalStyles.mainBackground, marginVertical: height * 0.02 }}>
-        {!usersData
-          ?
-          <LoadingScreen />
-          :
-          <Layout style={globalStyles.container}>
-            <Divider style={globalStyles.divider} />
-            <UsersList usersData={usersData} />
-            <UserListFooter usersData={usersData} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
-          </Layout>
-        }
-      </Layout>
-    </Layout>
+    <MainLayout>
+      {!usersData
+        ?
+        <LoadingScreen />
+        :
+        <DataLayout paddingTop={height * 0.042}>
+          <TopNavigation top={top} title='Usuarios' />
+          <Divider style={globalStyles.divider} />
+          <UsersList usersData={usersData} />
+          <UserListFooter usersData={usersData} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
+        </DataLayout>
+      }
+    </MainLayout>
   );
 };

@@ -4,7 +4,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { ProfileHeader, ProfileMenu, ProfileUserImage } from '../../../components/profile';
-import { Back } from '../../../components/ui';
+import { MainLayout, TopNavigation } from '../../../components/ui';
 import { useUserInfo } from '../../../hooks';
 import { IUserRole } from '../../../../infrastructure/interfaces';
 
@@ -16,8 +16,8 @@ export const ProfileScreen = () => {
   const { user } = useUserInfo();
 
   return (
-    <Layout style={globalStyles.container}>
-      <Back top={top} />
+    <MainLayout>
+      <TopNavigation top={top} />
       {!user
         ?
         <LoadingScreen />
@@ -28,6 +28,6 @@ export const ProfileScreen = () => {
           <ProfileMenu />
         </Layout>
       }
-    </Layout>
+    </MainLayout>
   );
 };

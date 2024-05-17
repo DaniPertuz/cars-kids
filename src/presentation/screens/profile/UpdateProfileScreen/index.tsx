@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
-import { Back, Caption, Headline, PrimaryButton } from '../../../components/ui';
+import { Caption, MainLayout, PrimaryButton, TopNavigation } from '../../../components/ui';
 import { useResetProfile } from '../../../hooks';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -23,10 +23,9 @@ export const UpdateProfileScreen = () => {
   }
 
   return (
-    <Layout style={{ paddingTop: top, ...globalStyles.container }}>
-      <Back top={top} />
-      <Layout style={{ ...styles.container, marginVertical: height * 0.05 }}>
-        <Headline text='Actualizar perfil' textColor={globalStyles.colorOnyx} />
+    <MainLayout paddingTop={top}>
+      <TopNavigation top={top} title='Actualizar perfil' />
+      <Layout style={{ ...styles.container, marginVertical: height * 0.03 }}>
         <Layout style={styles.inputContainer}>
           <Caption text='Nombre' textColor={globalStyles.colorOnyx} />
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
@@ -45,6 +44,6 @@ export const UpdateProfileScreen = () => {
         </Layout>
         <PrimaryButton disabled={loading} text='Actualizar' onPress={onSubmit} />
       </Layout>
-    </Layout>
+    </MainLayout>
   );
 };

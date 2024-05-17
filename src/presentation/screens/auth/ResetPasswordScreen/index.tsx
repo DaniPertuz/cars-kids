@@ -6,7 +6,7 @@ import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
-import { Back, Footnote, Headline } from '../../../components/ui';
+import { Footnote, HeaderLayout, Headline, MainLayout, TopNavigation } from '../../../components/ui';
 import { useEmailValidation, useResetProfile } from '../../../hooks';
 
 import { authStyles } from '../../../styles/auth/styles';
@@ -51,16 +51,16 @@ export const ResetPasswordScreen = () => {
   };
 
   return (
-    <Layout style={globalStyles.container}>
-      <Back top={top} />
+    <MainLayout>
+      <TopNavigation top={top} />
       <ScrollView style={globalStyles.mainMargin} keyboardShouldPersistTaps='always'>
-        <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
+        <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <Layout style={authStyles.welcomeTextContainer}>
             <Headline text='Restablecer contraseña' textColor={globalStyles.colorOnyx} />
           </Layout>
           <Footnote text='Ingresa email y nueva contraseña' />
-        </Layout>
+        </HeaderLayout>
         <Layout style={authStyles.formContainer}>
           <EmailInput placeholder='Email' value={email} onChangeText={(email: string) => setForm({ ...form, email })} />
           <PasswordInput placeholder={'Ingresa contraseña'} value={password} onChangeText={(password: string) => setForm({ ...form, password })} />
@@ -68,6 +68,6 @@ export const ResetPasswordScreen = () => {
         </Layout>
         <LoginButtonContainer disabled={loading} buttonText={'Restablecer'} onPress={onSubmit} />
       </ScrollView>
-    </Layout>
+    </MainLayout>
   );
 };

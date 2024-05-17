@@ -7,7 +7,7 @@ import Snackbar from 'react-native-snackbar';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
-import { RadioGroupComponent } from '../../../components/ui';
+import { HeaderLayout, MainLayout, RadioGroupComponent } from '../../../components/ui';
 import { IUserRole } from '../../../../infrastructure/interfaces';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
@@ -18,6 +18,7 @@ import { globalStyles } from '../../../styles/global.styles';
 interface Props extends StackScreenProps<RootStackParams, 'RegisterScreen'> { }
 
 export const RegisterScreen = ({ navigation }: Props) => {
+  const { height } = useWindowDimensions();
   const { register } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [role, setRole] = useState(IUserRole.Editor);
@@ -26,7 +27,6 @@ export const RegisterScreen = ({ navigation }: Props) => {
     email: '',
     password: ''
   });
-  const { height } = useWindowDimensions();
 
   const handleUserRole = (role: number) => {
     switch (role) {
@@ -59,12 +59,12 @@ export const RegisterScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Layout style={globalStyles.container}>
+    <MainLayout>
       <ScrollView style={globalStyles.mainMargin}>
-        <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
+        <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <LoginHeader title={'Registro'} footnote={'Ingresa tus datos'} />
-        </Layout>
+        </HeaderLayout>
         <Layout style={authStyles.formContainer}>
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
@@ -74,6 +74,6 @@ export const RegisterScreen = ({ navigation }: Props) => {
         <LoginButtonContainer disabled={loading} buttonText={'Registrar'} onPress={onRegister} />
         <LoginFooter text='¿Ya tienes cuenta?' linkText='Ingresa' onPress={() => navigation.dispatch(StackActions.push('LoginScreen'))} />
       </ScrollView>
-    </Layout>
+    </MainLayout>
   );
 };

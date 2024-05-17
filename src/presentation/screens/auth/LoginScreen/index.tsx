@@ -7,7 +7,7 @@ import Snackbar from 'react-native-snackbar';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
-import { Caption } from '../../../components/ui';
+import { Caption, HeaderLayout, MainLayout } from '../../../components/ui';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
@@ -45,12 +45,12 @@ export const LoginScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <Layout style={globalStyles.container}>
+    <MainLayout>
       <ScrollView showsVerticalScrollIndicator={false} style={globalStyles.mainMargin}>
-        <Layout style={{ paddingTop: height * 0.1, ...globalStyles.mainLayout }}>
+        <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <LoginHeader title={'Bienvenido'} footnote={'Ingresa tus credenciales'} />
-        </Layout>
+        </HeaderLayout>
         <Layout style={authStyles.formContainer}>
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
           <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
@@ -61,6 +61,6 @@ export const LoginScreen = ({ navigation }: Props) => {
         <LoginButtonContainer disabled={loading} buttonText={'Ingresar'} onPress={onLogin} />
         <LoginFooter text='¿No tienes cuenta?' linkText='Crea una' onPress={() => navigation.dispatch(StackActions.push('RegisterScreen'))} />
       </ScrollView>
-    </Layout>
+    </MainLayout>
   );
 };
