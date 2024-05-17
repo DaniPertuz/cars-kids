@@ -4,6 +4,7 @@ import { globalStyles } from '../../../styles/global.styles';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 5,
     ...globalStyles.mainBackground
   },
   buttonsContainer: {
@@ -24,6 +25,7 @@ export const styles = StyleSheet.create({
   selectsButtonContainer: {
     flex: 7,
     gap: 15,
+    marginTop: 10,
     ...globalStyles.mainBackground
   }
 });
