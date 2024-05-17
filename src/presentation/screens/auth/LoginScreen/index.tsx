@@ -34,6 +34,12 @@ export const LoginScreen = ({ navigation }: Props) => {
     setLoading(true);
     const resp = await login(form.email.trim(), form.password.trim());
 
+    if (!resp) {
+      setLoading(false);
+      Snackbar.show({ text: 'No hay conexión', duration: Snackbar.LENGTH_SHORT });
+      return;
+    }
+
     if (resp.error) {
       setLoading(false);
       Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
