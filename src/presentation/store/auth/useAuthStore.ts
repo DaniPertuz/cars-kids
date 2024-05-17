@@ -27,7 +27,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
     const resp = await AuthUseCases.authLoginUseCase(email, password);
 
     if (!resp) {
-      throw new Error("No connection");
+      set({ status: 'unauthenticated', token: undefined, user: undefined });
+      return;
     }
 
     resp.error
