@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Divider } from '@ui-kitten/components';
+import { Divider, Layout } from '@ui-kitten/components';
 
-import { DataLayout, MainLayout, TopNavigation } from '../../../components/ui';
-import { UsersList } from '../../../components/users/UsersList';
-import { UserListFooter } from '../../../components/users/UsersListFooter';
+import { MainLayout, TopNavigation } from '../../../components/ui';
+import { UsersListComponent } from '../../../components/users/UsersListComponent';
 import { useUsersData } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
 
 import { globalStyles } from '../../../styles/global.styles';
+import { styles } from './styles';
 
 export const UsersScreen = () => {
   const { top } = useSafeAreaInsets();
@@ -22,18 +22,17 @@ export const UsersScreen = () => {
   }, [usersData]);
 
   return (
-    <MainLayout>
-      {!usersData
-        ?
-        <LoadingScreen />
-        :
-        <DataLayout paddingTop={height * 0.042}>
-          <TopNavigation top={top} title='Usuarios' />
-          <Divider style={globalStyles.divider} />
-          <UsersList usersData={usersData} />
-          <UserListFooter usersData={usersData} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
-        </DataLayout>
-      }
+    <MainLayout paddingTop={top}>
+      <TopNavigation top={top} title='Usuarios' />
+      <Layout style={{ ...styles.container, marginVertical: height * 0.02 }}>
+        <Divider style={globalStyles.divider} />
+        {!usersData
+          ?
+          <LoadingScreen />
+          :
+          <UsersListComponent usersData={usersData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+        }
+      </Layout>
     </MainLayout>
   );
 };
