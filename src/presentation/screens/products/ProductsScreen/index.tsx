@@ -1,22 +1,18 @@
 import { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Divider, Layout } from '@ui-kitten/components';
+import { Divider } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { ProductAddButton } from '../../../components/products/ProductAddButton';
 import { ProductListComponent } from '../../../components/products/ProductListComponent';
-import { Back, DataLayout, ListPagination, MainLayout, Search, TitleHeader, TopNavigation, TotalListMessage } from '../../../components/ui';
+import { DataLayout, ListPagination, MainLayout, TopNavigation, TotalListMessage } from '../../../components/ui';
 import { useProductsData } from '../../../hooks';
-import { RootStackParams } from '../../../navigation/MainNavigator';
 import { ProductResponse } from '../../../../infrastructure/interfaces';
 
 import { globalStyles } from '../../../styles/global.styles';
 
 export const ProductsScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
   const { top, bottom } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
 
@@ -34,8 +30,7 @@ export const ProductsScreen = () => {
         :
         <>
           <DataLayout paddingTop={height * 0.042}>
-            <TopNavigation top={top} title='Productos' />
-            <Search top={top} onPress={() => navigation.navigate('SearchScreen', { entity: 'products' })} />
+            <TopNavigation top={top} title='Productos' renderSearchButton />
             <Divider style={globalStyles.divider} />
             <ProductListComponent bottom={bottom} display={display} productsData={productsData} />
           </DataLayout>
