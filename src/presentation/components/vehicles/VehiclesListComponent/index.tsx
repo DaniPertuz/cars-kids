@@ -1,8 +1,7 @@
 import { Layout } from '@ui-kitten/components';
-import { EmptyListMessage } from '../../ui';
+import { EmptyListMessage, SpinnerContainer } from '../../ui';
 import { VehiclesList } from '../VehiclesList';
 import { VehiclesResponse } from '../../../../infrastructure/interfaces';
-import { LoadingScreen } from '../../../screens/LoadingScreen';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
@@ -16,7 +15,7 @@ export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) =
     <Layout style={{ ...globalStyles.mainBackground, marginHorizontal: 20, paddingBottom: bottom + 200 }}>
       {(!display)
         ?
-        <LoadingScreen />
+        <SpinnerContainer />
         :
         (vehiclesData.total === 0)
           ?
