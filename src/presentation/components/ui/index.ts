@@ -25,6 +25,7 @@ export * from './PrimaryButton';
 export * from './RadioGroup';
 export * from './Search';
 export * from './SelectComponent';
+export * from './SpinnerContainer';
 export * from './Title';
 export * from './TitleHeader';
 export * from './TopNavigation';
