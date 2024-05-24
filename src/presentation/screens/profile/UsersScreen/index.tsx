@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Divider, Layout } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 
-import { MainLayout, TopNavigation } from '../../../components/ui';
+import { CustomDivider, MainLayout, TopNavigation } from '../../../components/ui';
 import { UsersListComponent } from '../../../components/users/UsersListComponent';
 import { useUsersData } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
 
-import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 export const UsersScreen = () => {
@@ -25,7 +24,7 @@ export const UsersScreen = () => {
     <MainLayout paddingTop={top}>
       <TopNavigation top={top} title='Usuarios' />
       <Layout style={{ ...styles.container, marginVertical: height * 0.02 }}>
-        <Divider style={globalStyles.divider} />
+        <CustomDivider />
         {!usersData
           ?
           <LoadingScreen />

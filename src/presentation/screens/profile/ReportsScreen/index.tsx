@@ -1,13 +1,12 @@
 import { useWindowDimensions } from 'react-native';
-import { Divider, Layout } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ReportsEntitiesList, ReportsListPagination, ReportsSelectComponentsGroup } from '../../../components/reports';
-import { Back, PrimaryButton, TitleHeader, TopNavigation } from '../../../components/ui';
+import { CustomDivider, PrimaryButton, TopNavigation } from '../../../components/ui';
 import { useReportsDataHandling } from '../../../hooks';
 
 import { styles } from './styles';
-import { globalStyles } from '../../../styles/global.styles';
 
 export const ReportsScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -38,7 +37,7 @@ export const ReportsScreen = () => {
       <Layout style={styles.container}>
         <TopNavigation top={0} title='Reportes' />
       </Layout>
-      <Divider style={globalStyles.divider} />
+      <CustomDivider />
       <Layout style={styles.selectsButtonContainer}>
         <ReportsSelectComponentsGroup category={category} lapse={lapse!} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />
         {isButtonEnabled() &&

@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Divider } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { ProductAddButton } from '../../../components/products/ProductAddButton';
 import { ProductListComponent } from '../../../components/products/ProductListComponent';
-import { DataLayout, ListPagination, MainLayout, TopNavigation, TotalListMessage } from '../../../components/ui';
+import { CustomDivider, DataLayout, ListPagination, MainLayout, TopNavigation, TotalListMessage } from '../../../components/ui';
 import { useProductsData } from '../../../hooks';
 import { ProductResponse } from '../../../../infrastructure/interfaces';
-
-import { globalStyles } from '../../../styles/global.styles';
 
 export const ProductsScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -31,7 +28,7 @@ export const ProductsScreen = () => {
         <>
           <DataLayout paddingTop={height * 0.042}>
             <TopNavigation top={top} title='Productos' renderSearchButton />
-            <Divider style={globalStyles.divider} />
+            <CustomDivider />
             <ProductListComponent bottom={bottom} display={display} productsData={productsData} />
           </DataLayout>
           {productsData.total !== 0 &&
