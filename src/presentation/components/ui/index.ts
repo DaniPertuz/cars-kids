@@ -4,6 +4,7 @@ export * from './BackgroundImage';
 export * from './Callout';
 export * from './CalloutBold';
 export * from './Caption';
+export * from './CustomDivider';
 export * from './CustomIcon';
 export * from './DataLayout';
 export * from './DeleteButton';
