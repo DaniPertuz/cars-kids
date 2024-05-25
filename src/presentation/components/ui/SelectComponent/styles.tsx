@@ -7,6 +7,6 @@ export const styles = StyleSheet.create({
     marginHorizontal: 2,
     borderColor: globalColors.background,
     borderRadius: 5,
-    borderWidth: 1
+    borderWidth: 0
   }
 });
