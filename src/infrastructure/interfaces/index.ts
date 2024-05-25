@@ -107,7 +107,7 @@ export interface DeskResponse {
   total:   number;
   next:    string | null;
   prev:    string | null;
-  data:    Desk[];
+  desks:   Desk[];
 }
 
 export interface DeskAPIResponse {
