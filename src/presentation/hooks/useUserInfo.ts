@@ -12,6 +12,7 @@ export const useUserInfo = () => {
     const userJson = userStorage ? JSON.parse(userStorage) : {};
 
     setUser({
+      _id: userStore ? userStore._id : userJson._id,
       name: userStore ? userStore.name : userJson.name,
       img: userStore ? userStore.img : userJson.img,
       email: userStore ? userStore.email : userJson.email,
