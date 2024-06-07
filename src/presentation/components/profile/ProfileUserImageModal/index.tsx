@@ -19,7 +19,7 @@ export const ProfileUserImageModal = ({ visible, setVisible }: Props) => {
 
   useEffect(() => {
     const hasProfileAssets = profilePicture?.assets !== undefined;
-    if (user?.img) {
+    if (user?.img?.length! > 0) {
       setDisplayThumb(false);
     } else if (visible) {
       setDisplayThumb(!hasProfileAssets);
