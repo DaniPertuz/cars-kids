@@ -51,7 +51,7 @@ export const UserEntryModal = ({ user, visible, setVisible }: Props) => {
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card>
+      <Card style={globalStyles.mainBackground}>
         <Layout style={globalStyles.modalContainer}>
           <HeaderFive text={'Actualizar rol de usuario'} />
           <Callout text={user.email} />

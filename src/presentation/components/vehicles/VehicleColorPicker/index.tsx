@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Layout } from '@ui-kitten/components';
 import ColorPicker from 'react-native-wheel-color-picker';
+import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   initialValue: string;
@@ -20,7 +21,7 @@ export const VehicleColorPicker = ({ initialValue, handleSelection }: Props) => 
   };
 
   return (
-    <Layout style={{ padding: 20 }}>
+    <Layout style={{ padding: 20, ...globalStyles.mainBackground }}>
       <ColorPicker color={selectedColor} onColorChangeComplete={onColorChange} />
     </Layout>
   );

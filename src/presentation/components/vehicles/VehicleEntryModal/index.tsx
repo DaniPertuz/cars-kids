@@ -32,7 +32,7 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card>
+      <Card style={globalStyles.mainBackground}>
         <Layout style={globalStyles.modalContainer}>
           <Headline text={vehicle ? 'Actualizar vehículo' : 'Nuevo vehículo'} textColor={globalStyles.colorOnyx} />
           <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleState.nickname} onChangeText={handleNicknameChange} />

@@ -18,7 +18,7 @@ export const BudgetEntryModal = ({ budget, visible, setVisible }: Props) => {
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card>
+      <Card style={globalStyles.mainBackground}>
         <Layout style={globalStyles.modalContainer}>
           <Headline text={'Actualizar presupuesto'} textColor={globalStyles.colorOnyx} />
           <NumericInput caption='Base' placeholder='' value={budgetState.base} onChangeText={(base) => handleFieldChange('base', base)} />

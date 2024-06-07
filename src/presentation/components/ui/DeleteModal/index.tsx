@@ -10,6 +10,7 @@ import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
 import { IStatus } from '../../../../infrastructure/interfaces';
 import { usePurchasesStore } from '../../../store/purchases/usePurchasesStore';
 
+import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 interface Props {
@@ -103,7 +104,7 @@ export const DeleteModal = ({ product, purchase, user, vehicle, visible, setVisi
       backdropStyle={styles.backdrop}
       onBackdropPress={() => setVisible(false)}
     >
-      <Card>
+      <Card style={globalStyles.mainBackground}>
         <Layout style={styles.container}>
           {product && <Callout text={`¿Desea desactivar el producto ${product.name}?`} />}
           {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}

@@ -35,7 +35,7 @@ export const ProfileUserImageModal = ({ visible, setVisible }: Props) => {
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card>
+      <Card style={globalStyles.mainBackground}>
         <Layout style={globalStyles.modalContainer}>
           <Headline text={'Imagen'} textColor={globalStyles.colorOnyx} />
           <Layout style={globalStyles.alignJustifyCenter}>
