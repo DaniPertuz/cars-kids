@@ -1,11 +1,12 @@
-import { Image } from 'react-native';
+import { useEffect, useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
+
 import { Headline, PrimaryButton } from '../../ui';
 import { useProfileUserImage, useUserInfo } from '../../../hooks';
+import { ProfileUserImageModalButtons } from './ProfileUserImageModalButtons';
+import { ProfileUserImage } from './ProfileUserImage';
+
 import { globalStyles } from '../../../styles/global.styles';
-import { globalColors } from '../../../theme/globalColors';
-import { useEffect, useState } from 'react';
-import { styles } from './styles';
 
 interface Props {
   visible: boolean;
@@ -38,13 +39,8 @@ export const ProfileUserImageModal = ({ visible, setVisible }: Props) => {
       <Card style={globalStyles.mainBackground}>
         <Layout style={globalStyles.modalContainer}>
           <Headline text={'Imagen'} textColor={globalStyles.colorOnyx} />
-          <Layout style={globalStyles.alignJustifyCenter}>
-            <Image style={styles.profileImage} source={profileImagePath} />
-          </Layout>
-          <Layout style={styles.buttonsContainer}>
-            <PrimaryButton disabled={false} text={'Foto'} color={globalColors.warning} onPress={takePicture} />
-            <PrimaryButton disabled={false} text={'Galería'} color={globalColors.success} onPress={selectPicture} />
-          </Layout>
+          <ProfileUserImage profileImagePath={profileImagePath} />
+          <ProfileUserImageModalButtons selectPicture={selectPicture} takePicture={takePicture} />
           <PrimaryButton disabled={loading} text={'Actualizar'} onPress={onSubmit} />
         </Layout>
       </Card>
