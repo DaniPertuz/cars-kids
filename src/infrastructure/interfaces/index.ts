@@ -40,6 +40,11 @@ export interface LayoutProps {
   children?: React.JSX.Element | React.JSX.Element[];
 }
 
+export interface Fee {
+  payment: IPayment;
+  price: number;
+}
+
 export interface DateRange {
   day?:       string;
   month?:     string;
