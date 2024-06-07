@@ -1,7 +1,6 @@
 import { Layout } from '@ui-kitten/components';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { globalStyles } from '../../../../styles/global.styles';
-import { styles } from '../styles';
 
 export const ProfileUserImage = ({ profileImagePath }: { profileImagePath: any; }) => {
   return (
@@ -10,3 +9,11 @@ export const ProfileUserImage = ({ profileImagePath }: { profileImagePath: any; 
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  profileImage: {
+    borderRadius: 50,
+    height: 320,
+    width: 320
+  }
+});
