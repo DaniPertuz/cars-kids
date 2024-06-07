@@ -14,15 +14,19 @@ export const ProfileMenu = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
   const { user } = useUserInfo();
 
+  const navigateToScreen = (screen: keyof RootStackParams) => {
+    navigation.navigate(screen as any);
+  };
+
   return (
     <Layout style={styles.menuContainer}>
       <Layout style={styles.menuItemsContainer}>
-        <ProfileMenuItem iconName={'edit-outline'} label={'Actualizar datos'} onPress={() => navigation.navigate('UpdateProfileScreen')} />
-        <ProfileMenuItem iconName={'car-outline'} label={'Vehículos'} onPress={() => navigation.navigate('VehiclesScreen')} />
-        <ProfileMenuItem iconName={'credit-card-outline'} label={'Presupuesto'} onPress={() => navigation.navigate('BudgetScreen')} />
-        <ProfileMenuItem iconName={'archive-outline'} label={'Productos'} onPress={() => navigation.navigate('ProductsScreen')} />
-        {user?.role === IUserRole.Admin && <ProfileMenuItem iconName={'file-text-outline'} label={'Reportes'} onPress={() => navigation.navigate('ReportsScreen')} />}
-        {user?.role === IUserRole.Admin && <ProfileMenuItem iconName={'people-outline'} label={'Usuarios'} onPress={() => navigation.navigate('UsersScreen')} />}
+      <ProfileMenuItem iconName={'edit-outline'} label={'Actualizar datos'} onPress={() => navigateToScreen('UpdateProfileScreen')} />
+        <ProfileMenuItem iconName={'car-outline'} label={'Vehículos'} onPress={() => navigateToScreen('VehiclesScreen')} />
+        <ProfileMenuItem iconName={'credit-card-outline'} label={'Presupuesto'} onPress={() => navigateToScreen('BudgetScreen')} />
+        <ProfileMenuItem iconName={'archive-outline'} label={'Productos'} onPress={() => navigateToScreen('ProductsScreen')} />
+        {user?.role === IUserRole.Admin && <ProfileMenuItem iconName={'file-text-outline'} label={'Reportes'} onPress={() => navigateToScreen('ReportsScreen')} />}
+        {user?.role === IUserRole.Admin && <ProfileMenuItem iconName={'people-outline'} label={'Usuarios'} onPress={() => navigateToScreen('UsersScreen')} />}
       </Layout>
       <LogoutComponent />
     </Layout>
