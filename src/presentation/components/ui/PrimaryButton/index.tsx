@@ -17,7 +17,7 @@ export const PrimaryButton = ({ color, text, disabled, onPress }: Props) => {
       style={[styles.button, { backgroundColor: color ? color : globalColors.primaryRed, borderColor: color ? color : globalColors.primaryRed }]}
       disabled={disabled}
       onPress={onPress}
-      accessoryLeft={disabled ? LoadingIndicator : undefined}
+      accessoryLeft={disabled ? <LoadingIndicator /> : undefined}
     >
       {!disabled ? text : undefined}
     </Button>
