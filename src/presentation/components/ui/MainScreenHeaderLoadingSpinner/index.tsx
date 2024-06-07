@@ -7,7 +7,7 @@ import { globalStyles } from '../../../styles/global.styles';
 export const MainScreenHeaderLoadingSpinner = () => {
   return (
     <Layout style={styles.container}>
-      <LoadingIndicator borderColor={globalColors.primaryRed} size='medium' />
+      <LoadingIndicator color={globalColors.primaryRed} size='medium' />
     </Layout>
   );
 };
