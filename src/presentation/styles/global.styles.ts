@@ -4,8 +4,7 @@ import { globalColors } from '../theme/globalColors';
 export const globalStyles = StyleSheet.create({
   alignJustifyCenter: {
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: globalColors.background
+    justifyContent: 'center'
   },
   backButtonContainer: {
     position: 'absolute',

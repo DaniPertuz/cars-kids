@@ -9,7 +9,7 @@ import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
-  vehicle: Vehicle
+  vehicle: Vehicle;
   visible: boolean;
   setVisible: (value: boolean) => void;
 }
@@ -39,7 +39,7 @@ export const VehicleImageModal = ({ vehicle, visible, setVisible }: Props) => {
       <Card style={globalStyles.mainBackground}>
         <Layout style={globalStyles.modalContainer}>
           <HeaderFive text={`Imagen de ${vehicle.nickname}`} />
-          <Layout style={globalStyles.alignJustifyCenter}>
+          <Layout style={{ ...globalStyles.alignJustifyCenter, ...globalStyles.mainBackground }}>
             <Image style={styles.vehicleImage} source={vehicleImagePath} />
           </Layout>
           <Layout style={styles.buttonsContainer}>

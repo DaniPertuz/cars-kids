@@ -4,7 +4,7 @@ import { globalStyles } from '../../../../styles/global.styles';
 
 export const ProfileUserImage = ({ profileImagePath }: { profileImagePath: any; }) => {
   return (
-    <Layout style={globalStyles.alignJustifyCenter}>
+    <Layout style={{ ...globalStyles.alignJustifyCenter, ...globalStyles.mainBackground }}>
       <Image style={styles.profileImage} source={profileImagePath} />
     </Layout>
   );
