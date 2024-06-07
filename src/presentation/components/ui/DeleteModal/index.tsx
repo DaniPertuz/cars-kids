@@ -3,24 +3,28 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
-import { Product, User, Vehicle } from '../../../../core/entities';
+import { Product, Purchase, User, Vehicle } from '../../../../core/entities';
 import * as ProductUseCases from '../../../../core/use-cases/products';
 import * as UserUseCases from '../../../../core/use-cases/users';
 import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
 import { IStatus } from '../../../../infrastructure/interfaces';
+import { usePurchasesStore } from '../../../store/purchases/usePurchasesStore';
 
 import { styles } from './styles';
 
 interface Props {
   product?: Product;
+  purchase?: Purchase;
   user?: User;
   vehicle?: Vehicle;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
 
-export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Props) => {
+export const DeleteModal = ({ product, purchase, user, vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
+  const purchases = usePurchasesStore(state => state.purchases);
+  const removePurchase = usePurchasesStore(state => state.removePurchase);
 
   const handleDeleteProduct = async () => {
     setLoading(true);
@@ -44,7 +48,7 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
   const handleDeleteUser = async () => {
     setLoading(true);
 
-    const resp = user?.status === IStatus.Inactive ? await UserUseCases.updateUserStatusUseCase(user.email, IStatus.Active) :  await UserUseCases.deactivateUserUseCase(user?.email!);
+    const resp = user?.status === IStatus.Inactive ? await UserUseCases.updateUserStatusUseCase(user.email, IStatus.Active) : await UserUseCases.deactivateUserUseCase(user?.email!);
 
     if (resp.error) {
       setLoading(false);
@@ -86,6 +90,13 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
     }
   };
 
+  const handleDeletePurchase = () => {
+    const index = purchases.indexOf(purchase!);
+    removePurchase(index);
+    Snackbar.show({ text: 'Compra eliminada', duration: Snackbar.LENGTH_SHORT });
+    setVisible(false);
+  };
+
   return (
     <Modal
       visible={visible}
@@ -95,9 +106,10 @@ export const DeleteModal = ({ product, user, vehicle, visible, setVisible }: Pro
       <Card>
         <Layout style={styles.container}>
           {product && <Callout text={`¿Desea desactivar el producto ${product.name}?`} />}
+          {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}
           {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
           {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-          <PrimaryButton disabled={loading} text={user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={product ? handleDeleteProduct : user ? handleDeleteUser : handleDeleteVehicle} />
+          <PrimaryButton disabled={loading} text={purchase ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={product ? handleDeleteProduct : user ? handleDeleteUser : purchase ? handleDeletePurchase : handleDeleteVehicle} />
         </Layout>
       </Card>
     </Modal>
