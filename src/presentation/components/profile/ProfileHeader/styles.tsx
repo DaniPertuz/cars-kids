@@ -4,7 +4,7 @@ import { globalStyles } from '../../../styles/global.styles';
 export const styles = StyleSheet.create({
   titleContainer: {
     alignItems: 'center',
-    gap: 20,
+    gap: 10,
     marginHorizontal: 20,
     ...globalStyles.mainBackground
   }
