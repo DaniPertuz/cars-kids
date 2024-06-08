@@ -19,4 +19,5 @@ export * from './useUserInfo';
 export * from './useUsersData';
 export * from './useVehicleEntryModalData';
 export * from './useVehicleImage';
+export * from './useVehicleSearchData';
 export * from './useVehiclesData';
