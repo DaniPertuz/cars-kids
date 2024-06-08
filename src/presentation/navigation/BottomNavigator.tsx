@@ -55,7 +55,7 @@ export const BottomNavigator = () => {
         })}
       >
         <Tab.Screen name="RentalsScreen" options={{ title: 'Alquileres' }} component={RentalsScreen} />
-        <Tab.Screen name="PurchasesScreen" options={{ title: 'Productos' }} component={PurchasesScreen} />
+        <Tab.Screen name="PurchasesScreen" options={{ title: 'Compras' }} component={PurchasesScreen} />
         <Tab.Screen name="ProfileScreen" options={{ title: 'Perfil' }} component={ProfileScreen} />
       </Tab.Navigator>
     </>
