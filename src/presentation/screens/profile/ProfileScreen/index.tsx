@@ -22,7 +22,7 @@ export const ProfileScreen = () => {
         ?
         <LoadingScreen />
         :
-        <Layout style={{ paddingTop: user.role === IUserRole.Admin ? height * 0.02 : height * 0.08, ...globalStyles.mainLayout }}>
+        <Layout style={{ paddingTop: user.role === IUserRole.Admin ? height * 0.03 : height * 0.08, ...globalStyles.mainLayout }}>
           <ProfileUserImage height={height} />
           <ProfileHeader />
           <ProfileMenu />
