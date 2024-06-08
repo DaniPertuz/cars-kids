@@ -3,9 +3,9 @@ import carskidsApi from '../../../config/api/carskidsApi';
 import { Desk } from '../../entities';
 import { DeskAPIResponse } from '../../../infrastructure/interfaces';
 
-export const updateDeskUseCase = async (desk: Desk): Promise<DeskAPIResponse> => {
+export const updateDeskUseCase = async (desk: Desk, newDesk: Desk): Promise<DeskAPIResponse> => {
   try {
-    const { data } = await carskidsApi.put<DeskAPIResponse>(`desks/${desk.name}`, desk);
+    const { data } = await carskidsApi.put<DeskAPIResponse>(`desks/${desk.name}`, newDesk);
     return { desk: data.desk };
   } catch (error: any) {
     if (error instanceof AxiosError) {
