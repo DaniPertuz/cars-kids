@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
-import { CustomIcon } from '../';
+import { Budget, Desk, Product, Purchase, User, Vehicle } from '../../../../core/entities';
 import { BudgetEntryModal } from '../../budget/BudgetEntryModal';
+import { DeskEntryModal } from '../../desks/DeskEntryModal';
 import { ProductEntryModal } from '../../products/ProductEntryModal';
 import { PurchaseEntryModal } from '../../purchases/PurchaseEntryModal';
 import { UserEntryModal } from '../../users/UserEntryModal';
 import { VehicleEntryModal } from '../../vehicles/VehicleEntryModal';
-import { Budget, Desk, Product, Purchase, User, Vehicle } from '../../../../core/entities';
+import { CustomIcon } from '../';
 
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
@@ -31,6 +32,7 @@ export const EditButton = ({ iconSize, budget, desk, product, purchase, user, ve
       <Layout style={styles.container}>
         <CustomIcon name='edit-outline' size={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
         {budget && <BudgetEntryModal budget={budget} visible={visible} setVisible={setVisible} />}
+        {desk && <DeskEntryModal desk={desk} visible={visible} setVisible={setVisible} />}
         {product && <ProductEntryModal product={product} visible={visible} setVisible={setVisible} />}
         {purchase && <PurchaseEntryModal visible={visible} setVisible={setVisible} purchase={purchase} desk={desk!} />}
         {user && <UserEntryModal user={user} visible={visible} setVisible={setVisible} />}
