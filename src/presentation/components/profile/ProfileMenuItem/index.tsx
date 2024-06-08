@@ -1,6 +1,6 @@
 import { TouchableOpacity } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
-import { CustomIcon } from '../../ui';
+import { Layout } from '@ui-kitten/components';
+import { CustomIcon, HeaderSix } from '../../ui';
 import { styles } from './styles';
 
 interface Props {
@@ -15,7 +15,7 @@ export const ProfileMenuItem = ({ iconName, label, onPress }: Props) => {
       <Layout style={styles.menuItem}>
         <Layout style={styles.menuItemLabel}>
           <CustomIcon name={iconName} />
-          <Text category='h6'>{label}</Text>
+          <HeaderSix text={label} />
         </Layout>
       </Layout>
     </TouchableOpacity>
