@@ -11,13 +11,13 @@ interface Props {
 
 export const ProfileMenuItem = ({ iconName, label, onPress }: Props) => {
   return (
-    <Layout style={styles.menuItem}>
-      <TouchableOpacity style={styles.justifyCenter} activeOpacity={1} onPress={onPress}>
+    <TouchableOpacity style={styles.justifyCenter} activeOpacity={1} onPress={onPress}>
+      <Layout style={styles.menuItem}>
         <Layout style={styles.menuItemLabel}>
           <CustomIcon name={iconName} />
           <Text category='h6'>{label}</Text>
         </Layout>
-      </TouchableOpacity>
-    </Layout>
+      </Layout>
+    </TouchableOpacity>
   );
 };
