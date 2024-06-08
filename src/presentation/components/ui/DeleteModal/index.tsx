@@ -3,7 +3,8 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
-import { Product, Purchase, User, Vehicle } from '../../../../core/entities';
+import { Desk, Product, Purchase, User, Vehicle } from '../../../../core/entities';
+import * as DeskUseCases from '../../../../core/use-cases/desks';
 import * as ProductUseCases from '../../../../core/use-cases/products';
 import * as UserUseCases from '../../../../core/use-cases/users';
 import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
@@ -14,6 +15,7 @@ import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 interface Props {
+  desk?: Desk;
   product?: Product;
   purchase?: Purchase;
   user?: User;
@@ -22,10 +24,29 @@ interface Props {
   setVisible: (visible: boolean) => void;
 }
 
-export const DeleteModal = ({ product, purchase, user, vehicle, visible, setVisible }: Props) => {
+export const DeleteModal = ({ desk, product, purchase, user, vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
   const purchases = usePurchasesStore(state => state.purchases);
   const removePurchase = usePurchasesStore(state => state.removePurchase);
+
+  const handleDeleteDesk = async () => {
+    setLoading(true);
+
+    const resp = await DeskUseCases.deleteDeskUseCase(desk!);
+
+    if (resp.error) {
+      setLoading(false);
+      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      return;
+    }
+
+    if (resp.desk) {
+      setLoading(false);
+      Snackbar.show({ text: `${desk?.name} eliminado`, duration: Snackbar.LENGTH_SHORT });
+      setVisible(false);
+      return;
+    }
+  }
 
   const handleDeleteProduct = async () => {
     setLoading(true);
@@ -106,11 +127,12 @@ export const DeleteModal = ({ product, purchase, user, vehicle, visible, setVisi
     >
       <Card style={globalStyles.mainBackground}>
         <Layout style={styles.container}>
+          {desk && <Callout text={`¿Desea eliminar ${desk.name}?`} />}
           {product && <Callout text={`¿Desea desactivar el producto ${product.name}?`} />}
           {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}
           {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
           {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-          <PrimaryButton disabled={loading} text={purchase ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={product ? handleDeleteProduct : user ? handleDeleteUser : purchase ? handleDeletePurchase : handleDeleteVehicle} />
+          <PrimaryButton disabled={loading} text={(purchase || desk) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : user ? handleDeleteUser : purchase ? handleDeletePurchase : handleDeleteVehicle} />
         </Layout>
       </Card>
     </Modal>
