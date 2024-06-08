@@ -7,6 +7,7 @@ import { LoginScreen } from '../screens/auth/LoginScreen';
 import { RegisterScreen } from '../screens/auth/RegisterScreen';
 import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen';
 import { BudgetScreen } from '../screens/budget/BudgetScreen';
+import { DesksScreen } from '../screens/desks/DesksScreen';
 import { SearchScreen } from '../screens/profile/SearchScreen';
 import { UpdateProfileScreen } from '../screens/profile/UpdateProfileScreen';
 import { ProductsScreen } from '../screens/products/ProductsScreen';
@@ -18,6 +19,7 @@ import { globalColors } from '../theme/globalColors';
 
 export type RootStackParams = {
   BudgetScreen: undefined;
+  DesksScreen: undefined;
   LoadingScreen: undefined;
   LoginScreen: undefined;
   RegisterScreen: undefined;
@@ -50,6 +52,7 @@ export const MainNavigator = () => {
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ResetPasswordScreen" component={ResetPasswordScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BudgetScreen" component={BudgetScreen} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="DesksScreen" component={DesksScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoadingScreen" component={LoadingScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="SearchScreen" component={SearchScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="BottomNavigator" component={BottomNavigator} />

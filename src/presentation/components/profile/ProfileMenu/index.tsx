@@ -22,6 +22,7 @@ export const ProfileMenu = () => {
     <Layout style={styles.menuContainer}>
       <Layout style={styles.menuItemsContainer}>
       <ProfileMenuItem iconName={'edit-outline'} label={'Actualizar datos'} onPress={() => navigateToScreen('UpdateProfileScreen')} />
+        <ProfileMenuItem iconName={'browser-outline'} label={'Puestos de trabajo'} onPress={() => navigateToScreen('DesksScreen')} />
         <ProfileMenuItem iconName={'car-outline'} label={'Vehículos'} onPress={() => navigateToScreen('VehiclesScreen')} />
         <ProfileMenuItem iconName={'credit-card-outline'} label={'Presupuesto'} onPress={() => navigateToScreen('BudgetScreen')} />
         <ProfileMenuItem iconName={'archive-outline'} label={'Productos'} onPress={() => navigateToScreen('ProductsScreen')} />
