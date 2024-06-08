@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   backdrop: {
@@ -7,6 +8,7 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     gap: 10,
-    width: 320
+    width: 320,
+    ...globalStyles.mainBackground
   }
 })
