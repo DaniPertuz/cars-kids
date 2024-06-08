@@ -56,7 +56,7 @@ export const usePurchasesStore = create<PurchaseState>()(
           await Promise.all(promises);
           if (success) {
             handleMessage('Compras cargadas exitosamente');
-            set({ purchases: [] }); // Clear purchases only on success
+            set({ purchases: [] });
             return true;
           } else {
             return false;
