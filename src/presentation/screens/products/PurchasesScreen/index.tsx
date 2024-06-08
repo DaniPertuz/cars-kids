@@ -5,7 +5,7 @@ import { PurchaseEntryModal } from '../../../components/purchases/PurchaseEntryM
 export const PurchasesScreen = () => {
   return (
     <MainLayout>
-      <MainScreenHeader ModalComponent={PurchaseEntryModal} purchases />
+      <MainScreenHeader title={'Compras'} ModalComponent={PurchaseEntryModal} purchases />
       <CustomDivider />
       <PurchasesListComponent />
     </MainLayout>
