@@ -198,19 +198,19 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
             <table style='height: 50%; width: auto;'>
               <tr>
                 <th>${budgetTableHeaders[0]}</th>
-                <td>${dayBudget?.data[0].base}</td>
+                <td>${dayBudget?.data[0].base || 0}</td>
               </tr>
               <tr>
                 <th>${budgetTableHeaders[1]}</th>
-                <td>${dayBudget?.data[0].loans}</td>
+                <td>${dayBudget?.data[0].loans || 0}</td>
               </tr>
               <tr>
                 <th>${budgetTableHeaders[2]}</th>
-                <td>${dayBudget?.data[0].expenses}</td>
+                <td>${dayBudget?.data[0].expenses || 0}</td>
               </tr>
               <tr>
                 <th>${budgetTableHeaders[3]}</th>
-                <td>${dayBudget?.data[0].payroll}</td>
+                <td>${dayBudget?.data[0].payroll || 0}</td>
               </tr>
             </table>
           `
