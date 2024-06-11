@@ -63,13 +63,14 @@ export const useReportsDataHandling = () => {
   };
 
   const isButtonEnabled = () => {
-    const isRangeDefined = typeof range.day !== 'undefined' &&
-      typeof range.month !== 'undefined' &&
-      typeof range.year !== 'undefined' &&
-      typeof range.startDate !== 'undefined' &&
-      typeof range.endDate !== 'undefined';
+    const isRangeDefined =
+      (typeof range.day !== 'undefined' && typeof range.month !== 'undefined' && typeof range.year !== 'undefined')
+      ||
+      (typeof range.month !== 'undefined' && typeof range.year !== 'undefined')
+      ||
+      (typeof range.startDate !== 'undefined' && typeof range.endDate !== 'undefined');
 
-    if (!category || !lapse || !dayDate || isRangeDefined)
+    if ((!category && !lapse && !isRangeDefined) || (!category && !lapse && !isRangeDefined && !dayDate))
       return false;
 
     switch (lapse) {
@@ -95,9 +96,8 @@ export const useReportsDataHandling = () => {
 
   useEffect(() => {
     setEntityData(null);
-    setLapse(undefined);
     setRange({ day: undefined, month: undefined, year: undefined, startDate: undefined, endDate: undefined });
-  }, [category]);
+  }, [category, lapse]);
 
   useEffect(() => {
     handleReportLapse();
