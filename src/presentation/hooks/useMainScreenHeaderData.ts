@@ -3,7 +3,7 @@ import Snackbar from 'react-native-snackbar';
 import { usePurchasesStore } from '../store/purchases/usePurchasesStore';
 import { useDeskData } from './useDeskData';
 
-export const useMainScreenHeaderData = ({ purchases }: { purchases: boolean; }) => {
+export const useMainScreenHeaderData = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const { desks, selectedDesk, setSelectedDesk } = useDeskData();
@@ -25,21 +25,20 @@ export const useMainScreenHeaderData = ({ purchases }: { purchases: boolean; }) 
     Snackbar.show({ text: message, duration: Snackbar.LENGTH_LONG });
   };
 
-  const handleUpload = async () => {
-    if (purchases && purchasesList.length === 0) {
+  const uploadPurchase = async () => {
+    if (purchasesList.length === 0) {
       Snackbar.show({ text: 'No hay compras para cargar', duration: Snackbar.LENGTH_LONG });
       return;
     }
 
-    if (purchases && purchasesList.length > 0) {
-      setLoading(true);
-      const success = await uploadPurchases(handleSnackbarMessage);
-      if (!success) {
-        handleSnackbarMessage('Error al cargar las compras.');
-        return;
-      }
+    setLoading(true);
+    const success = await uploadPurchases(handleSnackbarMessage);
+    if (!success) {
+      handleSnackbarMessage('Error al cargar las compras.');
       setLoading(false);
+      return;
     }
+    setLoading(false);
   };
 
   return {
@@ -48,8 +47,8 @@ export const useMainScreenHeaderData = ({ purchases }: { purchases: boolean; }) 
     selectedDesk,
     visible,
     handleDesk,
-    handleUpload,
+    uploadPurchase,
     setVisible,
     showPurchaseModal
-  }
-}
+  };
+};
