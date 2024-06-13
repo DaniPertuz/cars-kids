@@ -195,3 +195,5 @@ export interface ApiResponse {
 export type AnyApiResponse = UsersResponse | BudgetResponse | PurchaseResponse | RentalResponse;
 
 export type DataItem = User | Vehicle | Budget | Product | Purchase | Rental;
+
+export type Transaction = 'Purchase' | 'Rental';
