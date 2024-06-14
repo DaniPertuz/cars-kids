@@ -1,10 +1,13 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { CustomDivider, MainLayout, MainScreenHeader } from '../../../components/ui';
+import { PurchaseEntryModal } from '../../../components/purchases/PurchaseEntryModal';
+import { TransactionsListComponent } from '../../../components/transactions/TransactionListComponent';
 
 export const RentalsScreen = () => {
   return (
-    <View>
-      <Text>RentalsScreen</Text>
-    </View>
+    <MainLayout>
+      <MainScreenHeader title='Alquileres' transaction={'Rental'} ModalComponent={PurchaseEntryModal} />
+      <CustomDivider />
+      <TransactionsListComponent entity='Rental' />
+    </MainLayout>
   );
 };
