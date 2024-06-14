@@ -3,7 +3,7 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
-import { Desk, Product, Purchase, User, Vehicle } from '../../../../core/entities';
+import { Desk, Product, Purchase, Rental, User, Vehicle } from '../../../../core/entities';
 import * as DeskUseCases from '../../../../core/use-cases/desks';
 import * as ProductUseCases from '../../../../core/use-cases/products';
 import * as UserUseCases from '../../../../core/use-cases/users';
@@ -18,13 +18,14 @@ interface Props {
   desk?: Desk;
   product?: Product;
   purchase?: Purchase;
+  rental?: Rental;
   user?: User;
   vehicle?: Vehicle;
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
 
-export const DeleteModal = ({ desk, product, purchase, user, vehicle, visible, setVisible }: Props) => {
+export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
   const purchases = usePurchasesStore(state => state.purchases);
   const removePurchase = usePurchasesStore(state => state.removePurchase);
@@ -119,6 +120,13 @@ export const DeleteModal = ({ desk, product, purchase, user, vehicle, visible, s
     setVisible(false);
   };
 
+  const handleDeleteRental = () => {
+    const index = purchases.indexOf(purchase!);
+    removePurchase(index);
+    Snackbar.show({ text: 'Alquiler eliminado', duration: Snackbar.LENGTH_SHORT });
+    setVisible(false);
+  };
+
   return (
     <Modal
       visible={visible}
@@ -132,7 +140,7 @@ export const DeleteModal = ({ desk, product, purchase, user, vehicle, visible, s
           {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}
           {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
           {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-          <PrimaryButton disabled={loading} text={(purchase || desk) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : user ? handleDeleteUser : purchase ? handleDeletePurchase : handleDeleteVehicle} />
+          <PrimaryButton disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : rental ? handleDeleteRental : user ? handleDeleteUser : purchase ? handleDeletePurchase : handleDeleteVehicle} />
         </Layout>
       </Card>
     </Modal>
