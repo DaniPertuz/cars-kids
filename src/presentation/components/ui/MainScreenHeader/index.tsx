@@ -2,6 +2,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { Desk } from '../../../../core/entities';
+import { Transaction } from '../../../../infrastructure/interfaces';
 import { useMainScreenHeaderData } from '../../../hooks/useMainScreenHeaderData';
 import { MainScreenHeaderButton } from '../MainScreenHeaderButton';
 import { MainScreenHeaderTitle } from '../MainScreenHeaderTitle';
@@ -10,14 +11,14 @@ import { MainScreenHeaderLoadingSpinner } from '../MainScreenHeaderLoadingSpinne
 import { styles } from './styles';
 
 interface Props {
-  purchases: boolean;
+  transaction: Transaction;
   title: string;
   ModalComponent: React.ComponentType<{ visible: boolean; setVisible: (visible: boolean) => void; desk: Desk; }>;
 }
 
-export const MainScreenHeader = ({ purchases, title, ModalComponent }: Props) => {
+export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) => {
   const { top } = useSafeAreaInsets();
-  const { desks, selectedDesk, loading, visible, handleDesk, handleUpload, setVisible, showPurchaseModal } = useMainScreenHeaderData({ purchases });
+  const { desks, selectedDesk, loading, visible, handleDesk, uploadPurchase, setVisible, showPurchaseModal } = useMainScreenHeaderData();
 
   return (
     <Layout style={{ marginTop: top, ...styles.container }}>
@@ -25,7 +26,7 @@ export const MainScreenHeader = ({ purchases, title, ModalComponent }: Props) =>
       <MainScreenHeaderTitle desks={desks} selectedDesk={selectedDesk!} title={title} handleDesk={handleDesk} />
       {!loading
         ?
-        <MainScreenHeaderButton iconName={'upload-outline'} onPress={handleUpload} />
+        <MainScreenHeaderButton iconName={'upload-outline'} onPress={transaction === 'Purchase' ? uploadPurchase : uploadPurchase} />
         :
         <MainScreenHeaderLoadingSpinner />
       }
