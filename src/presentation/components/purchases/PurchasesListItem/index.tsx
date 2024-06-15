@@ -1,7 +1,7 @@
 import { ListItem } from '@ui-kitten/components';
 import { Purchase } from '../../../../core/entities';
 import { paymentDescriptions } from '../../../../utils';
-import { PurchaseActions } from '../PurchaseActions';
+import { TransactionActions } from '../../transactions/TransactionActions';
 
 interface Props {
   purchase: Purchase;
@@ -18,7 +18,7 @@ export const PurchasesListItem = ({ purchase }: Props) => {
     <ListItem
       title={purchase.product.name}
       description={purchaseDescription()}
-      accessoryRight={<PurchaseActions purchase={purchase} />}
+      accessoryRight={<TransactionActions purchase={purchase} />}
       style={{ borderRadius: 10, margin: 10 }}
     />
   );
