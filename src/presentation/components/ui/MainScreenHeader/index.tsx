@@ -18,11 +18,11 @@ interface Props {
 
 export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) => {
   const { top } = useSafeAreaInsets();
-  const { desks, selectedDesk, loading, visible, handleDesk, uploadPurchase, setVisible, showPurchaseModal } = useMainScreenHeaderData();
+  const { desks, selectedDesk, loading, visible, handleDesk, uploadPurchase, setVisible, showTransactionModal } = useMainScreenHeaderData({ transaction });
 
   return (
     <Layout style={{ marginTop: top, ...styles.container }}>
-      <MainScreenHeaderButton iconName={'plus-circle'} onPress={showPurchaseModal} />
+      <MainScreenHeaderButton iconName={'plus-circle'} onPress={showTransactionModal} />
       <MainScreenHeaderTitle desks={desks} selectedDesk={selectedDesk!} title={title} handleDesk={handleDesk} />
       {!loading
         ?
