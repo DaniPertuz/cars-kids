@@ -58,6 +58,15 @@ export const globalStyles = StyleSheet.create({
     gap: 10,
     width: 320
   },
+  transactionsContainer: {
+    backgroundColor: globalColors.background,
+    width: 320
+  },
+  transactionsOptionsContainer: {
+    gap: 20,
+    marginBottom: 30,
+    backgroundColor: globalColors.background,
+  },
   platinumBackground: {
     backgroundColor: globalColors.platinum
   },

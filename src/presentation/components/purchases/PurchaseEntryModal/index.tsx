@@ -7,7 +7,6 @@ import { ModalTitle, PrimaryButton, SelectComponent } from '../../ui';
 import { PurchaseEntryModalPaymentFeesSelects } from '../PurchaseEntryModalPaymentFeesSelects';
 
 import { globalStyles } from '../../../styles/global.styles';
-import { styles } from './styles';
 
 interface Props {
   desk: Desk;
@@ -44,9 +43,9 @@ export const PurchaseEntryModal = ({ desk, purchase, visible, setVisible }: Prop
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
       <Card style={globalStyles.mainBackground}>
-        <Layout style={styles.container}>
-          <Layout style={styles.optionsContainer}>
-            <ModalTitle purchase={purchase} />
+        <Layout style={globalStyles.transactionsContainer}>
+          <Layout style={globalStyles.transactionsOptionsContainer}>
+            <ModalTitle purchase={purchase} transaction='Purchase' />
             <SelectComponent placeholder={'Producto'} initialValue={purchase ? purchase.product.name : ''} options={productOptions} handleSelection={handleProduct} />
             {(newPurchase.product.price || purchase?.product.price) && <Input label={'Precio'} disabled value={String(purchase ? purchase.product.price : newPurchase.product.price)} />}
             <SelectComponent placeholder={'Cantidad'} initialValue={purchase ? String(purchase.quantity) : ''} options={quantityPurchases()} handleSelection={handleQuantity} />
