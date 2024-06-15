@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import Snackbar from 'react-native-snackbar';
-import { usePurchasesStore } from '../store/purchases/usePurchasesStore';
+import { Transaction } from '../../infrastructure/interfaces';
+import { useTransactionStore } from '../store/transactions/useTransactionsStore';
 import { useDeskData } from './useDeskData';
 
-export const useMainScreenHeaderData = () => {
+export const useMainScreenHeaderData = ({ transaction }: { transaction: Transaction; }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const { desks, selectedDesk, setSelectedDesk } = useDeskData();
-  const uploadPurchases = usePurchasesStore(state => state.uploadPurchases);
-  const purchasesList = usePurchasesStore(state => state.purchases);
+  const uploadTransactions = useTransactionStore(state => state.uploadTransactions);
+  const purchasesList = useTransactionStore(state => state.purchases);
+  const rentalsList = useTransactionStore(state => state.rentals);
 
-  const showPurchaseModal = () => {
+  const showTransactionModal = () => {
     setVisible(true);
   };
 
@@ -26,13 +28,20 @@ export const useMainScreenHeaderData = () => {
   };
 
   const uploadPurchase = async () => {
-    if (purchasesList.length === 0) {
+    const isPurchaseTransaction = transaction === 'Purchase';
+
+    if (isPurchaseTransaction && purchasesList.length === 0) {
       Snackbar.show({ text: 'No hay compras para cargar', duration: Snackbar.LENGTH_LONG });
       return;
     }
 
+    if (!isPurchaseTransaction && rentalsList.length === 0) {
+      Snackbar.show({ text: 'No hay alquileres para cargar', duration: Snackbar.LENGTH_LONG });
+      return;
+    }
+
     setLoading(true);
-    const success = await uploadPurchases(handleSnackbarMessage);
+    const success = await uploadTransactions(isPurchaseTransaction ? 'Purchase' : 'Rental', handleSnackbarMessage);
     if (!success) {
       handleSnackbarMessage('Error al cargar las compras.');
       setLoading(false);
@@ -49,6 +58,6 @@ export const useMainScreenHeaderData = () => {
     handleDesk,
     uploadPurchase,
     setVisible,
-    showPurchaseModal
+    showTransactionModal
   };
 };

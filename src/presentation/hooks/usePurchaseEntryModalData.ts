@@ -4,7 +4,7 @@ import { Desk, Purchase, Product } from '../../core/entities';
 import * as ProductUseCases from '../../core/use-cases/products';
 import { Fee, IPayment, IStatus } from '../../infrastructure/interfaces';
 import { paymentDescriptions } from '../../utils';
-import { usePurchasesStore } from '../store/purchases/usePurchasesStore';
+import { useTransactionStore } from '../store/transactions/useTransactionsStore';
 import { useUserInfo } from './useUserInfo';
 
 interface Props {
@@ -16,9 +16,9 @@ interface Props {
 
 export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible }: Props) => {
   const { user } = useUserInfo();
-  const purchases = usePurchasesStore(state => state.purchases);
-  const addPurchase = usePurchasesStore(state => state.addPurchase);
-  const updatePurchase = usePurchasesStore(state => state.updatePurchase);
+  const purchases = useTransactionStore(state => state.purchases);
+  const addPurchase = useTransactionStore(state => state.addTransaction);
+  const updatePurchase = useTransactionStore(state => state.updateTransaction);
 
   const initPurchase = {
     price: 0,
@@ -124,12 +124,16 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
     switch (value) {
       case IPayment.Bancolombia:
         payment = 'Bancolombia';
+        break;
       case IPayment.Daviplata:
         payment = 'Daviplata';
+        break;
       case IPayment.Nequi:
         payment = 'Nequi';
+        break;
       case IPayment.Cash:
         payment = 'Efectivo';
+        break;
     }
 
     return payment;
@@ -198,13 +202,13 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
 
     if (customPayment && validateFees()) {
       if (firstFee.price > 0) {
-        addPurchase(handleFees(firstFee));
+        addPurchase(handleFees(firstFee), 'Purchase');
       }
       if (secondFee.price > 0) {
-        addPurchase(handleFees(secondFee));
+        addPurchase(handleFees(secondFee), 'Purchase');
       }
       if (thirdFee.price > 0) {
-        addPurchase(handleFees(thirdFee));
+        addPurchase(handleFees(thirdFee), 'Purchase');
       }
 
       setLoading(false);
@@ -227,14 +231,14 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
         user: newPurchase.user || purchase.user,
       };
 
-      updatePurchase(index, updatedPurchase);
+      updatePurchase(index, updatedPurchase, 'Purchase');
       setLoading(false);
       setVisible(false);
       Snackbar.show({ text: 'Compra actualizada', duration: Snackbar.LENGTH_SHORT });
       return;
     }
 
-    addPurchase(newPurchase);
+    addPurchase(newPurchase, 'Purchase');
     setLoading(false);
     setVisible(false);
     Snackbar.show({ text: 'Compra agregada', duration: Snackbar.LENGTH_SHORT });
