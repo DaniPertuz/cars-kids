@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
-import Snackbar from 'react-native-snackbar';
 
+import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
 import { Footnote, HeaderLayout, Headline, MainLayout, TopNavigation } from '../../../components/ui';
@@ -23,25 +23,25 @@ export const ResetPasswordScreen = () => {
     setLoading(true);
 
     if (!isValidEmail) {
-      Snackbar.show({ text: 'Email no válido', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Email no válido');
       setLoading(false);
       return;
     }
-
+    
     if (!email || email.length === 0) {
-      Snackbar.show({ text: 'Ingrese email', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Ingrese email');
       setLoading(false);
       return;
     }
 
     if ((!password || !confirmPassword) || (password.length === 0 || confirmPassword.length === 0)) {
-      Snackbar.show({ text: 'No se permite contraseña vacía', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('No se permite contraseña vacía');
       setLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      Snackbar.show({ text: 'Contraseñas no coinciden', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Contaseñas no coinciden');
       setLoading(false);
       return;
     }

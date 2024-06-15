@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Snackbar from 'react-native-snackbar';
 
 import { RootStackParams } from '../navigation/MainNavigator';
 import { adaptApiResponse } from '../../config/adapters/api-response-adapter';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Budget } from '../../core/entities';
 import * as BudgetUseCases from '../../core/use-cases/budget';
 
@@ -59,12 +59,12 @@ export const useBudgetData = () => {
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     setLoading(false);
-    Snackbar.show({ text: 'Presupuesto actualizado', duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar('Presupuesto actualizado');
     navigation.goBack();
   };
 

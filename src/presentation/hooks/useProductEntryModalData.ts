@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Snackbar from 'react-native-snackbar';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Product } from '../../core/entities';
 import * as ProductUseCases from '../../core/use-cases/products';
 import { IStatus, IUserRole } from '../../infrastructure/interfaces';
@@ -68,16 +68,16 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
-
+    
     const actionText = product ? 'actualizado' : 'registrado';
     const successMessage = `Producto ${actionText} exitosamente`;
-
+    
     setLoading(false);
-    Snackbar.show({ text: successMessage, duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
+    SnackbarAdapter.showSnackbar(successMessage);
     setProductState(product ? productState : init);
   };
 

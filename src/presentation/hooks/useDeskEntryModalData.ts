@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Snackbar from 'react-native-snackbar';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Desk } from '../../core/entities';
 import * as DeskUseCases from '../../core/use-cases/desks';
 
@@ -34,7 +34,7 @@ export const useDeskEntryModalData = ({ desk, visible, setVisible }: Props) => {
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
@@ -42,7 +42,7 @@ export const useDeskEntryModalData = ({ desk, visible, setVisible }: Props) => {
     const successMessage = `Puesto de trabajo ${actionText} exitosamente`;
 
     setLoading(false);
-    Snackbar.show({ text: successMessage, duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar(successMessage);
     setVisible(false);
     setDeskState(desk ? deskState : init);
   };

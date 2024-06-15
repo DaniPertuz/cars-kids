@@ -3,12 +3,12 @@ import { ScrollView, useWindowDimensions } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
-import Snackbar from 'react-native-snackbar';
 
+import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
+import { IUserRole } from '../../../../infrastructure/interfaces';
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
 import { HeaderLayout, MainLayout, RadioGroupComponent } from '../../../components/ui';
-import { IUserRole } from '../../../../infrastructure/interfaces';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
@@ -41,7 +41,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
   const onRegister = async () => {
     if (form.email.length === 0 || form.password.length === 0) {
-      Snackbar.show({ text: 'Ingrese sus credenciales', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Ingrese sus credenciales');
       return;
     }
 
@@ -50,7 +50,7 @@ export const RegisterScreen = ({ navigation }: Props) => {
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 

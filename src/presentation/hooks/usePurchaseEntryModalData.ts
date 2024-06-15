@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Snackbar from 'react-native-snackbar';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Desk, Purchase, Product } from '../../core/entities';
 import * as ProductUseCases from '../../core/use-cases/products';
 import { Fee, IPayment, IStatus } from '../../infrastructure/interfaces';
@@ -190,13 +190,13 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
     if (newPurchase.desk?.name.length === 0) {
       setLoading(false);
       setVisible(false);
-      Snackbar.show({ text: 'Puesto de trabajo no válido', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Puesto de trabajo no válido');
       return;
     }
 
     if (customPayment && !validateFees()) {
       setLoading(false);
-      Snackbar.show({ text: 'Cuotas no son válidas', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Cuotas no son válidas');
       return;
     }
 
@@ -213,7 +213,7 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
 
       setLoading(false);
       setVisible(false);
-      Snackbar.show({ text: 'Compra por cuotas agregada', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Compra por cuotas agregada');
       return;
     }
 
@@ -234,14 +234,14 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
       updatePurchase(index, updatedPurchase, 'Purchase');
       setLoading(false);
       setVisible(false);
-      Snackbar.show({ text: 'Compra actualizada', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Compra actualizada');
       return;
     }
 
     addPurchase(newPurchase, 'Purchase');
     setLoading(false);
     setVisible(false);
-    Snackbar.show({ text: 'Compra agregada', duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar('Compra agregada');
   };
 
   useEffect(() => {

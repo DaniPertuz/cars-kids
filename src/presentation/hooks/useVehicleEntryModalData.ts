@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Snackbar from 'react-native-snackbar';
 
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Vehicle } from '../../core/entities';
 import * as VehicleUseCases from '../../core/use-cases/vehicles';
 import { IVehicleCategory, IUserRole, IVehicleSize, IStatus } from '../../infrastructure/interfaces';
@@ -98,15 +98,15 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
     if ((vehicleState.category === IVehicleCategory.Cycle && vehicleState.size !== IVehicleSize.Medium) ||
       (vehicleState.category === IVehicleCategory.Car && vehicleState.size === IVehicleSize.Medium)) {
       setLoading(false);
-      Snackbar.show({ text: vehicleState.category === IVehicleCategory.Cycle ? 'Tamaño no válido para moto' : 'Tamaño no válido para carro', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(vehicleState.category === IVehicleCategory.Cycle ? 'Tamaño no válido para moto' : 'Tamaño no válido para carro');
       return;
     }
-
+    
     const resp = vehicle ? await VehicleUseCases.updateVehicleUseCase(vehicle.nickname, vehicleObject as Vehicle) : await VehicleUseCases.addVehicleUseCase(vehicleState);
-
+    
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
@@ -114,8 +114,8 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
     const successMessage = `Vehículo ${actionText} exitosamente`;
 
     setLoading(false);
-    Snackbar.show({ text: successMessage, duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
+    SnackbarAdapter.showSnackbar(successMessage);
     setVehicleState(vehicle ? vehicleState : init);
   };
 

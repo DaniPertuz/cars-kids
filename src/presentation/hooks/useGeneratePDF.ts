@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import Snackbar from 'react-native-snackbar';
 import { adaptApiResponse } from '../../config/adapters/api-response-adapter';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Purchase, Rental } from '../../core/entities';
 import * as BudgetUseCases from '../../core/use-cases/budget';
 import { BudgetResponse, DateRange, PurchaseResponse, RentalResponse } from '../../infrastructure/interfaces';
@@ -339,7 +339,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
     const file = await RNHTMLtoPDF.convert(options);
 
     if (file.filePath) {
-      Snackbar.show({ text: `Archivo ${category === 'Alquileres' ? 'Pedidos' : 'Accesorios'} - ${reportLapse}.pdf generado exitosamente`, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(`Archivo ${category === 'Alquileres' ? 'Pedidos' : 'Accesorios'} - ${reportLapse}.pdf generado exitosamente`);
     }
   };
 

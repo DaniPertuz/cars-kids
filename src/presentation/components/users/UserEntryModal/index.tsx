@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
-import Snackbar from 'react-native-snackbar';
 
-import { RadioGroupComponent, PrimaryButton, HeaderFive, Callout } from '../../ui';
+import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { User } from '../../../../core/entities';
 import * as UserUseCases from '../../../../core/use-cases/users';
 import { IUserRole } from '../../../../infrastructure/interfaces';
+import { RadioGroupComponent, PrimaryButton, HeaderFive, Callout } from '../../ui';
 
 import { globalStyles } from '../../../styles/global.styles';
 
@@ -38,13 +38,13 @@ export const UserEntryModal = ({ user, visible, setVisible }: Props) => {
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     if (resp.user) {
       setLoading(false);
-      Snackbar.show({ text: 'Rol de usuario actualizado', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Rol de usuario actualizado');
       setVisible(false);
     }
   };

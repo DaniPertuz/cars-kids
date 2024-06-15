@@ -3,8 +3,8 @@ import { ScrollView, useWindowDimensions } from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
-import Snackbar from 'react-native-snackbar';
 
+import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
 import { Caption, HeaderLayout, MainLayout } from '../../../components/ui';
@@ -27,22 +27,22 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   const onLogin = async () => {
     if (form.email.length === 0 && form.password.length === 0) {
-      Snackbar.show({ text: 'Ingrese sus credenciales', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Ingrese sus credenciales');
       return;
     }
-
+    
     setLoading(true);
     const resp = await login(form.email.trim(), form.password.trim());
-
+    
     if (!resp) {
       setLoading(false);
-      Snackbar.show({ text: 'No hay conexión', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('No hay conexión');
       return;
     }
-
+    
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 

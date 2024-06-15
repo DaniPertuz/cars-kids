@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Snackbar from 'react-native-snackbar';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Transaction } from '../../infrastructure/interfaces';
 import { useTransactionStore } from '../store/transactions/useTransactionsStore';
 import { useDeskData } from './useDeskData';
@@ -24,19 +24,19 @@ export const useMainScreenHeaderData = ({ transaction }: { transaction: Transact
   };
 
   const handleSnackbarMessage = (message: string) => {
-    Snackbar.show({ text: message, duration: Snackbar.LENGTH_LONG });
+    SnackbarAdapter.showSnackbar(message);
   };
 
   const uploadPurchase = async () => {
     const isPurchaseTransaction = transaction === 'Purchase';
 
     if (isPurchaseTransaction && purchasesList.length === 0) {
-      Snackbar.show({ text: 'No hay compras para cargar', duration: Snackbar.LENGTH_LONG });
+      SnackbarAdapter.showSnackbar('No hay compras para cargar');
       return;
     }
 
     if (!isPurchaseTransaction && rentalsList.length === 0) {
-      Snackbar.show({ text: 'No hay alquileres para cargar', duration: Snackbar.LENGTH_LONG });
+      SnackbarAdapter.showSnackbar('No hay alquileres para cargar');
       return;
     }
 

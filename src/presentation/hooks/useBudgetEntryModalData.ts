@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Snackbar from 'react-native-snackbar';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Budget } from '../../core/entities';
 import * as BudgetUseCases from '../../core/use-cases/budget';
 
@@ -16,7 +16,7 @@ export const useBudgetEntryModalData = ({ budget, visible, setVisible }: Props) 
     expenses: 0,
     payroll: 0,
     date: new Date()
-  }
+  };
 
   const [loading, setLoading] = useState(false);
   const [budgetState, setBudgetState] = useState<Budget>({
@@ -42,12 +42,12 @@ export const useBudgetEntryModalData = ({ budget, visible, setVisible }: Props) 
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     setLoading(false);
-    Snackbar.show({ text: 'Presupuesto actualizado exitosamente', duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar('Presupuesto actualizado exitosamente');
     setVisible(false);
     setBudgetState(init);
   };
@@ -58,5 +58,5 @@ export const useBudgetEntryModalData = ({ budget, visible, setVisible }: Props) 
     visible,
     handleFieldChange,
     onSubmit
-  }
-}
+  };
+};

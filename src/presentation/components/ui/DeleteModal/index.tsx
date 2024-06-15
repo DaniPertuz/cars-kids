@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
-import Snackbar from 'react-native-snackbar';
 
 import { Callout, PrimaryButton } from '../';
+import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { Desk, Product, Purchase, Rental, User, Vehicle } from '../../../../core/entities';
 import * as DeskUseCases from '../../../../core/use-cases/desks';
 import * as ProductUseCases from '../../../../core/use-cases/products';
@@ -37,17 +37,17 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     if (resp.desk) {
       setLoading(false);
-      Snackbar.show({ text: `${desk?.name} eliminado`, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(`${desk?.name} eliminado`);
       setVisible(false);
       return;
     }
-  }
+  };
 
   const handleDeleteProduct = async () => {
     setLoading(true);
@@ -56,13 +56,13 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     if (resp.product) {
       setLoading(false);
-      Snackbar.show({ text: `Producto ${product?.name} eliminado`, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(`Producto ${product?.name} eliminado`);
       setVisible(false);
       return;
     }
@@ -75,20 +75,20 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     if (resp.user) {
       setLoading(false);
-      Snackbar.show({ text: `Usuario ${user?.name} reactivado`, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(`Usuario ${user?.name} reactivado`);
       setVisible(false);
       return;
     }
 
     if (resp.status) {
       setLoading(false);
-      Snackbar.show({ text: `Usuario ${user?.name} desactivado`, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(`Usuario ${user?.name} desactivado`);
       setVisible(false);
       return;
     }
@@ -101,13 +101,13 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
     if (resp.status) {
       setLoading(false);
-      Snackbar.show({ text: `Vehículo ${vehicle?.nickname} desactivado`, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(`Vehículo ${vehicle?.nickname} desactivado`);
       setVisible(false);
       return;
     }
@@ -116,7 +116,7 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
   const handleDeleteTransaction = () => {
     const index = purchases.indexOf(purchase!);
     removeTransaction(index, purchase ? 'Purchase' : 'Rental');
-    Snackbar.show({ text: purchase ? 'Compra eliminada' : 'Alquiler eliminado', duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar(purchase ? 'Compra eliminada' : 'Alquiler eliminado');
     setVisible(false);
   };
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Snackbar from 'react-native-snackbar';
 
 import { useEmptyFieldValidation, useUserInfo } from './';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { RootStackParams } from '../navigation/MainNavigator';
 import { useAuthStore } from '../store/auth/useAuthStore';
 
@@ -43,11 +43,11 @@ export const useResetProfile = () => {
           const resp = await updateName(emailStore, name);
 
           if (resp.error) {
-            Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+            SnackbarAdapter.showSnackbar(resp.error);
             return;
           }
 
-          Snackbar.show({ text: 'Nombre actualizado', duration: Snackbar.LENGTH_SHORT });
+          SnackbarAdapter.showSnackbar('Nombre actualizado');
           navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
           return;
         }
@@ -56,11 +56,11 @@ export const useResetProfile = () => {
           const resp = await updateEmail(emailStore, email);
 
           if (resp.error) {
-            Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+            SnackbarAdapter.showSnackbar(resp.error);
             return;
           }
 
-          Snackbar.show({ text: 'Email actualizado', duration: Snackbar.LENGTH_SHORT });
+          SnackbarAdapter.showSnackbar('Email actualizado');
           navigator.push('BottomNavigator', { screen: 'ProfileScreen' });
           return;
         }
@@ -73,18 +73,18 @@ export const useResetProfile = () => {
 
     if (!isEmailEmpty && !isPasswordEmpty && !isConfirmedPasswordEmpty) {
       if (password !== confirmPassword) {
-        Snackbar.show({ text: 'Contraseñas no coinciden', duration: Snackbar.LENGTH_SHORT });
+        SnackbarAdapter.showSnackbar('Contraseñas no coinciden');
         return;
       }
 
       const resp = await updatePassword(email, password);
 
       if (resp.error) {
-        Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+        SnackbarAdapter.showSnackbar(resp.error);
         return;
       }
 
-      Snackbar.show({ text: 'Contraseña restablecida', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('Contraseña restablecida');
       navigator.push('LoginScreen');
     }
   };

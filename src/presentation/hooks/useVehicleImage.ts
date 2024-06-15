@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ImagePickerResponse } from 'react-native-image-picker';
-import Snackbar from 'react-native-snackbar';
 
-import { useCloudinaryOperation, useUserInfo } from './';
+import { useCloudinaryOperation } from './';
 import { ImagePickerAdapter } from '../../config/adapters/image-picker.adapter';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Vehicle } from '../../core/entities';
 import * as VehicleUseCases from '../../core/use-cases/vehicles';
 
@@ -39,7 +39,7 @@ export const useVehicleImage = ({ vehicle, setVisible }: Props) => {
 
     if (!vehiclePicture) {
       setLoading(false);
-      Snackbar.show({ text: 'No se pudo subir la imagen', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('No se pudo subir la imagen');
       return;
     }
 
@@ -49,11 +49,11 @@ export const useVehicleImage = ({ vehicle, setVisible }: Props) => {
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
 
-    Snackbar.show({ text: 'Foto de vehículo actualizada', duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar('Foto de vehículo actualizada');
     setLoading(false);
     setVisible(false);
   };

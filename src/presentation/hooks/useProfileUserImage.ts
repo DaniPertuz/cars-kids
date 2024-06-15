@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { ImagePickerResponse } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Snackbar from 'react-native-snackbar';
 
 import { useCloudinaryOperation, useUserInfo } from './';
 import { ImagePickerAdapter } from '../../config/adapters/image-picker.adapter';
+import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { useAuthStore } from '../store/auth/useAuthStore';
 import { RootStackParams } from '../navigation/MainNavigator';
 
@@ -39,7 +39,7 @@ export const useProfileUserImage = () => {
 
     if (!profilePicture) {
       setLoading(false);
-      Snackbar.show({ text: 'No se pudo subir la imagen', duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar('No se pudo subir la imagen');
       return;
     }
 
@@ -49,12 +49,12 @@ export const useProfileUserImage = () => {
 
     if (resp.error) {
       setLoading(false);
-      Snackbar.show({ text: resp.error, duration: Snackbar.LENGTH_SHORT });
+      SnackbarAdapter.showSnackbar(resp.error);
       return;
     }
-
+    
     navigation.push('BottomNavigator', { screen: 'ProfileScreen' });
-    Snackbar.show({ text: 'Foto actualizada', duration: Snackbar.LENGTH_SHORT });
+    SnackbarAdapter.showSnackbar('Foto actualizada');
     setLoading(false);
   };
 
