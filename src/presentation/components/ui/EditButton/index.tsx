@@ -18,6 +18,7 @@ import { styles } from './styles';
 interface Props {
   iconSize: number;
   budget?: Budget;
+  updateDesk?: Desk;
   desk?: Desk;
   product?: Product;
   purchase?: Purchase;
@@ -26,7 +27,7 @@ interface Props {
   vehicle?: Vehicle;
 }
 
-export const EditButton = ({ iconSize, budget, desk, product, purchase, rental, user, vehicle }: Props) => {
+export const EditButton = ({ iconSize, budget, desk, updateDesk, product, purchase, rental, user, vehicle }: Props) => {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -34,7 +35,7 @@ export const EditButton = ({ iconSize, budget, desk, product, purchase, rental, 
       <Layout style={styles.container}>
         <CustomIcon name='edit-outline' size={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
         {budget && <BudgetEntryModal budget={budget} visible={visible} setVisible={setVisible} />}
-        {desk && <DeskEntryModal desk={desk} visible={visible} setVisible={setVisible} />}
+        {updateDesk && <DeskEntryModal desk={desk} visible={visible} setVisible={setVisible} />}
         {product && <ProductEntryModal product={product} visible={visible} setVisible={setVisible} />}
         {purchase && <PurchaseEntryModal visible={visible} setVisible={setVisible} purchase={purchase} desk={desk!} />}
         {rental && <RentalEntryModal visible={visible} setVisible={setVisible} rental={rental} desk={desk!} />}

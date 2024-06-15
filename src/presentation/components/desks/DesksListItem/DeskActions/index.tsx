@@ -6,7 +6,7 @@ import { styles } from '../styles';
 export const DeskActions = ({ desk }: { desk: Desk; }) => {
   return (
     <Layout style={styles.container}>
-      <EditButton iconSize={25} desk={desk} />
+      <EditButton iconSize={25} updateDesk={desk} />
       <DeleteButton iconName='trash-outline' iconSize={25} desk={desk} />
     </Layout>
   );
