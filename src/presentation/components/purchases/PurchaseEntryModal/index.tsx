@@ -3,9 +3,8 @@ import { Card, Input, Layout, Modal } from '@ui-kitten/components';
 
 import { Desk, Purchase } from '../../../../core/entities';
 import { usePurchaseEntryModalData } from '../../../hooks';
-import { PrimaryButton, SelectComponent } from '../../ui';
+import { ModalTitle, PrimaryButton, SelectComponent } from '../../ui';
 import { PurchaseEntryModalPaymentFeesSelects } from '../PurchaseEntryModalPaymentFeesSelects';
-import { ModalTitle } from './ModalTitle';
 
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
