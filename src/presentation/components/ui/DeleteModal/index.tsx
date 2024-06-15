@@ -9,7 +9,7 @@ import * as ProductUseCases from '../../../../core/use-cases/products';
 import * as UserUseCases from '../../../../core/use-cases/users';
 import * as VehicleUseCases from '../../../../core/use-cases/vehicles';
 import { IStatus } from '../../../../infrastructure/interfaces';
-import { usePurchasesStore } from '../../../store/purchases/usePurchasesStore';
+import { useTransactionStore } from '../../../store/transactions/useTransactionsStore';
 
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
@@ -27,8 +27,8 @@ interface Props {
 
 export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
-  const purchases = usePurchasesStore(state => state.purchases);
-  const removePurchase = usePurchasesStore(state => state.removePurchase);
+  const purchases = useTransactionStore(state => state.purchases);
+  const removeTransaction = useTransactionStore(state => state.removeTransaction);
 
   const handleDeleteDesk = async () => {
     setLoading(true);
@@ -113,17 +113,10 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
     }
   };
 
-  const handleDeletePurchase = () => {
+  const handleDeleteTransaction = () => {
     const index = purchases.indexOf(purchase!);
-    removePurchase(index);
-    Snackbar.show({ text: 'Compra eliminada', duration: Snackbar.LENGTH_SHORT });
-    setVisible(false);
-  };
-
-  const handleDeleteRental = () => {
-    const index = purchases.indexOf(purchase!);
-    removePurchase(index);
-    Snackbar.show({ text: 'Alquiler eliminado', duration: Snackbar.LENGTH_SHORT });
+    removeTransaction(index, purchase ? 'Purchase' : 'Rental');
+    Snackbar.show({ text: purchase ? 'Compra eliminada' : 'Alquiler eliminado', duration: Snackbar.LENGTH_SHORT });
     setVisible(false);
   };
 
@@ -140,7 +133,7 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
           {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}
           {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
           {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-          <PrimaryButton disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : rental ? handleDeleteRental : user ? handleDeleteUser : purchase ? handleDeletePurchase : handleDeleteVehicle} />
+          <PrimaryButton disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : rental ? handleDeleteTransaction : user ? handleDeleteUser : purchase ? handleDeleteTransaction : handleDeleteVehicle} />
         </Layout>
       </Card>
     </Modal>
