@@ -187,7 +187,7 @@ export const usePurchaseEntryModalData = ({ desk, purchase, visible, setVisible 
   const onSubmit = async () => {
     setLoading(true);
 
-    if (newPurchase.desk.name.length === 0) {
+    if (newPurchase.desk?.name.length === 0) {
       setLoading(false);
       setVisible(false);
       Snackbar.show({ text: 'Puesto de trabajo no válido', duration: Snackbar.LENGTH_SHORT });
