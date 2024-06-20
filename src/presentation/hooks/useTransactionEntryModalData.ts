@@ -392,10 +392,6 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, 
   }, [user]);
 
   useEffect(() => {
-    console.log({ user });
-  }, [user]);
-
-  useEffect(() => {
     if (!visible) {
       setCustomPayment(false);
       setNewPurchase(initPurchase);
