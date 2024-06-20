@@ -60,6 +60,7 @@ export const globalStyles = StyleSheet.create({
   },
   transactionsContainer: {
     backgroundColor: globalColors.background,
+    justifyContent: 'center',
     width: 320
   },
   transactionsOptionsContainer: {
