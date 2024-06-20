@@ -21,6 +21,7 @@ export * from './ListPagination';
 export * from './LoadingIndicator';
 export * from './MainLayout';
 export * from './MainScreenHeader';
+export * from './ModalBody';
 export * from './ModalTitle';
 export * from './NextButton';
 export * from './PrevButton';
