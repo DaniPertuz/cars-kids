@@ -12,7 +12,7 @@ export * from './useGeneratePDF';
 export * from './useProductEntryModalData';
 export * from './useProductsData';
 export * from './useProfileUserImage';
-export * from './usePurchaseEntryModalData';
+export * from './useTransactionEntryModalData';
 export * from './useReportsDataHandling';
 export * from './useResetProfile';
 export * from './useUserInfo';
