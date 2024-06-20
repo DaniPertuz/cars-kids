@@ -1,5 +1,4 @@
-import { View } from 'react-native';
-import { Spinner } from '@ui-kitten/components';
+import { Layout, Spinner } from '@ui-kitten/components';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
@@ -9,8 +8,8 @@ interface Props {
 
 export const LoadingIndicator = ({ color, size }: Props) => {
   return (
-    <View style={globalStyles.alignJustifyCenter}>
+    <Layout style={globalStyles.alignJustifyCenter}>
       <Spinner size={size ? size : 'tiny'} style={color ? { borderColor: color } : globalStyles.whiteBorder} />
-    </View>
+    </Layout>
   );
 };
