@@ -23,7 +23,7 @@ const FeeSelector = ({ fee, handleFeePayment, handleFeeValue, setFee }: { fee: F
   );
 };
 
-export const PurchaseEntryModalPaymentFeesSelects = ({ firstFee, secondFee, thirdFee, handleFeePayment, handleFeeValue, setFirstFee, setSecondFee, setThirdFee }: Props) => {
+export const TransactionEntryModalPaymentFeesSelects = ({ firstFee, secondFee, thirdFee, handleFeePayment, handleFeeValue, setFirstFee, setSecondFee, setThirdFee }: Props) => {
   return (
     <>
       <FeeSelector fee={firstFee} handleFeePayment={handleFeePayment} handleFeeValue={handleFeeValue} setFee={setFirstFee} />
