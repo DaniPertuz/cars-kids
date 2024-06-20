@@ -1,9 +1,9 @@
 import { Layout, ListItem } from '@ui-kitten/components';
 import { Rental } from '../../../../core/entities';
 import { paymentDescriptions } from '../../../../utils';
+import { useFormattedDate } from '../../../hooks';
 import { TransactionActions } from '../../transactions/TransactionActions';
 import { HeaderSix } from '../../ui';
-import { useFormattedDate } from '../../../hooks';
 
 interface Props {
   rental: Rental;
@@ -15,7 +15,7 @@ export const RentalsListItem = ({ rental }: Props) => {
   const rentalDescription = () => {
     const safeAccess = (value: any) => value || 'N/A';
     const payment = paymentDescriptions[rental.payment];
-    let description = `Inicio: ${extractTimeFromStringDate(rental.date)}\nFin: ${addedTime(rental.date, rental.time)}\nVehículo: ${safeAccess(rental.vehicle?.nickname)}\nPago: ${safeAccess(rental.amount)}\nMedio: ${payment}\nPuesto de trabajo: ${rental.desk.name}\nUsuario: ${safeAccess(rental.user?.name)}`;
+    let description = `Inicio: ${extractTimeFromStringDate(rental.date)}\nFin: ${addedTime(rental.date, rental.time)}\nVehículo: ${safeAccess(rental.vehicle?.nickname)}\nPago: ${safeAccess(rental.amount)}\nMedio: ${payment}\nPuesto de trabajo: ${safeAccess(rental.desk?.name)}\nUsuario: ${safeAccess(rental.user?.name)}`;
     if (rental.exception) {
       description += `\nObservación: ${rental.exception}`;
     }
