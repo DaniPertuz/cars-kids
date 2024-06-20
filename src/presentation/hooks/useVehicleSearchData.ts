@@ -35,14 +35,16 @@ export const useVehicleSearchData = () => {
     if (debouncedValue.length < 3) return [];
 
     return vehiclesList.filter(vehicle =>
-      vehicle.nickname.toLocaleLowerCase().includes(debouncedValue.toLocaleLowerCase()),
+      vehicle.nickname.toLocaleLowerCase().includes(debouncedValue.toLocaleLowerCase())
     );
   }, [debouncedValue, vehiclesList]);
+
   return {
     debouncedValue,
     loading,
     search,
     vehicles,
+    vehiclesList,
     setSearch
-  }
-}
+  };
+};
