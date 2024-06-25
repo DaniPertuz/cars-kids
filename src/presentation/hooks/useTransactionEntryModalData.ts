@@ -12,11 +12,10 @@ interface Props {
   desk: Desk;
   purchase?: Purchase;
   rental?: Rental;
-  visible: boolean;
   setVisible: (visible: boolean) => void;
 }
 
-export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, setVisible }: Props) => {
+export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisible }: Props) => {
   const { user } = useUserInfo();
   const purchases = useTransactionStore(state => state.purchases);
   const rentals = useTransactionStore(state => state.rentals);
@@ -49,8 +48,8 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, 
   const [firstFee, setFirstFee] = useState({ payment: {} as IPayment, price: 0 });
   const [secondFee, setSecondFee] = useState({ payment: {} as IPayment, price: 0 });
   const [thirdFee, setThirdFee] = useState({ payment: {} as IPayment, price: 0 });
-  const [newPurchase, setNewPurchase] = useState<Purchase>(purchase ? purchase : initPurchase);
-  const [newRental, setNewRental] = useState<Rental>(rental ? rental : initRental);
+  const [newPurchase, setNewPurchase] = useState<Purchase>(purchase || initPurchase);
+  const [newRental, setNewRental] = useState<Rental>(rental || initRental);
   const products = useProductsStore(state => state.products);
   const fetchTotalProducts = useProductsStore(state => state.fetchTotalProducts);
   const fetchProductsData = useProductsStore(state => state.fetchProductsData);
@@ -218,10 +217,26 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, 
     setFeeState(feeSetter, { price: value });
   };
 
-  const validateFees = () => {
+  const validateFees = (transaction: Transaction) => {
     const fees = [firstFee, secondFee, thirdFee];
+    let isDuplicated: boolean = false;
+
+    for (let i = 0; i < fees.length; i++) {
+      for (let j = i + 1; j < fees.length; j++) {
+        if (fees[i].payment && fees[j].payment && fees[i].payment === fees[j].payment) {
+          isDuplicated = true;
+        }
+      }
+    }
+
     const accum = fees.reduce((acc: number, curr) => acc + curr.price, 0);
-    return newPurchase.product.price === accum;
+    const expectedAmount = transaction === 'Purchase' ? newPurchase.product.price : handleRentalAmount(newRental.vehicle.size as IVehicleSize);
+
+    if (accum !== expectedAmount || isDuplicated) {
+      return false;
+    }
+
+    return true;
   };
 
   const handleUser = () => {
@@ -263,43 +278,30 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, 
       isEmptyObject(rental.vehicle);
   };
 
-  const showError = (message: string) => {
+  const showMessage = (message: string) => {
     setLoading(false);
     setVisible(false);
     SnackbarAdapter.showSnackbar(message);
   };
 
   const fieldValidations = (transaction: Transaction) => {
-    if (newPurchase.desk?.name.length === 0) {
-      showError('Puesto de trabajo no válido');
+    if (newPurchase.desk?.name.length === 0 || newRental.desk?.name.length === 0) {
+      showMessage('Puesto de trabajo no válido');
       return false;
     }
 
-    if (customPayment && !validateFees()) {
-      showError('Cuotas no son válidas');
+    if (transaction === 'Purchase' && isPurchaseInvalid(newPurchase) && !customPayment) {
+      showMessage('Compra inválida');
       return false;
     }
 
-    if (transaction === 'Purchase' && isPurchaseInvalid(newPurchase)) {
-      showError('Compra inválida');
+    if (transaction === 'Rental' && isRentalInvalid(newRental) && !customPayment) {
+      showMessage('Alquiler inválido');
       return false;
     }
 
-    if (transaction === 'Rental' && isRentalInvalid(newRental)) {
-      showError('Alquiler inválido');
-      return false;
-    }
-
-    if (customPayment && validateFees()) {
-      [firstFee, secondFee, thirdFee].forEach((fee) => {
-        if (fee.price > 0) {
-          addTransaction(handleFees(fee, transaction), transaction);
-        }
-      });
-
-      setLoading(false);
-      setVisible(false);
-      SnackbarAdapter.showSnackbar(`${transaction === 'Purchase' ? 'Compra' : 'Alquiler'} por cuotas agregada`);
+    if (customPayment && !validateFees(transaction)) {
+      showMessage('Cuotas no son válidas');
       return false;
     }
 
@@ -308,65 +310,74 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, 
 
   const onSubmit = async (transaction: Transaction) => {
     setLoading(true);
-
-    if (!fieldValidations(transaction)) {
-      return;
-    }
-
-    if (transaction === 'Purchase') {
-      if (purchase) {
-        const index = purchases.indexOf(purchase);
-        const updatedPurchase: Purchase = {
-          ...purchase,
-          ...newPurchase,
-          desk: newPurchase.desk || purchase.desk,
-          payment: newPurchase.payment || purchase.payment,
-          price: newPurchase.price || purchase.price,
-          product: Object.keys(newPurchase.product).length ? newPurchase.product : purchase.product,
-          purchaseDate: newPurchase.purchaseDate || purchase.purchaseDate,
-          quantity: newPurchase.quantity || purchase.quantity,
-          user: newPurchase.user || purchase.user,
-        };
-
-        updateTransaction(index, updatedPurchase, transaction);
-        setLoading(false);
-        setVisible(false);
-        SnackbarAdapter.showSnackbar('Compra actualizada');
+    try {
+      if (!fieldValidations(transaction)) {
+        setVisible(true);
         return;
       }
 
-      addTransaction(newPurchase, transaction);
-      setLoading(false);
-      setVisible(false);
-      SnackbarAdapter.showSnackbar('Compra agregada');
-      return;
-    }
-
-    if (transaction === 'Rental') {
-      const updatedRental: Rental = {
-        ...rental,
-        ...newRental,
-        client: newRental.client || rental?.client || 'NN',
-        time: newRental.time || rental?.time!,
-        date: newRental.date || rental?.date,
-        vehicle: newRental.vehicle || rental?.vehicle,
-        payment: newRental.payment || rental?.payment,
-        amount: newRental.amount || rental?.amount!,
-        desk: newRental.desk || rental?.desk,
-        user: newRental.user || rental?.user
-      };
-
-      if (rental) {
-        const index = rentals.indexOf(rental);
-        updateTransaction(index, updatedRental, transaction);
-      } else {
-        addTransaction(updatedRental, transaction);
+      if (customPayment && validateFees(transaction)) {
+        [firstFee, secondFee, thirdFee].forEach((fee) => {
+          if (fee.price > 0) {
+            addTransaction(handleFees(fee, transaction), transaction);
+          }
+        });
+        showMessage(`${transaction === 'Purchase' ? 'Compra' : 'Alquiler'} por cuotas agregada`);
+        return;
       }
 
-      setLoading(false);
-      setVisible(false);
-      SnackbarAdapter.showSnackbar(rental ? 'Alquiler actualizado' : 'Alquiler agregado');
-      return;
+      const commonFields = {
+        desk: transaction === 'Purchase' ? newPurchase.desk : newRental.desk,
+        payment: transaction === 'Purchase' ? newPurchase.payment : newRental.payment,
+        user: transaction === 'Purchase' ? newPurchase.user : newRental.user,
+      };
+
+      if (transaction === 'Purchase') {
+        const updatedPurchase: Purchase = {
+          ...purchase,
+          ...newPurchase,
+          ...commonFields,
+          price: newPurchase.price,
+          product: newPurchase.product,
+          purchaseDate: newPurchase.purchaseDate,
+          quantity: newPurchase.quantity,
+        };
+
+        if (purchase) {
+          const index = purchases.indexOf(purchase);
+          updateTransaction(index, updatedPurchase, transaction);
+          showMessage('Compra actualizada');
+          return;
+        }
+
+        addTransaction(updatedPurchase, transaction);
+        showMessage('Compra agregada');
+      }
+
+      if (transaction === 'Rental') {
+        const updatedRental: Rental = {
+          ...rental,
+          ...newRental,
+          ...commonFields,
+          client: newRental.client || 'NN',
+          time: newRental.time!,
+          date: newRental.date,
+          vehicle: newRental.vehicle,
+          amount: newRental.amount!,
+        };
+
+        if (rental) {
+          const index = rentals.indexOf(rental);
+          updateTransaction(index, updatedRental, transaction);
+          showMessage('Alquiler actualizado');
+          return;
+        }
+
+        addTransaction(updatedRental, transaction);
+        showMessage('Alquiler agregado');
+      }
+    } catch (error) {
+      showMessage('Error al procesar la transacción');
     }
   };
 
@@ -390,14 +401,6 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, visible, 
   useEffect(() => {
     handleUser();
   }, [user]);
-
-  useEffect(() => {
-    if (!visible) {
-      setCustomPayment(false);
-      setNewPurchase(initPurchase);
-      setNewRental(initRental);
-    }
-  }, [visible]);
 
   return {
     customPayment,
