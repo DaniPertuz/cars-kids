@@ -23,8 +23,15 @@ export const useProductsStore = create<ProductsState>()(
       },
       fetchTotalProducts: async () => {
         try {
-          const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}`);
-          set({ total: resp.response?.total || 0 });
+          const storedTotal = await AsyncStorage.getItem('products-total');
+          if (storedTotal) {
+            set({ total: JSON.parse(storedTotal) });
+          } else {
+            const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}`);
+            const total = resp.response?.total || 0;
+            set({ total });
+            await AsyncStorage.setItem('products-total', JSON.stringify(total));
+          }
         } catch (error) {
           console.error('Error al obtener total de productos:', error);
         }
@@ -32,8 +39,15 @@ export const useProductsStore = create<ProductsState>()(
       fetchProductsData: async () => {
         try {
           const { total } = get();
-          const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}?limit=${total}`);
-          set({ products: resp.response?.products || [] });
+          const storedProducts = await AsyncStorage.getItem('products-data');
+          if (storedProducts) {
+            set({ products: JSON.parse(storedProducts) });
+          } else {
+            const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}?limit=${total}`);
+            const products = resp.response?.products || [];
+            set({ products });
+            await AsyncStorage.setItem('products-data', JSON.stringify(products));
+          }
         } catch (error) {
           console.error('Error al obtener productos:', error);
         }

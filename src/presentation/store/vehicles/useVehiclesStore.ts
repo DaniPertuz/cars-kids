@@ -22,17 +22,31 @@ export const useVehiclesStore = create<VehiclesState>()(
       },
       fetchTotalVehicles: async () => {
         try {
-          const resp = await VehicleUseCases.getVehiclesUseCase('vehicles/status/active');
-          set({ total: resp.response?.total || 0 });
+          const storedTotal = await AsyncStorage.getItem('vehicles-total');
+          if (storedTotal) {
+            set({ total: JSON.parse(storedTotal) });
+          } else {
+            const resp = await VehicleUseCases.getVehiclesUseCase('vehicles/status/active');
+            const total = resp.response?.total || 0;
+            set({ total });
+            await AsyncStorage.setItem('vehicles-total', JSON.stringify(total));
+          }
         } catch (error) {
           console.error('Error al obtener total de vehículos:', error);
         }
       },
       fetchVehiclesData: async () => {
         try {
-          const { total } = get();
-          const resp = await VehicleUseCases.getVehiclesUseCase(`vehicles/status/active?limit=${total}`);
-          set({ vehicles: resp.response?.vehicles || [] });
+          const storedVehicles = await AsyncStorage.getItem('vehicles-data');
+          if (storedVehicles) {
+            set({ vehicles: JSON.parse(storedVehicles) });
+          } else {
+            const { total } = get();
+            const resp = await VehicleUseCases.getVehiclesUseCase(`vehicles/status/active?limit=${total}`);
+            const vehicles = resp.response?.vehicles || [];
+            set({ vehicles });
+            await AsyncStorage.setItem('vehicles-data', JSON.stringify(vehicles));
+          }
         } catch (error) {
           console.error('Error al obtener vehículos:', error);
         }
