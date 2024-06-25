@@ -50,7 +50,7 @@ export const ModalBody = ({ desk, purchase, rental, transaction, visible, setVis
     handleRentalVehicle,
     paymentOptions,
     onSubmit
-  } = useTransactionEntryModalData({ desk, visible, setVisible });
+  } = useTransactionEntryModalData({ desk, purchase, rental, setVisible });
 
   const productOptions = useMemo(() => products.map(p => p.name), [products]);
 
@@ -68,17 +68,17 @@ export const ModalBody = ({ desk, purchase, rental, transaction, visible, setVis
                 {transaction === 'Purchase'
                   ?
                   <>
-                    <SelectComponent placeholder={'Producto'} initialValue={purchase ? purchase.product.name : ''} options={productOptions} handleSelection={handleProduct} />
+                    <SelectComponent placeholder={'Producto'} initialValue={purchase?.product.name || ''} options={productOptions} handleSelection={handleProduct} />
                     {(newPurchase.product.price || purchase?.product.price) && <Input label={'Precio'} disabled value={String(purchase ? purchase.product.price : newPurchase.product.price)} />}
-                    <SelectComponent placeholder={'Cantidad'} initialValue={purchase ? String(purchase.quantity) : ''} options={quantityPurchases()} handleSelection={(value: string) => handleQuantity(value, 'Purchase')} />
-                    <SelectComponent placeholder={'Medio de pago'} initialValue={purchase ? convertPurchasePayment(purchase.payment) : ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Purchase')} />
+                    <SelectComponent placeholder={'Cantidad'} initialValue={String(purchase?.quantity) || ''} options={quantityPurchases()} handleSelection={(value: string) => handleQuantity(value, 'Purchase')} />
+                    <SelectComponent placeholder={'Medio de pago'} initialValue={convertPurchasePayment(purchase?.payment!) || ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Purchase')} />
                   </>
                   :
                   <>
-                    <DefaultInput placeholder={'Cliente'} value={newRental?.client!} onChangeText={(client: string) => handleRentalClient(client)} />
-                    <SelectComponent placeholder={'Tiempo'} initialValue={rental ? String(rental.time) : ''} options={['15', '20', '30']} handleSelection={handleRentalTime} />
-                    <VehiclesSelectComponent placeholder={'Vehículo'} initialValue={rental ? rental.vehicle.nickname : ''} vehicles={vehicles} handleSelection={handleRentalVehicle} />
-                    <SelectComponent placeholder={'Medio de pago'} initialValue={rental ? convertPurchasePayment(rental.payment) : ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Rental')} />
+                    <DefaultInput placeholder={'Cliente'} value={newRental?.client || ''} onChangeText={(client: string) => handleRentalClient(client)} />
+                    <SelectComponent placeholder={'Tiempo'} initialValue={String(rental?.time) || ''} options={['15', '20', '30']} handleSelection={handleRentalTime} />
+                    <VehiclesSelectComponent placeholder={'Vehículo'} initialValue={rental?.vehicle.nickname || ''} vehicles={vehicles} handleSelection={handleRentalVehicle} />
+                    <SelectComponent placeholder={'Medio de pago'} initialValue={convertPurchasePayment(rental?.payment!) || ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Rental')} />
                   </>
                 }
                 {customPayment &&
