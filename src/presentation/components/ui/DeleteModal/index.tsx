@@ -134,7 +134,7 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
           {rental && <Callout text={'¿Desea eliminar este alquiler?'} />}
           {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
           {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-          <PrimaryButton disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : (purchase || rental) ? handleDeleteTransaction : user ? handleDeleteUser : handleDeleteVehicle} />
+          <PrimaryButton activeOpacity={0.6} disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : (purchase || rental) ? handleDeleteTransaction : user ? handleDeleteUser : handleDeleteVehicle} />
         </Layout>
       </Card>
     </Modal>
