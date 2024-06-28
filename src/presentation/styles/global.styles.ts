@@ -6,6 +6,11 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  alignCenterRowSpaceBetween: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   backButtonContainer: {
     position: 'absolute',
     left: 15,

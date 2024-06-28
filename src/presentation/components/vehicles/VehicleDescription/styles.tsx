@@ -4,10 +4,8 @@ import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   descriptionContainer: {
+    ...globalStyles.alignCenterRowSpaceBetween,
     ...globalStyles.platinumBackground,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginTop: 10
   },
   itemColor: {
