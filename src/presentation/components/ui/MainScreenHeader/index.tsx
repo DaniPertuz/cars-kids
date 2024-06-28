@@ -13,7 +13,7 @@ import { styles } from './styles';
 interface Props {
   transaction: Transaction;
   title: string;
-  ModalComponent: React.ComponentType<{ visible: boolean; setVisible: (visible: boolean) => void; desk: Desk; }>;
+  ModalComponent: React.ComponentType<{ transaction: Transaction, visible: boolean; setVisible: (visible: boolean) => void; desk: Desk; }>;
 }
 
 export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) => {
@@ -30,7 +30,7 @@ export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) 
         :
         <MainScreenHeaderLoadingSpinner />
       }
-      <ModalComponent visible={visible} setVisible={setVisible} desk={selectedDesk!} />
+      <ModalComponent transaction={transaction} visible={visible} setVisible={setVisible} desk={selectedDesk!} />
     </Layout>
   );
 };
