@@ -6,8 +6,7 @@ import { Budget, Desk, Product, Purchase, Rental, User, Vehicle } from '../../..
 import { BudgetEntryModal } from '../../budget/BudgetEntryModal';
 import { DeskEntryModal } from '../../desks/DeskEntryModal';
 import { ProductEntryModal } from '../../products/ProductEntryModal';
-import { PurchaseEntryModal } from '../../purchases/PurchaseEntryModal';
-import { RentalEntryModal } from '../../rentals/RentalEntryModal';
+import { TransactionEntryModal } from '../../transactions/TransactionEntryModal';
 import { UserEntryModal } from '../../users/UserEntryModal';
 import { VehicleEntryModal } from '../../vehicles/VehicleEntryModal';
 import { CustomIcon } from '../';
@@ -37,8 +36,8 @@ export const EditButton = ({ iconSize, budget, desk, updateDesk, product, purcha
         {budget && <BudgetEntryModal budget={budget} visible={visible} setVisible={setVisible} />}
         {updateDesk && <DeskEntryModal desk={desk} visible={visible} setVisible={setVisible} />}
         {product && <ProductEntryModal product={product} visible={visible} setVisible={setVisible} />}
-        {purchase && <PurchaseEntryModal visible={visible} setVisible={setVisible} purchase={purchase} desk={desk!} />}
-        {rental && <RentalEntryModal visible={visible} setVisible={setVisible} rental={rental} desk={desk!} />}
+        {purchase && <TransactionEntryModal visible={visible} setVisible={setVisible} purchase={purchase} desk={desk!} />}
+        {rental && <TransactionEntryModal visible={visible} setVisible={setVisible} rental={rental} desk={desk!} />}
         {user && <UserEntryModal user={user} visible={visible} setVisible={setVisible} />}
         {vehicle && <VehicleEntryModal vehicle={vehicle} visible={visible} setVisible={setVisible} />}
       </Layout>

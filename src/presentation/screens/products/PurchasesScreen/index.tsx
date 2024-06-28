@@ -1,11 +1,11 @@
 import { CustomDivider, MainLayout, MainScreenHeader } from '../../../components/ui';
-import { PurchaseEntryModal } from '../../../components/purchases/PurchaseEntryModal';
+import { TransactionEntryModal } from '../../../components/transactions/TransactionEntryModal';
 import { TransactionsListComponent } from '../../../components/transactions/TransactionListComponent';
 
 export const PurchasesScreen = () => {
   return (
     <MainLayout>
-      <MainScreenHeader title={'Compras'} ModalComponent={PurchaseEntryModal} transaction={'Purchase'} />
+      <MainScreenHeader title={'Compras'} ModalComponent={TransactionEntryModal} transaction={'Purchase'} />
       <CustomDivider />
       <TransactionsListComponent entity={'Purchase'} />
     </MainLayout>

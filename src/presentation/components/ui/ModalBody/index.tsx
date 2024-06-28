@@ -20,11 +20,10 @@ interface Props {
   purchase?: Purchase;
   rental?: Rental;
   transaction: Transaction;
-  visible: boolean;
   setVisible: (value: boolean) => void;
 }
 
-export const ModalBody = ({ desk, purchase, rental, transaction, visible, setVisible }: Props) => {
+export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: Props) => {
   const {
     customPayment,
     firstFee,
