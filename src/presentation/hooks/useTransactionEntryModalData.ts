@@ -88,29 +88,40 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     }
   };
 
+  const updateTransactionState = (field: string, value: any, transaction: Transaction) => {
+    if (transaction === 'Purchase') {
+      setNewPurchase(prevState => ({
+        ...prevState,
+        [field]: value
+      }));
+    }
+
+    if (transaction === 'Rental') {
+      setNewRental(prevState => ({
+        ...prevState,
+        [field]: value
+      }));
+    }
+  };
+
   const handleDesk = () => {
     if (desk) {
-      updateBothTransactionStates({ desk }, 'Purchase');
-      updateBothTransactionStates({ desk }, 'Rental');
+      updateTransactionState('desk', desk, 'Purchase');
+      updateTransactionState('desk', desk, 'Rental');
     }
   };
 
   const handleProduct = (value: string) => {
     const selectedProduct = products.find(p => p.name === value);
     if (selectedProduct) {
-      setNewPurchase(prevState => ({
-        ...prevState,
-        price: selectedProduct.price,
-        product: selectedProduct
-      }));
+      updateTransactionState('product', selectedProduct, 'Purchase');
+      updateTransactionState('price', selectedProduct.price, 'Purchase');
     }
   };
 
-  const handleRentalAmount = (value: IVehicleSize) => {
+  const handleRentalAmount = (size: IVehicleSize, time: number) => {
     let rentalAmount: number = 0;
-    const time = newRental.time;
-
-    switch (value) {
+    switch (size) {
       case IVehicleSize.Small:
         rentalAmount = time === 15 ? 8000 : time === 20 ? 10000 : 15000;
         break;
@@ -119,11 +130,20 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
         rentalAmount = time === 15 ? 10000 : time === 20 ? 14000 : 18000;
         break;
     }
-
     return rentalAmount;
   };
 
+  const handleRentalVehicle = (value: string) => {
+    const selectedVehicle = vehicles.find(v => v.nickname === value);
+    if (selectedVehicle && selectedVehicle !== newRental.vehicle) {
+      const amount = handleRentalAmount(selectedVehicle.size as IVehicleSize, newRental.time);
+      updateTransactionState('vehicle', selectedVehicle, 'Rental');
+      updateTransactionState('amount', amount, 'Rental');
+    }
+  };
+
   const handleRentalClient = (value: string) => {
+    updateTransactionState('client', value, 'Rental');
     setNewRental(prevState => ({
       ...prevState,
       client: value
@@ -132,26 +152,12 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
   const handleRentalTime = (value: string) => {
     const rentalTime = parseInt(value, 10);
-    setNewRental(prevState => ({
-      ...prevState,
-      time: rentalTime
-    }));
-  };
-
-  const handleRentalVehicle = (value: string) => {
-    const selectedVehicle = vehicles.find(v => v.nickname === value);
-    if (selectedVehicle && selectedVehicle !== newRental.vehicle) {
-      setNewRental(prevState => ({
-        ...prevState,
-        amount: handleRentalAmount(selectedVehicle.size as IVehicleSize),
-        vehicle: selectedVehicle
-      }));
-    }
+    updateTransactionState('time', rentalTime, 'Rental');
   };
 
   const handleQuantity = (value: string, transaction: Transaction) => {
     const quantity = parseInt(value, 10);
-    updateBothTransactionStates({ quantity }, transaction);
+    updateTransactionState('quantity', quantity, transaction);
   };
 
   const handlePayment = (value: string, transaction: Transaction) => {
@@ -164,7 +170,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
     const paymentMethod = paymentMethodMap[value];
     if (paymentMethod) {
-      updateBothTransactionStates({ payment: paymentMethod }, transaction);
+      updateTransactionState('payment', paymentMethod, transaction);
     }
 
     if (value === 'Personalizado') {
@@ -230,7 +236,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     }
 
     const accum = fees.reduce((acc: number, curr) => acc + curr.price, 0);
-    const expectedAmount = transaction === 'Purchase' ? newPurchase.product.price : handleRentalAmount(newRental.vehicle.size as IVehicleSize);
+    const expectedAmount = transaction === 'Purchase' ? newPurchase.product.price : handleRentalAmount(newRental.vehicle.size as IVehicleSize, newRental.time);
 
     if (accum !== expectedAmount || isDuplicated) {
       return false;
@@ -241,8 +247,8 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
   const handleUser = () => {
     if (user) {
-      updateBothTransactionStates({ user }, 'Purchase');
-      updateBothTransactionStates({ user }, 'Rental');
+      updateTransactionState('user', user, 'Purchase');
+      updateTransactionState('user', user, 'Rental');
     }
   };
 
@@ -399,7 +405,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
   }, [desk]);
 
   useEffect(() => {
-    handleUser();
+    if (user) handleUser();
   }, [user]);
 
   return {

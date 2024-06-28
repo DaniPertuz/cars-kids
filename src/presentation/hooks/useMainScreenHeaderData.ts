@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Transaction } from '../../infrastructure/interfaces';
+import { useDesksStore } from '../store/desk/useDeskStore';
 import { useTransactionStore } from '../store/transactions/useTransactionsStore';
-import { useDeskData } from './useDeskData';
 
 export const useMainScreenHeaderData = ({ transaction }: { transaction: Transaction; }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const { desks, selectedDesk, setSelectedDesk } = useDeskData();
+  const { desks, selectedDesk, getDesksTotal, setSelectedDesk } = useDesksStore();
   const uploadTransactions = useTransactionStore(state => state.uploadTransactions);
   const purchasesList = useTransactionStore(state => state.purchases);
   const rentalsList = useTransactionStore(state => state.rentals);
@@ -49,6 +49,10 @@ export const useMainScreenHeaderData = ({ transaction }: { transaction: Transact
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    getDesksTotal();
+  }, []);
 
   return {
     desks,

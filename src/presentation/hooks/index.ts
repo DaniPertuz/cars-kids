@@ -1,7 +1,6 @@
 export * from './useBudgetData';
 export * from './useBudgetEntryModalData';
 export * from './useDebouncedValue';
-export * from './useDeskData';
 export * from './useDeskEntryModalData';
 export * from './useCloudinaryOperation';
 export * from './useEmailValidation';
