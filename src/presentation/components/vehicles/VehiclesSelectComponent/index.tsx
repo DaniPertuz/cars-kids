@@ -31,6 +31,7 @@ export const VehiclesSelectComponent = ({ initialValue, vehicles, placeholder, h
     [IVehicleSize.Small]: 1,
     [IVehicleSize.Medium]: 2,
     [IVehicleSize.Large]: 3,
+    [IVehicleSize.XLarge]: 4
   };
 
   return (
