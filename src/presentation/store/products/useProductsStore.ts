@@ -23,14 +23,17 @@ export const useProductsStore = create<ProductsState>()(
       },
       fetchTotalProducts: async () => {
         try {
+          const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}`);
+          const newTotal = resp.response?.total || 0;
+
           const storedTotal = await AsyncStorage.getItem('products-total');
-          if (storedTotal) {
-            set({ total: JSON.parse(storedTotal) });
+          const parsedStoredTotal = storedTotal ? JSON.parse(storedTotal) : 0;
+
+          if (newTotal !== parsedStoredTotal) {
+            set({ total: newTotal });
+            await AsyncStorage.setItem('products-total', JSON.stringify(newTotal));
           } else {
-            const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}`);
-            const total = resp.response?.total || 0;
-            set({ total });
-            await AsyncStorage.setItem('products-total', JSON.stringify(total));
+            set({ total: parsedStoredTotal });
           }
         } catch (error) {
           console.error('Error al obtener total de productos:', error);
@@ -38,13 +41,26 @@ export const useProductsStore = create<ProductsState>()(
       },
       fetchProductsData: async () => {
         try {
-          const { total } = get();
           const storedProducts = await AsyncStorage.getItem('products-data');
+          const { total } = get();
+          const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}?limit=${total}`);
+          const products = resp.response?.products || [];
+
           if (storedProducts) {
-            set({ products: JSON.parse(storedProducts) });
+            const parsedStoredProducts = JSON.parse(storedProducts);
+            const hasChanges =
+              products.length !== parsedStoredProducts.length ||
+              products.some((product, index) =>
+                JSON.stringify(product) !== JSON.stringify(parsedStoredProducts[index])
+              );
+
+            if (hasChanges) {
+              set({ products });
+              await AsyncStorage.setItem('products-data', JSON.stringify(products));
+            } else {
+              set({ products: parsedStoredProducts });
+            }
           } else {
-            const resp = await ProductUseCases.getProductsUseCase(`products/status/${IStatus.Active}?limit=${total}`);
-            const products = resp.response?.products || [];
             set({ products });
             await AsyncStorage.setItem('products-data', JSON.stringify(products));
           }

@@ -22,14 +22,17 @@ export const useVehiclesStore = create<VehiclesState>()(
       },
       fetchTotalVehicles: async () => {
         try {
+          const resp = await VehicleUseCases.getVehiclesUseCase('vehicles/status/active');
+          const newTotal = resp.response?.total || 0;
+
           const storedTotal = await AsyncStorage.getItem('vehicles-total');
-          if (storedTotal) {
-            set({ total: JSON.parse(storedTotal) });
+          const parsedStoredTotal = storedTotal ? JSON.parse(storedTotal) : 0;
+
+          if (newTotal !== parsedStoredTotal) {
+            set({ total: newTotal });
+            await AsyncStorage.setItem('vehicles-total', JSON.stringify(newTotal));
           } else {
-            const resp = await VehicleUseCases.getVehiclesUseCase('vehicles/status/active');
-            const total = resp.response?.total || 0;
-            set({ total });
-            await AsyncStorage.setItem('vehicles-total', JSON.stringify(total));
+            set({ total: parsedStoredTotal });
           }
         } catch (error) {
           console.error('Error al obtener total de vehículos:', error);
@@ -38,12 +41,25 @@ export const useVehiclesStore = create<VehiclesState>()(
       fetchVehiclesData: async () => {
         try {
           const storedVehicles = await AsyncStorage.getItem('vehicles-data');
+          const { total } = get();
+          const resp = await VehicleUseCases.getVehiclesUseCase(`vehicles/status/active?limit=${total}`);
+          const vehicles = resp.response?.vehicles || [];
+
           if (storedVehicles) {
-            set({ vehicles: JSON.parse(storedVehicles) });
+            const parsedStoredVehicles = JSON.parse(storedVehicles);
+            const hasChanges = 
+              vehicles.length !== parsedStoredVehicles.length ||
+              vehicles.some((vehicle, index) => 
+                JSON.stringify(vehicle) !== JSON.stringify(parsedStoredVehicles[index])
+              );
+
+            if (hasChanges) {
+              set({ vehicles });
+              await AsyncStorage.setItem('vehicles-data', JSON.stringify(vehicles));
+            } else {
+              set({ vehicles: parsedStoredVehicles });
+            }
           } else {
-            const { total } = get();
-            const resp = await VehicleUseCases.getVehiclesUseCase(`vehicles/status/active?limit=${total}`);
-            const vehicles = resp.response?.vehicles || [];
             set({ vehicles });
             await AsyncStorage.setItem('vehicles-data', JSON.stringify(vehicles));
           }
