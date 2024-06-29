@@ -278,7 +278,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
   };
 
   const fieldValidations = (transaction: Transaction) => {
-    if (newPurchase.desk?.name.length === 0 || newRental.desk?.name.length === 0) {
+    if (!newPurchase.desk || !newRental.desk) {
       showMessage('Puesto de trabajo no válido');
       return false;
     }
