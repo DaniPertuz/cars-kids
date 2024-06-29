@@ -72,22 +72,6 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     return options;
   };
 
-  const updateBothTransactionStates = (updates: Partial<Purchase & Rental>, transaction?: Transaction) => {
-    if (transaction === 'Purchase') {
-      setNewPurchase(prevState => ({
-        ...prevState,
-        ...updates
-      }));
-    }
-
-    if (transaction === 'Rental') {
-      setNewRental(prevState => ({
-        ...prevState,
-        ...updates
-      }));
-    }
-  };
-
   const updateTransactionState = (field: string, value: any, transaction: Transaction) => {
     if (transaction === 'Purchase') {
       setNewPurchase(prevState => ({
