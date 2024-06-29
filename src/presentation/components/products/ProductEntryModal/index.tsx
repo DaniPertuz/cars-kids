@@ -1,7 +1,7 @@
 import { Card, Layout, Modal } from '@ui-kitten/components';
 
 import { DefaultInput, NumericInput } from '../../forms';
-import { Headline, PrimaryButton, RadioGroupComponent } from '../../ui';
+import { Headline, ModalCloseButtonContainer, PrimaryButton, RadioGroupComponent } from '../../ui';
 import { useProductEntryModalData } from '../../../hooks';
 import { IStatus } from '../../../../infrastructure/interfaces';
 import { Product } from '../../../../core/entities';
@@ -20,6 +20,7 @@ export const ProductEntryModal = ({ product, visible, setVisible }: Props) => {
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
       <Card style={globalStyles.mainBackground}>
+        <ModalCloseButtonContainer onPress={() => setVisible(false)} />
         <Layout style={globalStyles.modalContainer}>
           <Headline text={`${product ? 'Actualizar' : 'Nuevo'} producto`} textColor={globalStyles.colorOnyx} />
           <DefaultInput caption='Este valor es único' placeholder={'Nombre'} value={productState.name} onChangeText={(name) => handleFieldChange('name', name)} />

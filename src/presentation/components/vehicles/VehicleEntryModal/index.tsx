@@ -1,7 +1,7 @@
 import { Card, Layout, Modal } from '@ui-kitten/components';
 
 import { DefaultInput } from '../../forms';
-import { Headline, PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
+import { Headline, ModalCloseButtonContainer, PrimaryButton, RadioGroupComponent, SelectComponent } from '../../ui';
 import { useVehicleEntryModalData } from '../../../hooks';
 import { Vehicle } from '../../../../core/entities';
 import { IStatus } from '../../../../infrastructure/interfaces';
@@ -33,6 +33,7 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
       <Card style={globalStyles.mainBackground}>
+        <ModalCloseButtonContainer onPress={() => setVisible(false)} />
         <Layout style={globalStyles.modalContainer}>
           <Headline text={vehicle ? 'Actualizar vehículo' : 'Nuevo vehículo'} textColor={globalStyles.colorOnyx} />
           <DefaultInput caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleState.nickname} onChangeText={handleNicknameChange} />
