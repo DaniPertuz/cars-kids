@@ -25,7 +25,8 @@ export enum IVehicleCategory {
 export enum IVehicleSize {
   Small  = 'S',
   Medium = 'M',
-  Large  = 'L'
+  Large  = 'L',
+  XLarge = 'XL'
 }
 
 export enum IPayment {
