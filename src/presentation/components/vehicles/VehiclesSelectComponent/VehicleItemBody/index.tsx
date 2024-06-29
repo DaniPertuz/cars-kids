@@ -6,10 +6,12 @@ import { Callout } from '../../../ui';
 import { globalColors } from '../../../../theme/globalColors';
 
 export const VehicleItemBody = ({ vehicle }: { vehicle: Vehicle; }) => {
+  const iconPadding = vehicle.size === IVehicleSize.Small ? 6 : vehicle.size === IVehicleSize.Medium ? 8 : 10;
+  const iconStyle = { backgroundColor: vehicle.color, ...styles.itemBorder, padding: iconPadding };
   return (
     <>
       <Layout style={styles.colorContainer}>
-        <Layout style={{ backgroundColor: vehicle.color, ...styles.itemColor, padding: vehicle.size === IVehicleSize.Small ? 6 : vehicle.size === IVehicleSize.Medium ? 8 : 10 }} />
+        <Layout style={iconStyle} />
       </Layout>
       <Layout style={styles.nicknameContainer}>
         <Callout text={vehicle.nickname} />
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  itemColor: {
+  itemBorder: {
     borderColor: globalColors.dark,
     borderRadius: 100,
     borderWidth: 1
