@@ -129,6 +129,9 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
       case IVehicleSize.Large:
         rentalAmount = time === 15 ? 10000 : time === 20 ? 14000 : 18000;
         break;
+      case IVehicleSize.XLarge:
+        rentalAmount = time === 15 ? 15000 : time === 20 ? 20000 : 25000;
+        break;
     }
     return rentalAmount;
   };

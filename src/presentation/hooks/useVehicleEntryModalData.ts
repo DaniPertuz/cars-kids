@@ -34,7 +34,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   const { user } = useUserInfo();
   const isAdmin = user?.role === IUserRole.Admin;
   const initialCategoryIndex = vehicle ? vehicle.category === IVehicleCategory.Car ? 0 : 1 : 0;
-  const initialSizeValue = vehicle ? vehicle.size === IVehicleSize.Large ? 'Grande' : vehicle.size === IVehicleSize.Medium ? 'Estándar' : 'Pequeño' : '';
+  const initialSizeValue = vehicle ? vehicle.size === IVehicleSize.XLarge ? 'Adultos' : vehicle.size === IVehicleSize.Large ? 'Grande' : vehicle.size === IVehicleSize.Medium ? 'Estándar' : 'Pequeño' : '';
 
   const handleFieldChange = (fieldName: keyof Vehicle, value: string | number) => {
     if (!visible) setVehicleObject({});
@@ -70,6 +70,9 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
         break;
       case 'Grande':
         handleFieldChange('size', IVehicleSize.Large);
+        break;
+      case 'Adultos':
+        handleFieldChange('size', IVehicleSize.XLarge);
         break;
     }
   };
