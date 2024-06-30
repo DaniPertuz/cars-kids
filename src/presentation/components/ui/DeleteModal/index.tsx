@@ -1,12 +1,13 @@
 import { Card, Layout, Modal } from '@ui-kitten/components';
 
-import { Callout, ModalCloseButton, PrimaryButton } from '../';
+import { BasicButton, Callout, PrimaryButton } from '../';
 import { Desk, Product, Purchase, Rental, User, Vehicle } from '../../../../core/entities';
 import { useDeleteModal } from '../../../hooks';
 import { IStatus } from '../../../../infrastructure/interfaces';
 
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
+import { globalColors } from '../../../theme/globalColors';
 
 interface Props {
   desk?: Desk;
@@ -41,7 +42,7 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
               {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
             </Layout>
             <Layout style={styles.closeButtonContainer}>
-              <ModalCloseButton onPress={() => setVisible(false)} />
+              <BasicButton activeOpacity={1.0} iconName={'close-circle-outline'} fillColor={globalColors.primaryRed} size={{ height: 35, width: 35 }} onPress={() => setVisible(false)} />
             </Layout>
           </Layout>
           <PrimaryButton activeOpacity={0.6} disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : (purchase || rental) ? handleDeleteTransaction : user ? handleDeleteUser : handleDeleteVehicle} />

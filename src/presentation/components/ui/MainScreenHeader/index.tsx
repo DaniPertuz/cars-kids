@@ -4,10 +4,11 @@ import { Layout } from '@ui-kitten/components';
 import { Desk } from '../../../../core/entities';
 import { Transaction } from '../../../../infrastructure/interfaces';
 import { useMainScreenHeaderData } from '../../../hooks/useMainScreenHeaderData';
-import { MainScreenHeaderButton } from '../MainScreenHeaderButton';
+import { BasicButton } from '../BasicButton';
 import { MainScreenHeaderTitle } from '../MainScreenHeaderTitle';
 import { MainScreenHeaderLoadingSpinner } from '../MainScreenHeaderLoadingSpinner';
 
+import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
@@ -22,11 +23,11 @@ export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) 
 
   return (
     <Layout style={{ marginTop: top, ...styles.container }}>
-      <MainScreenHeaderButton iconName={'plus-circle'} onPress={showTransactionModal} />
+      <BasicButton activeOpacity={0.5} iconName='plus-circle' fillColor={globalColors.primaryRed} size={{ height: 45, width: 45 }} onPress={showTransactionModal} />
       <MainScreenHeaderTitle desks={desks} selectedDesk={selectedDesk!} title={title} handleDesk={handleDesk} />
       {!loading
         ?
-        <MainScreenHeaderButton iconName={'upload-outline'} onPress={transaction === 'Purchase' ? uploadPurchase : uploadPurchase} />
+        <BasicButton activeOpacity={0.5} iconName='upload-outline' fillColor={globalColors.primaryRed} size={{ height: 45, width: 45 }} onPress={transaction === 'Purchase' ? uploadPurchase : uploadPurchase} />
         :
         <MainScreenHeaderLoadingSpinner />
       }
