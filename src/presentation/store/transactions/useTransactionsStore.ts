@@ -43,7 +43,7 @@ export const useTransactionStore = create<TransactionState>()(
             const resp = type === 'Purchase'
               ? await PurchasesUseCases.createPurchaseUseCase(transaction as Purchase)
               : await RentalsUseCases.createRentalUseCase(transaction as Rental);
-            if (resp) {
+            if (!resp.error) {
               success = true;
             }
           } catch (error: any) {
