@@ -1,8 +1,8 @@
 import { Modal } from '@ui-kitten/components';
 import { Desk, Purchase, Rental } from '../../../../core/entities';
-import { ModalBody } from '../../ui';
-import { globalStyles } from '../../../styles/global.styles';
 import { Transaction } from '../../../../infrastructure/interfaces';
+import { ModalBody } from '../ModalBody';
+import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   desk: Desk;
