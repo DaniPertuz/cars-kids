@@ -12,8 +12,8 @@ export const RentalItemBody = ({ rental, index }: { index: number, rental: Renta
   return (
     <Layout style={styles.mainContainer}>
       <Layout style={styles.container}>
-        <Layout style={[styles.headerContainer, { backgroundColor: (!done && (time / 60) < 3) ? globalColors.primaryRed : (!done && (time / 60) < 10) ? globalColors.warning : globalColors.white }]}>
-          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={(!done && (time / 60) < 3) ? globalColors.white : (!done && (time / 60) < 10) ? globalColors.white : globalColors.dark} />
+        <Layout style={[styles.headerContainer, { backgroundColor: (!done && (time / 60) < 3) ? globalColors.primaryRed : (!done && (time / 60) < 5) ? globalColors.warning : globalColors.white }]}>
+          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={(!done && (time / 60) < 3) ? globalColors.white : (!done && (time / 60) < 5) ? globalColors.white : globalColors.dark} />
         </Layout>
         <Layout style={styles.descriptionContainer}>
           <RentalItemDescription rental={rental} />
