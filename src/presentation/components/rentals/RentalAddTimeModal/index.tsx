@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
+import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { Rental } from '../../../../core/entities';
 import { useTransactionStore } from '../../../store/transactions/useTransactionsStore';
 import { DefaultInput, NumericInput } from '../../forms';
@@ -22,6 +23,12 @@ export const RentalAddTimeModal = ({ index, rental, visible, advanceTime, setVis
 
   const onSubmit = () => {
     setLoading(true);
+    if (minutes === 0 || exception.length === 0) {
+      SnackbarAdapter.showSnackbar('Datos incompletos para agregar minutos');
+      setLoading(false);
+      return;
+    }
+
     advanceTime((minutes * 60) * -1);
     updateRental(index, { ...rental, exception }, 'Rental');
     setLoading(false);
