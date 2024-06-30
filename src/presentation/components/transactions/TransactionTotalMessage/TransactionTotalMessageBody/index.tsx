@@ -4,11 +4,19 @@ import { Callout } from '../../../ui';
 import { TransactionIconTotal } from './TransactionIconTotal';
 import { globalStyles } from '../../../../styles/global.styles';
 
-export const TransactionTotalMessageBody = (cashTotal: number, transferTotal: number, total: number) => (
+interface Props {
+  cashTotal: number;
+  transferTotal: number;
+  total: number;
+  count: number;
+}
+
+export const TransactionTotalMessageBody = ({ cashTotal, count, total, transferTotal }: Props) => (
   <Layout style={styles.mainContainer}>
     <TransactionIconTotal transaction='cash' total={cashTotal} />
     <TransactionIconTotal transaction='transfers' total={transferTotal} />
     <Callout text={`Total: ${total}`} />
+    <Callout text={`Conteo: ${count}`} />
   </Layout>
 );
 
