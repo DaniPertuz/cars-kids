@@ -22,6 +22,7 @@ interface Props {
 export const useDeleteModal = ({ desk, product, purchase, rental, user, vehicle, visible, setVisible }: Props) => {
   const [loading, setLoading] = useState(false);
   const purchases = useTransactionStore(state => state.purchases);
+  const rentals = useTransactionStore(state => state.rentals);
   const removeTransaction = useTransactionStore(state => state.removeTransaction);
 
   const handleDeleteDesk = async () => {
@@ -108,7 +109,7 @@ export const useDeleteModal = ({ desk, product, purchase, rental, user, vehicle,
   };
 
   const handleDeleteTransaction = () => {
-    const index = purchases.indexOf(purchase!);
+    const index = purchase ? purchases.indexOf(purchase!) : rentals.indexOf(rental!);
     removeTransaction(index, purchase ? 'Purchase' : 'Rental');
     SnackbarAdapter.showSnackbar(purchase ? 'Compra eliminada' : 'Alquiler eliminado');
     setVisible(false);
@@ -121,5 +122,5 @@ export const useDeleteModal = ({ desk, product, purchase, rental, user, vehicle,
     handleDeleteTransaction,
     handleDeleteUser,
     handleDeleteVehicle
-  }
-}
+  };
+};
