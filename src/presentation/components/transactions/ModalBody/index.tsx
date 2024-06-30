@@ -5,12 +5,12 @@ import { Desk, Purchase, Rental } from '../../../../core/entities';
 import { Transaction } from '../../../../infrastructure/interfaces';
 import { useTransactionEntryModalData } from '../../../hooks';
 import { DefaultInput } from '../../forms';
-import { TransactionEntryModalPaymentFeesSelects } from '../../transactions/TransactionEntryModalPaymentFeesSelects';
+import { TransactionEntryModalPaymentFeesSelects } from '../TransactionEntryModalPaymentFeesSelects';
 import { VehiclesSelectComponent } from '../../vehicles/VehiclesSelectComponent';
-import { ModalTitle } from '../ModalTitle';
-import { PrimaryButton } from '../PrimaryButton';
-import { SelectComponent } from '../SelectComponent';
-import { LoadingIndicator } from '../LoadingIndicator';
+import { ModalTitle } from '../../ui/ModalTitle';
+import { PrimaryButton } from '../../ui/PrimaryButton';
+import { SelectComponent } from '../../ui/SelectComponent';
+import { LoadingIndicator } from '../../ui/LoadingIndicator';
 
 import { globalColors } from '../../../theme/globalColors';
 import { globalStyles } from '../../../styles/global.styles';
