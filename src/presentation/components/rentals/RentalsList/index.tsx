@@ -10,7 +10,7 @@ export const RentalsList = ({ rentals }: { rentals: Rental[]; }) => {
       data={rentals}
       showsVerticalScrollIndicator={false}
       style={styles.container}
-      renderItem={({ item }) => <RentalsListItem rental={item} />}
+      renderItem={({ item, index }) => <RentalsListItem index={index} rental={item} />}
     />
   );
 };

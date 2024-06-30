@@ -5,10 +5,10 @@ import { TransactionActions } from '../../transactions/TransactionActions';
 import { RentalItemBody } from './RentalItemBody';
 import { globalColors } from '../../../theme/globalColors';
 
-export const RentalsListItem = ({ rental }: { rental: Rental; }) => {
+export const RentalsListItem = ({ index, rental }: { index: number, rental: Rental; }) => {
   return (
     <ListItem
-      description={<RentalItemBody rental={rental} />}
+      description={<RentalItemBody index={index} rental={rental} />}
       accessoryRight={<TransactionActions rental={rental} />}
       style={styles.itemContainer}
     />
