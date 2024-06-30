@@ -1,22 +1,48 @@
+import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { HeaderFive, BasicButton } from '../../ui';
+import { Status } from 'use-timer/lib/types';
+import { Rental } from '../../../../core/entities';
+import { BasicButton } from '../../ui';
+import { RentalAddTimeModal } from '../RentalAddTimeModal';
 import { globalColors } from '../../../theme/globalColors';
 
-export const RentalTimerButtons = () => {
-  const buttonSize = { height: 25, width: 25 };
-  const buttonOpacity = 0.7;
+interface Props {
+  buttonOpacity: number;
+  buttonSize: { height: number, width: number; };
+  index: number;
+  rental: Rental;
+  status: Status;
+  advanceTime: (timeToAdd: number) => void;
+  pause: () => void;
+  reset: () => void;
+  setDone: (value: boolean) => void;
+  start: () => void;
+}
 
+export const RentalTimerButtons = ({ buttonOpacity, buttonSize, index, rental, status, advanceTime, pause, reset, setDone, start }: Props) => {
+  const [visible, setVisible] = useState(false);
   return (
-    <Layout style={styles.container}>
-      <HeaderFive text={`'`} />
-      <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.warning} size={buttonSize} iconName='pause-circle-outline' onPress={() => console.log('Pausa')} />
-      <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.darkDisabled} size={buttonSize} iconName='refresh-outline' onPress={() => console.log('Reanuda')} />
-      <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.successLight} size={buttonSize} iconName='checkmark-circle-2-outline' onPress={() => console.log('Termina')} />
+    <Layout>
+      <Layout style={styles.container}>
+        <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.primaryRed} size={buttonSize} iconName={'plus-circle-outline'} onPress={() => setVisible(true)} />
+        <BasicButton activeOpacity={buttonOpacity} fillColor={status === 'RUNNING' ? globalColors.warning : globalColors.success} size={buttonSize} iconName={status === 'RUNNING' ? 'pause-circle-outline' : 'play-circle-outline'} onPress={status === 'RUNNING' ? pause : start} />
+        <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.darkDisabled} size={buttonSize} iconName='refresh-outline' onPress={reset} />
+        <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.successLight} size={buttonSize} iconName='checkmark-circle-2-outline' onPress={() => setDone(true)} />
+      </Layout>
+      <RentalAddTimeModal index={index} rental={rental} advanceTime={advanceTime} visible={visible} setVisible={setVisible} />
     </Layout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', gap: 15 }
+  container: {
+    borderRadius: 50,
+    borderColor: globalColors.darkDisabled,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 5
+  }
 });
