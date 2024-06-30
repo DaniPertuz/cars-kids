@@ -1,6 +1,7 @@
 export * from './AddButton';
 export * from './Back';
 export * from './BackgroundImage';
+export * from './BasicButton';
 export * from './Callout';
 export * from './CalloutBold';
 export * from './Caption';
@@ -22,7 +23,6 @@ export * from './LoadingIndicator';
 export * from './MainLayout';
 export * from './MainScreenHeader';
 export * from './ModalBody';
-export * from './ModalCloseButton';
 export * from './ModalCloseButtonContainer';
 export * from './ModalTitle';
 export * from './NextButton';
