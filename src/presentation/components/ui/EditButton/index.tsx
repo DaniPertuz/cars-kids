@@ -36,8 +36,8 @@ export const EditButton = ({ iconSize, budget, desk, updateDesk, product, purcha
         {budget && <BudgetEntryModal budget={budget} visible={visible} setVisible={setVisible} />}
         {updateDesk && <DeskEntryModal desk={desk} visible={visible} setVisible={setVisible} />}
         {product && <ProductEntryModal product={product} visible={visible} setVisible={setVisible} />}
-        {purchase && <TransactionEntryModal visible={visible} setVisible={setVisible} purchase={purchase} desk={desk!} />}
-        {rental && <TransactionEntryModal visible={visible} setVisible={setVisible} rental={rental} desk={desk!} />}
+        {purchase && <TransactionEntryModal visible={visible} setVisible={setVisible} purchase={purchase} desk={desk!} transaction={'Purchase'} />}
+        {rental && <TransactionEntryModal visible={visible} setVisible={setVisible} rental={rental} desk={desk!} transaction={'Rental'} />}
         {user && <UserEntryModal user={user} visible={visible} setVisible={setVisible} />}
         {vehicle && <VehicleEntryModal vehicle={vehicle} visible={visible} setVisible={setVisible} />}
       </Layout>
