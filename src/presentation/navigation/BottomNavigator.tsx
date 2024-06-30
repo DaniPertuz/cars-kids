@@ -1,3 +1,4 @@
+import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CustomIcon } from '../components/ui/CustomIcon';
 import StatusBarComponent from '../components/ui/status-bar';
@@ -23,7 +24,7 @@ export const BottomNavigator = () => {
           tabBarIcon: ({ focused }) => {
             switch (route.name) {
               case 'RentalsScreen':
-                return <CustomIcon name='navigation-2-outline' fillColor={focused ? globalColors.white : globalColors.dark} />;
+                return <Image source={require('../../assets/race.png')} style={{ height: 25, width: 25 }} />;
 
               case 'PurchasesScreen':
                 return <CustomIcon name='shopping-cart-outline' fillColor={focused ? globalColors.white : globalColors.dark} />;
