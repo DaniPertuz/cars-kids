@@ -4,6 +4,7 @@ import { Transaction } from '../../../../infrastructure/interfaces';
 import { useTransactionStore } from '../../../store/transactions/useTransactionsStore';
 import { PurchasesListContent } from '../../purchases/PurchasesListContent';
 import { RentalsListContent } from '../../rentals/RentalsListContent';
+import { TransactionTotalMessage } from '../TransactionTotalMessage';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
@@ -16,6 +17,7 @@ export const TransactionsListComponent = ({ entity }: Props) => {
 
   return (
     <Layout style={styles.container}>
+      <TransactionTotalMessage entity={entity} purchases={purchases} rentals={rentals} />
       {entity === 'Purchase' ? <PurchasesListContent purchases={purchases} /> : <RentalsListContent rentals={rentals} />}
     </Layout>
   );
