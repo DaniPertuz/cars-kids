@@ -45,8 +45,7 @@ export const globalStyles = StyleSheet.create({
   input: {
     backgroundColor: globalColors.white,
     borderColor: globalColors.backgroundDark,
-    borderRadius: 10,
-    marginBottom: 10
+    borderRadius: 10
   },
   mainBackground: {
     backgroundColor: globalColors.background
