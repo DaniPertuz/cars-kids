@@ -43,11 +43,12 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
     handlePayment,
     handleProduct,
     handleQuantity,
-    quantityPurchases,
+    handleRentalException,
     handleRentalClient,
     handleRentalTime,
     handleRentalVehicle,
     paymentOptions,
+    quantityPurchases,
     onSubmit
   } = useTransactionEntryModalData({ desk, purchase, rental, setVisible });
 
@@ -78,6 +79,7 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
                     <SelectComponent placeholder={'Tiempo'} initialValue={rental ? String(rental.time) : ''} options={['15', '20', '30']} handleSelection={handleRentalTime} />
                     <VehiclesSelectComponent placeholder={'Vehículo'} initialValue={rental?.vehicle.nickname || ''} vehicles={vehicles} handleSelection={handleRentalVehicle} />
                     <SelectComponent placeholder={'Medio de pago'} initialValue={convertPurchasePayment(rental?.payment!) || ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Rental')} />
+                    <DefaultInput placeholder={'Observación'} value={newRental?.exception || ''} onChangeText={(exception: string) => handleRentalException(exception)} />
                   </>
                 }
                 {customPayment &&

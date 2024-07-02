@@ -137,6 +137,14 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     }));
   };
 
+  const handleRentalException = (value: string) => {
+    updateTransactionState('exception', value, 'Rental');
+    setNewRental(prevState => ({
+      ...prevState,
+      exception: value
+    }));
+  };
+
   const handleRentalTime = (value: string) => {
     const rentalTime = parseInt(value, 10);
     updateTransactionState('time', rentalTime, 'Rental');
@@ -410,6 +418,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     handleQuantity,
     handlePayment,
     handleRentalClient,
+    handleRentalException,
     handleRentalTime,
     handleRentalVehicle,
     handleFeePayment,
