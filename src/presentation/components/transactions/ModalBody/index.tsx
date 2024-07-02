@@ -4,13 +4,10 @@ import { Card, Input, Layout } from '@ui-kitten/components';
 import { Desk, Purchase, Rental } from '../../../../core/entities';
 import { Transaction } from '../../../../infrastructure/interfaces';
 import { useTransactionEntryModalData } from '../../../hooks';
-import { DefaultInput } from '../../forms';
+import { DefaultInput, NumericInput } from '../../forms';
 import { TransactionEntryModalPaymentFeesSelects } from '../TransactionEntryModalPaymentFeesSelects';
+import { CustomCheckbox, LoadingIndicator, ModalTitle, PrimaryButton, SelectComponent } from '../../ui';
 import { VehiclesSelectComponent } from '../../vehicles/VehiclesSelectComponent';
-import { ModalTitle } from '../../ui/ModalTitle';
-import { PrimaryButton } from '../../ui/PrimaryButton';
-import { SelectComponent } from '../../ui/SelectComponent';
-import { LoadingIndicator } from '../../ui/LoadingIndicator';
 
 import { globalColors } from '../../../theme/globalColors';
 import { globalStyles } from '../../../styles/global.styles';
@@ -26,7 +23,9 @@ interface Props {
 export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: Props) => {
   const {
     customPayment,
+    customRentalAmount,
     firstFee,
+    isCustomRentalAmount,
     loading,
     newPurchase,
     newRental,
@@ -35,6 +34,7 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
     thirdFee,
     vehicles,
     convertPurchasePayment,
+    handleCustomRentalAmount,
     setFirstFee,
     setSecondFee,
     setThirdFee,
@@ -49,6 +49,7 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
     handleRentalVehicle,
     paymentOptions,
     quantityPurchases,
+    setCustomRentalAmount,
     onSubmit
   } = useTransactionEntryModalData({ desk, purchase, rental, setVisible });
 
@@ -79,7 +80,9 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
                     <SelectComponent placeholder={'Tiempo'} initialValue={rental ? String(rental.time) : ''} options={['15', '20', '30']} handleSelection={handleRentalTime} />
                     <VehiclesSelectComponent placeholder={'Vehículo'} initialValue={rental?.vehicle.nickname || ''} vehicles={vehicles} handleSelection={handleRentalVehicle} />
                     <SelectComponent placeholder={'Medio de pago'} initialValue={convertPurchasePayment(rental?.payment!) || ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Rental')} />
+                    {isCustomRentalAmount && <NumericInput placeholder='Monto' value={customRentalAmount || 0} onChangeText={(amount: number) => setCustomRentalAmount(amount)} />}
                     <DefaultInput placeholder={'Observación'} value={newRental?.exception || ''} onChangeText={(exception: string) => handleRentalException(exception)} />
+                    <CustomCheckbox isCustomRentalAmount={isCustomRentalAmount} handleCustomRentalAmount={handleCustomRentalAmount} />
                   </>
                 }
                 {customPayment &&

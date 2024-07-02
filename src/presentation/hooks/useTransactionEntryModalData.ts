@@ -45,6 +45,8 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
   const [loading, setLoading] = useState(false);
   const [customPayment, setCustomPayment] = useState(false);
+  const [isCustomRentalAmount, setIsCustomRentalAmount] = useState(false);
+  const [customRentalAmount, setCustomRentalAmount] = useState(0);
   const [firstFee, setFirstFee] = useState({ payment: {} as IPayment, price: 0 });
   const [secondFee, setSecondFee] = useState({ payment: {} as IPayment, price: 0 });
   const [thirdFee, setThirdFee] = useState({ payment: {} as IPayment, price: 0 });
@@ -103,7 +105,11 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     }
   };
 
-  const handleRentalAmount = (size: IVehicleSize, time: number) => {
+  const handleCustomRentalAmount = (value: boolean) => {
+    setIsCustomRentalAmount(value);
+  };
+
+  const handleRentalAmount = (size: IVehicleSize, time: number, customRentalAmount?: number) => {
     let rentalAmount: number = 0;
     switch (size) {
       case IVehicleSize.Small:
@@ -123,26 +129,16 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
   const handleRentalVehicle = (value: string) => {
     const selectedVehicle = vehicles.find(v => v.nickname === value);
     if (selectedVehicle && selectedVehicle !== newRental.vehicle) {
-      const amount = handleRentalAmount(selectedVehicle.size as IVehicleSize, newRental.time);
       updateTransactionState('vehicle', selectedVehicle, 'Rental');
-      updateTransactionState('amount', amount, 'Rental');
     }
   };
 
   const handleRentalClient = (value: string) => {
     updateTransactionState('client', value, 'Rental');
-    setNewRental(prevState => ({
-      ...prevState,
-      client: value
-    }));
   };
 
   const handleRentalException = (value: string) => {
     updateTransactionState('exception', value, 'Rental');
-    setNewRental(prevState => ({
-      ...prevState,
-      exception: value
-    }));
   };
 
   const handleRentalTime = (value: string) => {
@@ -356,6 +352,12 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
       }
 
       if (transaction === 'Rental') {
+        if (isCustomRentalAmount && (customRentalAmount === 0 || !newRental.exception)) {
+          showMessage('Alquiler personalizado inválido');
+          setVisible(true);
+          return;
+        }
+
         const updatedRental: Rental = {
           ...rental,
           ...newRental,
@@ -364,7 +366,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
           time: newRental.time!,
           date: newRental.date,
           vehicle: newRental.vehicle,
-          amount: newRental.amount!,
+          amount: isCustomRentalAmount ? customRentalAmount : handleRentalAmount(newRental.vehicle.size as IVehicleSize, newRental.time)
         };
 
         if (rental) {
@@ -405,8 +407,10 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
   return {
     customPayment,
+    customRentalAmount,
     firstFee,
     loading,
+    isCustomRentalAmount,
     newPurchase,
     newRental,
     products,
@@ -414,6 +418,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     thirdFee,
     vehicles,
     convertPurchasePayment,
+    handleCustomRentalAmount,
     handleProduct,
     handleQuantity,
     handlePayment,
@@ -425,6 +430,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     handleFeeValue,
     paymentOptions,
     quantityPurchases,
+    setCustomRentalAmount,
     setFirstFee,
     setSecondFee,
     setThirdFee,
