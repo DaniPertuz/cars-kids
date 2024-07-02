@@ -4,6 +4,8 @@ import { AuthStatus } from '../../../infrastructure/interfaces';
 import { StorageAdapter } from '../../../config/adapters/storage-adapter';
 import * as AuthUseCases from '../../../core/use-cases/auth';
 import * as UserUseCases from '../../../core/use-cases/users';
+import { useTransactionStore } from '../transactions/useTransactionsStore';
+import { useDesksStore } from '../desk/useDeskStore';
 
 export interface AuthState {
   status: AuthStatus;
@@ -102,12 +104,12 @@ export const useAuthStore = create<AuthState>()((set) => ({
     return await UserUseCases.updateUserPasswordUseCase(email, password);
   },
   logout: async () => {
-    Promise.all([
-      StorageAdapter.removeItem('token'),
-      StorageAdapter.removeItem('user'),
-      StorageAdapter.removeItem('desks-storage'),
-      StorageAdapter.removeItem('transactions-storage')
-    ]);
     set({ status: 'unauthenticated', token: undefined, user: undefined });
+    await Promise.all([
+      StorageAdapter.removeItem('token'),
+      StorageAdapter.removeItem('user')
+    ]);
+    useDesksStore.getState().clearStorage();
+    useTransactionStore.getState().clearStorage();
   }
 }));
