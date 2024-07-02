@@ -5,6 +5,7 @@ export * from './BasicButton';
 export * from './Callout';
 export * from './CalloutBold';
 export * from './Caption';
+export * from './CustomCheckbox';
 export * from './CustomDivider';
 export * from './CustomIcon';
 export * from './DataLayout';
