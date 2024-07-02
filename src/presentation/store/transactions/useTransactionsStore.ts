@@ -14,6 +14,7 @@ interface TransactionState {
   updateTransaction: (index: number, updatedTransaction: Purchase | Rental, type: Transaction) => void;
   uploadTransactions: (type: Transaction, handleMessage: (message: string) => void) => Promise<boolean>;
   removeTransaction: (index: number, type: Transaction) => void;
+  clearStorage: () => void;
 }
 
 export const useTransactionStore = create<TransactionState>()(
@@ -79,6 +80,10 @@ export const useTransactionStore = create<TransactionState>()(
           return { [type === 'Purchase' ? 'purchases' : 'rentals']: transactions };
         });
       },
+      clearStorage: () => {
+        AsyncStorage.removeItem('transactions-storage');
+        set({ purchases: [], rentals: [] });
+      }
     }),
     {
       name: 'transactions-storage',
@@ -92,8 +97,8 @@ export const useTransactionStore = create<TransactionState>()(
         },
         removeItem: async (key) => {
           await AsyncStorage.removeItem(key);
-        },
-      },
+        }
+      }
     }
   )
 );

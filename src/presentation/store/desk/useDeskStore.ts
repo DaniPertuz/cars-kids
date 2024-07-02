@@ -11,6 +11,7 @@ interface DeskState {
   setSelectedDesk: (desk: Desk) => void;
   getDesksTotal: () => Promise<void>;
   getAllDesks: (limit?: number) => Promise<void>;
+  clearStorage: () => void;
 }
 
 export const useDesksStore = create<DeskState>()(
@@ -27,7 +28,7 @@ export const useDesksStore = create<DeskState>()(
         const total = resp.response?.total || 0;
         set({ total });
 
-        if (total !== get().total) {
+        if (get().desks.length !== get().total) {
           await get().getAllDesks(total);
         }
       },
@@ -35,6 +36,10 @@ export const useDesksStore = create<DeskState>()(
         const query = limit ? `desks?limit=${limit}` : 'desks';
         const resp = await DeskUseCases.getDesksUseCase(query);
         set({ desks: resp.response?.desks || [] });
+      },
+      clearStorage: () => {
+        AsyncStorage.removeItem('desks-storage');
+        set({ desks: [], selectedDesk: undefined, total: 0 });
       }
     }),
     {
