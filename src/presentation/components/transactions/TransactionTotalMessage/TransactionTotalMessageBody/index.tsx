@@ -16,7 +16,7 @@ export const TransactionTotalMessageBody = ({ cashTotal, count, total, transferT
     <TransactionIconTotal transaction='cash' total={cashTotal} />
     <TransactionIconTotal transaction='transfers' total={transferTotal} />
     <Callout text={`Total: ${total}`} />
-    <Callout text={`Conteo: ${count}`} />
+    <Callout text={`# ${count}`} />
   </Layout>
 );
 
