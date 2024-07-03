@@ -38,7 +38,7 @@ export const useBudgetEntryModalData = ({ budget, visible, setVisible }: Props) 
   const onSubmit = async () => {
     setLoading(true);
 
-    const resp = await BudgetUseCases.updateBudgetUseCase(budgetState);
+    const resp = (JSON.stringify(budget) === JSON.stringify(init)) ? await BudgetUseCases.updateBudgetUseCase(budgetState) : await BudgetUseCases.createBudgetUseCase(budgetState);
 
     if (resp.error) {
       setLoading(false);
