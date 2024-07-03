@@ -7,6 +7,7 @@ import { adaptApiResponse } from '../../config/adapters/api-response-adapter';
 import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Budget } from '../../core/entities';
 import * as BudgetUseCases from '../../core/use-cases/budget';
+import { padTo2Digits } from '../../utils';
 
 export const useBudgetData = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
@@ -27,8 +28,8 @@ export const useBudgetData = () => {
 
   const setBudgetsByDay = async () => {
     const curr = new Date();
-    const day = curr.getDate().toString().padStart(2, '0');
-    const month = (curr.getMonth() + 1).toString().padStart(2, '0');
+    const day = padTo2Digits(curr.getDate());
+    const month = padTo2Digits(curr.getMonth() + 1);
     const year = curr.getFullYear().toString();
     const { response } = await BudgetUseCases.getBudgetsByDayUseCase('budgets/dates/day', day, month, year, { page: 1, limit: 1 });
     setCurrentDate({ day, month, year });
