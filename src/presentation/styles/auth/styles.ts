@@ -4,7 +4,8 @@ import { globalStyles } from '../global.styles';
 export const authStyles = StyleSheet.create({
   formContainer: {
     ...globalStyles.mainBackground,
-    marginTop: 20,
+    gap: 10,
+    marginTop: 20
   },
   footer: {
     alignItems: 'flex-end',
