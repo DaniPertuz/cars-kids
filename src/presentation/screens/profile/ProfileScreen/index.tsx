@@ -4,11 +4,9 @@ import { Layout } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { ProfileHeader, ProfileMenu, ProfileUserImage } from '../../../components/profile';
-import { MainLayout, TopNavigation } from '../../../components/ui';
+import { MainLayout } from '../../../components/ui';
 import { useUserInfo } from '../../../hooks';
 import { IUserRole } from '../../../../infrastructure/interfaces';
-
-import { globalStyles } from '../../../styles/global.styles';
 
 export const ProfileScreen = () => {
   const { top } = useSafeAreaInsets();
@@ -17,12 +15,11 @@ export const ProfileScreen = () => {
 
   return (
     <MainLayout>
-      <TopNavigation top={top} />
       {!user
         ?
         <LoadingScreen />
         :
-        <Layout style={{ paddingTop: user.role === IUserRole.Admin ? height * 0.03 : height * 0.08, ...globalStyles.mainLayout }}>
+        <Layout style={{ marginTop: user.role === IUserRole.Admin ? height * 0.03 : height * 0.08  }}>
           <ProfileUserImage height={height} />
           <ProfileHeader />
           <ProfileMenu />
