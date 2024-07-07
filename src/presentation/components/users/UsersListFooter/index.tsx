@@ -7,7 +7,7 @@ interface Props {
   fetchPrevPage: () => void;
 }
 
-export const UserListFooter = ({ usersData, fetchNextPage, fetchPrevPage }: Props) => {
+export const UsersListFooter = ({ usersData, fetchNextPage, fetchPrevPage }: Props) => {
   return (
     <MainLayout>
       <>
