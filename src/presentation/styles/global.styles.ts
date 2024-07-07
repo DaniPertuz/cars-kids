@@ -13,8 +13,7 @@ export const globalStyles = StyleSheet.create({
   },
   backButtonContainer: {
     position: 'absolute',
-    left: 15,
-    backgroundColor: globalColors.background
+    left: 15
   },
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -29,7 +28,6 @@ export const globalStyles = StyleSheet.create({
     marginBottom: 5
   },
   flexAlignJustifyCenter: {
-    backgroundColor: globalColors.background,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
@@ -42,35 +40,23 @@ export const globalStyles = StyleSheet.create({
     height: 25,
     width: 25
   },
-  input: {
-    backgroundColor: globalColors.white,
-    borderColor: globalColors.backgroundDark,
-    borderRadius: 10
-  },
   mainBackground: {
     backgroundColor: globalColors.background
-  },
-  mainLayout: {
-    backgroundColor: globalColors.background,
-    gap: 20,
   },
   mainMargin: {
     marginHorizontal: 40
   },
   modalContainer: {
-    backgroundColor: globalColors.background,
     gap: 10,
     width: 320
   },
   transactionsContainer: {
-    backgroundColor: globalColors.background,
     justifyContent: 'center',
     width: 320
   },
   transactionsOptionsContainer: {
     gap: 20,
-    marginBottom: 30,
-    backgroundColor: globalColors.background,
+    marginBottom: 30
   },
   platinumBackground: {
     backgroundColor: globalColors.platinum
