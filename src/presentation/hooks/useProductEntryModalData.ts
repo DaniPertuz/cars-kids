@@ -64,6 +64,12 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const onSubmit = async () => {
     setLoading(true);
 
+    if (productState.cost >= productState.price) {
+      setLoading(false);
+      SnackbarAdapter.showSnackbar('Costo debe ser menor a precio de venta');
+      return;
+    }
+
     const resp = product ? await ProductUseCases.updateProductUseCase(product.name, productObject as Product) : await ProductUseCases.addProductUseCase(productState);
 
     if (resp.error) {
@@ -78,6 +84,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
     setLoading(false);
     setVisible(false);
     SnackbarAdapter.showSnackbar(successMessage);
+    setProductObject(init);
     setProductState(product ? productState : init);
   };
 
