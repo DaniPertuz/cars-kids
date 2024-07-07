@@ -1,5 +1,7 @@
+import { Layout } from '@ui-kitten/components';
 import { Fee } from '../../../../infrastructure/interfaces';
 import { paymentDescriptions } from '../../../../utils';
+import { useCustomTheme } from '../../../hooks';
 import { NumericInput } from '../../forms';
 import { SelectComponent } from '../../ui';
 
@@ -24,11 +26,12 @@ const FeeSelector = ({ fee, handleFeePayment, handleFeeValue, setFee }: { fee: F
 };
 
 export const TransactionEntryModalPaymentFeesSelects = ({ firstFee, secondFee, thirdFee, handleFeePayment, handleFeeValue, setFirstFee, setSecondFee, setThirdFee }: Props) => {
+  const { background } = useCustomTheme();
   return (
-    <>
+    <Layout style={[{ gap: 10 }, background]}>
       <FeeSelector fee={firstFee} handleFeePayment={handleFeePayment} handleFeeValue={handleFeeValue} setFee={setFirstFee} />
       <FeeSelector fee={secondFee} handleFeePayment={handleFeePayment} handleFeeValue={handleFeeValue} setFee={setSecondFee} />
       <FeeSelector fee={thirdFee} handleFeePayment={handleFeePayment} handleFeeValue={handleFeeValue} setFee={setThirdFee} />
-    </>
+    </Layout>
   );
 };

@@ -15,7 +15,6 @@ import { ReportsScreen } from '../screens/profile/ReportsScreen';
 import { UsersScreen } from '../screens/profile/UsersScreen';
 import { VehiclesScreen } from '../screens/profile/VehiclesScreen';
 import { BottomNavigator, MainStackParams } from './BottomNavigator';
-import { globalColors } from '../theme/globalColors';
 
 export type RootStackParams = {
   BudgetScreen: undefined;
@@ -46,7 +45,7 @@ const fadeAnimation: StackCardStyleInterpolator = ({ current }) => {
 export const MainNavigator = () => {
   return (
     <>
-      <StatusBarComponent color={globalColors.background} theme='dark-content' />
+      <StatusBarComponent />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="LoginScreen" component={LoginScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="RegisterScreen" component={RegisterScreen} />

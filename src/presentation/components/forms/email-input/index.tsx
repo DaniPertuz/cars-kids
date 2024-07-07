@@ -1,5 +1,5 @@
 import { Input } from '@ui-kitten/components';
-import { globalStyles } from '../../../styles/global.styles';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   placeholder: string;
@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const EmailInput = ({ placeholder, value, onChangeText }: Props) => {
+  const { borderColor } = useCustomTheme();
 
   return (
     <Input
@@ -16,8 +17,7 @@ export const EmailInput = ({ placeholder, value, onChangeText }: Props) => {
       autoCapitalize='none'
       value={value}
       onChangeText={onChangeText}
-      textStyle={globalStyles.colorOnyx}
-      style={globalStyles.input}
+      style={[{ borderRadius: 10, borderWidth: 1 }, borderColor]}
     />
   );
 };

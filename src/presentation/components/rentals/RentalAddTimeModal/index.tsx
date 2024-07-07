@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
 import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { Rental } from '../../../../core/entities';
+import { useCustomTheme } from '../../../hooks';
 import { useTransactionStore } from '../../../store/transactions/useTransactionsStore';
 import { DefaultInput, NumericInput } from '../../forms';
 import { HeaderFive, PrimaryButton } from '../../ui';
@@ -19,6 +20,7 @@ export const RentalAddTimeModal = ({ index, rental, visible, advanceTime, setVis
   const [loading, setLoading] = useState<boolean>(false);
   const [minutes, setMinutes] = useState<number>(0);
   const [exception, setException] = useState<string>('');
+  const { background } = useCustomTheme();
   const updateRental = useTransactionStore(state => state.updateTransaction);
 
   const onSubmit = () => {
@@ -38,7 +40,7 @@ export const RentalAddTimeModal = ({ index, rental, visible, advanceTime, setVis
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card style={globalStyles.mainBackground}>
+      <Card style={background}>
         <Layout style={globalStyles.modalContainer}>
           <HeaderFive text='Agregar minutos' />
           <NumericInput placeholder='Minutos adicionales' value={minutes} onChangeText={setMinutes} />

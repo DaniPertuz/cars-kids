@@ -9,6 +9,7 @@ import { Budget, Purchase, Rental } from '../../../../core/entities';
 import * as BudgetsUseCases from '../../../../core/use-cases/budget';
 import * as PurchasesUseCases from '../../../../core/use-cases/purchases';
 import * as RentalsUseCases from '../../../../core/use-cases/rentals';
+import { useCustomTheme } from '../../../hooks';
 
 import { styles } from './styles';
 
@@ -20,6 +21,7 @@ export const MonthPicker = ({ handleMonthYear }: Props) => {
   const [monthDate, setMonthDate] = useState<string | undefined>();
   const [yearDate, setYearDate] = useState<string | undefined>();
   const [years, setYears] = useState<number[]>([]);
+  const { background } = useCustomTheme();
 
   const fetchYears = async () => {
     try {
@@ -74,15 +76,15 @@ export const MonthPicker = ({ handleMonthYear }: Props) => {
   }, []);
 
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, background]}>
       {monthDate && yearDate
         ?
-        <Layout style={styles.resetDataContainer}>
+        <Layout style={[styles.resetDataContainer, background]}>
           <Footnote text={'Mes'} />
           <EditSelectedDate text={`${monthDate} de ${yearDate}`} onPress={reset} />
         </Layout>
         :
-        <Layout style={styles.selectsContainer}>
+        <Layout style={[styles.selectsContainer, background]}>
           <SelectComponent placeholder='Mes' options={i18n.monthNames[TranslationWidth.LONG]!} initialValue='' handleSelection={onMonthChange} />
           <SelectComponent placeholder='Año' options={years.map(String)} initialValue='' handleSelection={onYearChange} />
         </Layout>

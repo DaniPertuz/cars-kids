@@ -2,6 +2,7 @@ import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CustomIcon } from '../components/ui/CustomIcon';
 import StatusBarComponent from '../components/ui/status-bar';
+import { useCustomTheme } from '../hooks';
 import { PurchasesScreen } from '../screens/products/PurchasesScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { RentalsScreen } from '../screens/rentals/RentalsScreen';
@@ -16,43 +17,41 @@ export type MainStackParams = {
 const Tab = createBottomTabNavigator();
 
 export const BottomNavigator = () => {
+  const { background, isDarkMode, defaultPrimaryColor } = useCustomTheme();
+  const activeTintColor = isDarkMode ? defaultPrimaryColor : globalColors.white;
+  const tintColor = isDarkMode ? defaultPrimaryColor : globalColors.dark;
   return (
     <>
-      <StatusBarComponent color={globalColors.background} theme='dark-content' />
+      <StatusBarComponent />
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             switch (route.name) {
               case 'RentalsScreen':
-                return <Image source={require('../../assets/race.png')} style={{ height: 25, width: 25 }} />;
+                return <Image source={isDarkMode ? require('../../assets/race_dark.png') : require('../../assets/race.png')} style={{ height: 25, width: 25 }} />;
 
               case 'PurchasesScreen':
-                return <CustomIcon name='shopping-cart-outline' fillColor={focused ? globalColors.white : globalColors.dark} />;
+                return <CustomIcon name='shopping-cart-outline' fillColor={focused ? globalColors.white : tintColor} />;
 
               case 'ProfileScreen':
-                return <CustomIcon name='person-outline' fillColor={focused ? globalColors.white : globalColors.dark} />;
+                return <CustomIcon name='person-outline' fillColor={focused ? globalColors.white : tintColor} />;
             }
           },
-          tabBarActiveTintColor: globalColors.white,
-          tabBarInactiveTintColor: globalColors.dark,
+          tabBarActiveTintColor: activeTintColor,
+          tabBarInactiveTintColor: tintColor,
           tabBarLabelStyle: {
             fontSize: 12,
             paddingBottom: 5
           },
-          headerStyle: {
-            elevation: 0,
-            borderColor: 'transparent',
-            shadowColor: 'transparent'
-          },
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: globalColors.background,
-            borderColor: globalColors.backgroundDark,
-            borderTopWidth: 1,
+            backgroundColor: background.backgroundColor,
+            borderTopColor: isDarkMode ? globalColors.white : globalColors.dark,
+            borderWidth: 1,
             elevation: 0,
             height: 80
           },
-          tabBarActiveBackgroundColor: globalColors.primaryRed,
+          tabBarActiveBackgroundColor: globalColors.primaryRed
         })}
       >
         <Tab.Screen name="RentalsScreen" options={{ title: 'Alquileres' }} component={RentalsScreen} />

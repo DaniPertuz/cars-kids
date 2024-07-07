@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Layout, RangeDatepicker } from '@ui-kitten/components';
 
-import { EditSelectedDate } from '../EditSelectedDate';
-import { Footnote } from '../../ui';
-import { useFormattedDate } from '../../../hooks';
+import { useCustomTheme, useFormattedDate } from '../../../hooks';
 import { localeDateService } from '../../../../utils';
+import { Footnote } from '../../ui';
+import { EditSelectedDate } from '../EditSelectedDate';
 
 import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
@@ -14,6 +14,7 @@ interface Props {
 }
 
 export const PeriodPicker = ({ handleSelectedRange }: Props) => {
+  const { background } = useCustomTheme();
   const [range, setRange] = useState<{ startDate?: Date | undefined, endDate?: Date | undefined; }>({
     startDate: undefined,
     endDate: undefined
@@ -45,7 +46,7 @@ export const PeriodPicker = ({ handleSelectedRange }: Props) => {
   }, [startDateNumbersText, endDateNumbersText]);
 
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, background]}>
       <Footnote text={'Rango'} />
       {!range.endDate
         ?

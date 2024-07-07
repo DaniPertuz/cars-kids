@@ -3,7 +3,7 @@ import { Layout } from '@ui-kitten/components';
 
 import { Desk } from '../../../../core/entities';
 import { Transaction } from '../../../../infrastructure/interfaces';
-import { useMainScreenHeaderData } from '../../../hooks/useMainScreenHeaderData';
+import { useCustomTheme, useMainScreenHeaderData } from '../../../hooks';
 import { BasicButton } from '../BasicButton';
 import { MainScreenHeaderTitle } from '../MainScreenHeaderTitle';
 import { MainScreenHeaderLoadingSpinner } from '../MainScreenHeaderLoadingSpinner';
@@ -19,10 +19,11 @@ interface Props {
 
 export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) => {
   const { top } = useSafeAreaInsets();
+  const { background } = useCustomTheme();
   const { desks, selectedDesk, loading, visible, handleDesk, uploadPurchase, setVisible, showTransactionModal } = useMainScreenHeaderData({ transaction });
 
   return (
-    <Layout style={{ marginTop: top, ...styles.container }}>
+    <Layout style={[{ marginTop: top, ...styles.container }, background]}>
       <BasicButton activeOpacity={0.5} iconName='plus-circle' fillColor={globalColors.primaryRed} size={{ height: 45, width: 45 }} onPress={showTransactionModal} />
       <MainScreenHeaderTitle desks={desks} selectedDesk={selectedDesk!} title={title} handleDesk={handleDesk} />
       {!loading

@@ -3,7 +3,6 @@ import { globalStyles } from '../global.styles';
 
 export const authStyles = StyleSheet.create({
   formContainer: {
-    ...globalStyles.mainBackground,
     gap: 10,
     marginTop: 20
   },
@@ -15,20 +14,14 @@ export const authStyles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    ...globalStyles.mainBackground,
     marginBottom: 30
   },
   mainImage: {
-    ...globalStyles.mainBackground,
     height: 200,
     width: 300
   },
   spacer: {
     ...globalStyles.mainBackground,
     height: 20
-  },
-  welcomeTextContainer: {
-    alignItems: 'center',
-    ...globalStyles.mainBackground
   }
 });

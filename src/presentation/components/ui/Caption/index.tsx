@@ -1,9 +1,15 @@
 import { Text } from '@ui-kitten/components';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   text: string;
-  textColor: { color: string; };
+  textColor?: string;
   onPress?: () => void;
 }
 
-export const Caption = ({ text, textColor, onPress }: Props) => <Text category='p2' style={textColor} onPress={onPress}>{text}</Text>;
+export const Caption = ({ text, textColor, onPress }: Props) => {
+  const { defaultColor } = useCustomTheme();
+  return (
+    <Text category='p2' style={{ color: textColor ? textColor : defaultColor.color }} onPress={onPress}>{text}</Text>
+  );
+};

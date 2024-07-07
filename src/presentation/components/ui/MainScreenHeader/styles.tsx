@@ -9,8 +9,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 50,
     marginHorizontal: 20,
-    paddingBottom: 40,
-    ...globalStyles.mainBackground
+    paddingBottom: 40
   },
   titleContainer: {
     alignItems: 'center',

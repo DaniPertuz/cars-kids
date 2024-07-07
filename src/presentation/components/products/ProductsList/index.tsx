@@ -1,22 +1,22 @@
 import { Layout, List } from '@ui-kitten/components';
 
 import { Product } from '../../../../core/entities';
+import { useCustomTheme } from '../../../hooks';
 import { ProductListItem } from '../ProductListItem';
-
-import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   products: Product[];
 }
 
 export const ProductsList = ({ products }: Props) => {
+  const { background } = useCustomTheme();
   return (
     <List
       data={products}
       showsVerticalScrollIndicator={false}
-      style={globalStyles.mainBackground}
+      style={background}
       renderItem={({ item }) => (
-        <Layout style={globalStyles.mainBackground}>
+        <Layout style={background}>
           <ProductListItem item={item} />
         </Layout>
       )}

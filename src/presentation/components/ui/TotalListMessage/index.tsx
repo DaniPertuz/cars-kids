@@ -1,4 +1,5 @@
 import { Layout } from '@ui-kitten/components';
+import { useCustomTheme } from '../../../hooks';
 import { Callout } from '../../ui';
 import { styles } from './styles';
 
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export const TotalListMessage = ({ bottom, item, total }: Props) => {
+  const { background } = useCustomTheme();
   const formatItemName = (word: string, count: number) => {
     switch (word) {
       case 'Alquileres':
@@ -23,7 +25,7 @@ export const TotalListMessage = ({ bottom, item, total }: Props) => {
   };
 
   return (
-    <Layout style={{ ...styles.container, bottom: bottom + 20 }}>
+    <Layout style={[{ ...styles.container, bottom: bottom + 20 }, background]}>
       <Callout text={`${total} ${formatItemName(item, total)}`} />
     </Layout>
   );

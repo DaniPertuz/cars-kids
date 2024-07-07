@@ -1,8 +1,13 @@
 import { Layout } from '@ui-kitten/components';
-import { globalStyles } from '../../../styles/global.styles';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   height: number;
 }
 
-export const Spacer = ({ height }: Props) => <Layout style={{ height, ...globalStyles.mainBackground }} />;
+export const Spacer = ({ height }: Props) => {
+  const { background } = useCustomTheme();
+  return (
+    <Layout style={[{ height }, background]} />
+  );
+}

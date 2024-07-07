@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card, Layout, Modal } from '@ui-kitten/components';
 
 import { Headline, PrimaryButton } from '../../ui';
-import { useProfileUserImage, useUserInfo } from '../../../hooks';
+import { useCustomTheme, useProfileUserImage, useUserInfo } from '../../../hooks';
 import { ProfileUserImageModalButtons } from './ProfileUserImageModalButtons';
 import { ProfileUserImage } from './ProfileUserImage';
 
@@ -34,11 +34,13 @@ export const ProfileUserImageModal = ({ visible, setVisible }: Props) => {
     ? require('../../../../assets/logo2.png')
     : { uri: profilePicture ? profilePicture?.assets?.[0]?.uri : user?.img };
 
+  const { background } = useCustomTheme();
+
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card style={globalStyles.mainBackground}>
-        <Layout style={globalStyles.modalContainer}>
-          <Headline text={'Imagen'} textColor={globalStyles.colorOnyx} />
+      <Card style={background}>
+        <Layout style={[globalStyles.modalContainer, background]}>
+          <Headline text={'Imagen'} />
           <ProfileUserImage profileImagePath={profileImagePath} />
           <ProfileUserImageModalButtons selectPicture={selectPicture} takePicture={takePicture} />
           <PrimaryButton disabled={loading} text={'Actualizar'} onPress={onSubmit} />

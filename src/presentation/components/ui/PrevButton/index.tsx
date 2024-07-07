@@ -1,6 +1,6 @@
 import { Icon } from '@ui-kitten/components';
 import { TouchableOpacity } from 'react-native';
-import { globalColors } from '../../../theme/globalColors';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   iconSize: number;
@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const PrevButton = ({ iconSize, prevUrl, onPress }: Props) => {
+  const { disabledColor, defaultBasicDisabledColor } = useCustomTheme();
   return (
     <TouchableOpacity
       activeOpacity={1.0}
@@ -16,7 +17,7 @@ export const PrevButton = ({ iconSize, prevUrl, onPress }: Props) => {
       disabled={!prevUrl}
       style={{ height: iconSize, width: iconSize }}
     >
-      <Icon name='arrow-circle-left-outline' fill={prevUrl ? globalColors.dark : globalColors.darkDisabled} />
+      <Icon name='arrow-circle-left-outline' fill={prevUrl ? disabledColor : defaultBasicDisabledColor} />
     </TouchableOpacity>
   );
 };

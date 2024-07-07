@@ -4,16 +4,18 @@ import { Layout } from '@ui-kitten/components';
 
 import { ProfileEditUserImageButton } from '../ProfileEditUserImageButton';
 import { ProfileUserImageModal } from '../ProfileUserImageModal';
-import { useUserInfo } from '../../../hooks';
+import { useCustomTheme, useUserInfo } from '../../../hooks';
 
+import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 export const ProfileUserImage = ({ height }: { height: number; }) => {
   const [visible, setVisible] = useState(false);
   const { user } = useUserInfo();
+  const { isDarkMode, defaultBackgroundColor } = useCustomTheme();
 
   return (
-    <Layout style={styles.imageContainer}>
+    <Layout style={[styles.imageContainer, { backgroundColor: isDarkMode ? defaultBackgroundColor : globalColors.background }]}>
       <Image style={styles.image} source={user?.img ? { uri: user.img } : require('../../../../assets/logo2.png')} />
       <Layout style={{ ...styles.editImageIconContainer, top: height * 0.13 }}>
         <ProfileEditUserImageButton onPress={() => setVisible(true)} />

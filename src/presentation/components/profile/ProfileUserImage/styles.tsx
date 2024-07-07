@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { globalColors } from '../../../theme/globalColors';
-import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   editImageIconBackground: {
@@ -18,13 +17,13 @@ export const styles = StyleSheet.create({
     width: 25
   },
   image: {
-    backgroundColor: globalColors.white,
     borderRadius: 100,
     height: 150,
     width: 150,
   },
   imageContainer: {
     alignItems: 'center',
-    ...globalStyles.mainBackground
+    paddingHorizontal: 30,
+    paddingBottom: 25
   },
 });

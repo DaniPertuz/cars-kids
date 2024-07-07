@@ -1,8 +1,8 @@
 import { Layout } from '@ui-kitten/components';
 import { UsersResponse } from '../../../../infrastructure/interfaces';
+import { useCustomTheme } from '../../../hooks';
 import { UsersList } from '../UsersList';
-import { UserListFooter } from '../UsersListFooter';
-import { globalStyles } from '../../../styles/global.styles';
+import { UsersListFooter } from '../UsersListFooter';
 
 interface Props {
   usersData: UsersResponse;
@@ -11,10 +11,11 @@ interface Props {
 }
 
 export const UsersListComponent = ({ usersData, fetchPrevPage, fetchNextPage }: Props) => {
+  const { background } = useCustomTheme();
   return (
-    <Layout style={globalStyles.container}>
+    <Layout style={[{ flex: 1 }, background]}>
       <UsersList usersData={usersData} />
-      <UserListFooter usersData={usersData} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
+      <UsersListFooter usersData={usersData} fetchNextPage={fetchNextPage} fetchPrevPage={fetchPrevPage} />
     </Layout>
   );
 };

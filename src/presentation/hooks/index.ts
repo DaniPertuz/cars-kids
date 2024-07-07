@@ -10,6 +10,7 @@ export * from './useEmptyFieldValidation';
 export * from './useEntityData';
 export * from './useFormattedDate';
 export * from './useGeneratePDF';
+export * from './useMainScreenHeaderData';
 export * from './useProductEntryModalData';
 export * from './useProductsData';
 export * from './useProfileUserImage';

@@ -4,28 +4,23 @@ import { globalStyles } from '../../../styles/global.styles';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: 5,
-    ...globalStyles.mainBackground
+    marginBottom: 5
   },
   buttonsContainer: {
-    ...globalStyles.mainBackground,
     ...globalStyles.mainMargin
   },
   dataContainer: {
-    flex: 18,
-    ...globalStyles.mainBackground
+    flex: 18
   },
   flexOne: {
     flex: 1
   },
   listContainer: {
-    flex: 10,
-    ...globalStyles.mainBackground
+    flex: 10
   },
   selectsButtonContainer: {
     flex: 7,
     gap: 15,
-    marginTop: 10,
-    ...globalStyles.mainBackground
+    marginTop: 10
   }
 });

@@ -1,19 +1,20 @@
 import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { Rental } from '../../../../../core/entities';
-import { useRentalTimer } from '../../../../hooks';
+import { useCustomTheme, useRentalTimer } from '../../../../hooks';
 import { HeaderFive } from '../../../ui';
 import { RentalTimerButtons } from '../../RentalTimerButtons';
 import { RentalItemDescription } from '../RentalItemDescription';
 import { globalColors } from '../../../../theme/globalColors';
 
 export const RentalItemBody = ({ rental, index }: { index: number, rental: Rental; }) => {
+  const { defaultColor, platinumItemBackgroundColor } = useCustomTheme();
   const { done, time, formatTime, buttonOpacity, buttonSize, status, advanceTime, pause, reset, setDone, start } = useRentalTimer({ rental });
   return (
-    <Layout style={styles.mainContainer}>
-      <Layout style={styles.container}>
-        <Layout style={[styles.headerContainer, { backgroundColor: (!done && (time / 60) < 3) ? globalColors.primaryRed : (!done && (time / 60) < 5) ? globalColors.warning : globalColors.white }]}>
-          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={(!done && (time / 60) < 3) ? globalColors.white : (!done && (time / 60) < 5) ? globalColors.white : globalColors.dark} />
+    <Layout style={[styles.mainContainer, platinumItemBackgroundColor]}>
+      <Layout style={[styles.container, platinumItemBackgroundColor]}>
+        <Layout style={[styles.headerContainer, { backgroundColor: (!done && (time / 60) < 3) ? globalColors.primaryRed : (!done && (time / 60) < 5) ? globalColors.warning : platinumItemBackgroundColor.backgroundColor }]}>
+          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={(!done && (time / 60) < 3) ? globalColors.white : (!done && (time / 60) < 5) ? globalColors.white : defaultColor.color} />
         </Layout>
         <Layout style={styles.descriptionContainer}>
           <RentalItemDescription rental={rental} />

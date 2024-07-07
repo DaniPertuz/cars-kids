@@ -1,10 +1,11 @@
 import { Layout } from '@ui-kitten/components';
+import { useCustomTheme } from '../../../hooks';
 import { LayoutProps } from '../../../../infrastructure/interfaces';
-import { globalStyles } from '../../../styles/global.styles';
 
 export const HeaderLayout = ({ paddingTop, children }: LayoutProps) => {
+  const { background } = useCustomTheme();
   return (
-    <Layout style={{ paddingTop: paddingTop ? paddingTop : 0, ...globalStyles.mainLayout }}>
+    <Layout style={[{ paddingTop: paddingTop ? paddingTop : 0, gap: 10 }, background]}>
       {children}
     </Layout>
   );

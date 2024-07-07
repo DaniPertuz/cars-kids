@@ -4,7 +4,6 @@ import { EmptyListMessage } from '../../ui';
 import { AnyApiResponse } from '../../../../infrastructure/interfaces';
 import { LoadingScreen } from '../../../screens/LoadingScreen';
 import { ReportsList } from '../ReportsList';
-import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   data: AnyApiResponse;
@@ -32,7 +31,6 @@ export const ReportsListComponent = ({ data }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    ...globalStyles.mainBackground,
     flex: 1,
     marginTop: 10
   }

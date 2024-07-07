@@ -1,5 +1,6 @@
 import { Layout } from '@ui-kitten/components';
 import { Image, StyleSheet } from 'react-native';
+import { useCustomTheme } from '../../../../../hooks';
 import { Callout, CustomIcon } from '../../../../ui';
 import { globalStyles } from '../../../../../styles/global.styles';
 
@@ -9,13 +10,14 @@ interface Props {
 }
 
 export const TransactionIconTotal = ({ transaction, total }: Props) => {
+  const { background, isDarkMode } = useCustomTheme();
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, background]}>
       {transaction === 'cash'
         ?
-        <Image source={require('../../../../../../assets/money.png')} style={styles.iconSize} />
+        <Image source={isDarkMode ? require('../../../../../../assets/money_dark.png') : require('../../../../../../assets/money.png')} style={globalStyles.iconSize} />
         :
-        <CustomIcon name="credit-card-outline" size={styles.iconSize} />
+        <CustomIcon name="credit-card-outline" size={globalStyles.iconSize} />
       }
       <Callout text={`${total}`} />
     </Layout>
@@ -26,11 +28,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 10,
-    ...globalStyles.mainBackground
-  },
-  iconSize: {
-    height: 25,
-    width: 25
+    gap: 10
   }
 });

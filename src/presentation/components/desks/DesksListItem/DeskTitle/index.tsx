@@ -1,11 +1,12 @@
 import { Layout } from '@ui-kitten/components';
 import { Desk } from '../../../../../core/entities';
+import { useCustomTheme } from '../../../../hooks';
 import { Callout } from '../../../ui';
-import { globalStyles } from '../../../../styles/global.styles';
 
 export const DeskTitle = ({ desk }: { desk: Desk; }) => {
+  const { platinumItemBackgroundColor } = useCustomTheme();
   return (
-    <Layout style={globalStyles.platinumBackground}>
+    <Layout style={platinumItemBackgroundColor}>
       <Callout text={desk.name} />
     </Layout>
   );

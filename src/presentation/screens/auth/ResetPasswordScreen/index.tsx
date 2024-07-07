@@ -7,7 +7,7 @@ import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
 import { Footnote, HeaderLayout, Headline, MainLayout, TopNavigation } from '../../../components/ui';
-import { useEmailValidation, useResetProfile } from '../../../hooks';
+import { useCustomTheme, useEmailValidation, useResetProfile } from '../../../hooks';
 
 import { authStyles } from '../../../styles/auth/styles';
 import { globalStyles } from '../../../styles/global.styles';
@@ -18,6 +18,7 @@ export const ResetPasswordScreen = () => {
   const [loading, setLoading] = useState(false);
   const { form, email, password, confirmPassword, setForm, onUpdateProfile } = useResetProfile();
   const isValidEmail = useEmailValidation(email);
+  const { background } = useCustomTheme();
 
   const onSubmit = () => {
     setLoading(true);
@@ -56,8 +57,8 @@ export const ResetPasswordScreen = () => {
       <ScrollView style={globalStyles.mainMargin} keyboardShouldPersistTaps='always'>
         <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
-          <Layout style={authStyles.welcomeTextContainer}>
-            <Headline text='Restablecer contraseña' textColor={globalStyles.colorOnyx} />
+          <Layout style={background}>
+            <Headline text='Restablecer contraseña' />
           </Layout>
           <Footnote text='Ingresa email y nueva contraseña' />
         </HeaderLayout>

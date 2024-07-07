@@ -2,7 +2,7 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 
 import { NumericInput } from '../../forms';
 import { ModalTitle, PrimaryButton } from '../../ui';
-import { useBudgetEntryModalData } from '../../../hooks';
+import { useBudgetEntryModalData, useCustomTheme } from '../../../hooks';
 import { Budget } from '../../../../core/entities';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -14,6 +14,7 @@ interface Props {
 }
 
 export const BudgetEntryModal = ({ budget, visible, setVisible }: Props) => {
+  const { background } = useCustomTheme();
   const { loading, budgetState, handleFieldChange, onSubmit } = useBudgetEntryModalData({ budget, visible, setVisible });
 
   const closeModal = () => {
@@ -22,8 +23,8 @@ export const BudgetEntryModal = ({ budget, visible, setVisible }: Props) => {
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={closeModal}>
-      <Card style={globalStyles.mainBackground}>
-        <Layout style={globalStyles.modalContainer}>
+      <Card style={background}>
+        <Layout style={[globalStyles.modalContainer, background]}>
           <ModalTitle budget={budget} setVisible={closeModal} />
           <NumericInput caption='Base' placeholder='' value={budgetState.base} onChangeText={(base) => handleFieldChange('base', base)} />
           <NumericInput caption='Préstamos' placeholder='' value={budgetState.loans} onChangeText={(loans) => handleFieldChange('loans', loans)} />

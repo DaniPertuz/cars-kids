@@ -1,21 +1,22 @@
 import { TouchableOpacity } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 
-import { CustomIcon } from '../../ui';
+import { useCustomTheme } from '../../../hooks';
+import { CustomIcon, HeaderSix } from '../../ui';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
 import { globalColors } from '../../../theme/globalColors';
-import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 export const LogoutComponent = () => {
   const { logout } = useAuthStore();
+  const { isDarkMode, defaultBackgroundColor } = useCustomTheme();
 
   return (
     <TouchableOpacity activeOpacity={1.0} onPress={logout}>
-      <Layout style={styles.logoutContainer}>
+      <Layout style={[styles.logoutContainer, { backgroundColor: isDarkMode ? defaultBackgroundColor : globalColors.background }]}>
         <CustomIcon name='power-outline' fillColor={globalColors.primaryRed} />
-        <Text category='h6' style={globalStyles.colorPrimaryRed}>Cerrar sesión</Text>
+        <HeaderSix text='Cerrar sesión' textColor={globalColors.primaryRed} />
       </Layout>
     </TouchableOpacity>
   );

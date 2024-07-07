@@ -1,5 +1,5 @@
 import { Input } from '@ui-kitten/components';
-import { globalStyles } from '../../../styles/global.styles';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   caption?: string;
@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const NumericInput = ({ caption, placeholder, value, onChangeText }: Props) => {
+  const { borderColor } = useCustomTheme();
   const handleTextChange = (text: string) => {
     const numericValue = parseFloat(text);
     onChangeText(isNaN(numericValue) ? 0 : numericValue);
@@ -21,8 +22,7 @@ export const NumericInput = ({ caption, placeholder, value, onChangeText }: Prop
       keyboardType='numeric'
       value={String(value)}
       onChangeText={handleTextChange}
-      textStyle={globalStyles.colorOnyx}
-      style={globalStyles.input}
+      style={[{ borderRadius: 10, borderWidth: 1 }, borderColor]}
     />
   );
 };

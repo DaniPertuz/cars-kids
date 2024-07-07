@@ -1,15 +1,16 @@
 import { Layout } from '@ui-kitten/components';
-import { Callout } from '../../ui';
 import { Product } from '../../../../core/entities';
-import { globalStyles } from '../../../styles/global.styles';
+import { useCustomTheme } from '../../../hooks';
+import { Callout } from '../../ui';
 
 interface Props {
   item: Product;
 }
 
 export const ProductTitle = ({ item }: Props) => {
+  const { platinumItemBackgroundColor } = useCustomTheme();
   return (
-    <Layout style={globalStyles.platinumBackground}>
+    <Layout style={platinumItemBackgroundColor}>
       <Callout text={item.name} />
     </Layout>
   );

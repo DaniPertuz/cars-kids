@@ -1,14 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   menuContainer: {
-    marginHorizontal: 30,
-    ...globalStyles.mainBackground
+    paddingHorizontal: 30
   },
   menuItemsContainer: {
     gap: 18,
-    marginBottom: 40,
-    ...globalStyles.mainBackground
+    marginBottom: 40
   }
 });

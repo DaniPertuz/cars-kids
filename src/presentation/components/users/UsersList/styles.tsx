@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 18,
     marginHorizontal: 30,
-    marginBottom: 25,
-    ...globalStyles.mainBackground
+    marginBottom: 25
   }
 });

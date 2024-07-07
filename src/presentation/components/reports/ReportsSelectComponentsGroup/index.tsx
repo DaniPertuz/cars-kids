@@ -1,6 +1,7 @@
 import { Layout } from '@ui-kitten/components';
-import { PickerComponent } from '../PickerComponent';
+import { useCustomTheme } from '../../../hooks';
 import { SelectComponent } from '../../ui';
+import { PickerComponent } from '../PickerComponent';
 import { styles } from './styles';
 
 interface Props {
@@ -16,8 +17,9 @@ interface Props {
 }
 
 export const ReportsSelectComponentsGroup = ({ category, lapse, dayDate, dayDateText, setCategory, setDayDate, setLapse, handleMonthYear, handlePeriod }: Props) => {
+  const { background } = useCustomTheme();
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, background]}>
       <SelectComponent placeholder='Categoría' options={['Alquileres', 'Compras', 'Presupuestos']} initialValue='' handleSelection={setCategory} />
       {category &&
         <>

@@ -5,6 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    ...globalStyles.mainLayout
+    gap: 20
   },
 });

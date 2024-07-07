@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { Purchase, Rental } from '../../../../core/entities';
+import { useCustomTheme } from '../../../hooks';
 import { EditButton, DeleteButton } from '../../ui';
-import { globalColors } from '../../../theme/globalColors';
 
 interface Props {
   purchase?: Purchase;
@@ -10,8 +10,9 @@ interface Props {
 }
 
 export const TransactionActions = ({ purchase, rental }: Props) => {
+  const { platinumItemBackgroundColor } = useCustomTheme();
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, platinumItemBackgroundColor]}>
       <EditButton iconSize={25} purchase={purchase} rental={rental} />
       <DeleteButton iconName='trash-outline' iconSize={25} purchase={purchase} rental={rental} />
     </Layout>
@@ -20,7 +21,6 @@ export const TransactionActions = ({ purchase, rental }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: globalColors.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 10

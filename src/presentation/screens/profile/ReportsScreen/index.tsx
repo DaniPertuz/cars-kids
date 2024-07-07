@@ -4,14 +4,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ReportsEntitiesList, ReportsListPagination, ReportsSelectComponentsGroup } from '../../../components/reports';
 import { CustomDivider, PrimaryButton, TopNavigation } from '../../../components/ui';
-import { useReportsDataHandling } from '../../../hooks';
+import { useCustomTheme, useReportsDataHandling } from '../../../hooks';
 
 import { styles } from './styles';
 
 export const ReportsScreen = () => {
+  const { background } = useCustomTheme();
   const { top, bottom } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-
   const {
     category,
     dayDate,
@@ -33,23 +33,23 @@ export const ReportsScreen = () => {
   } = useReportsDataHandling();
 
   return (
-    <Layout style={{ paddingTop: height * 0.045, ...styles.container }}>
-      <Layout style={styles.container}>
+    <Layout style={[{ paddingTop: height * 0.045, ...styles.container }, background]}>
+      <Layout style={[styles.container, background]}>
         <TopNavigation top={0} title='Reportes' />
       </Layout>
       <CustomDivider />
-      <Layout style={styles.selectsButtonContainer}>
+      <Layout style={[styles.selectsButtonContainer, background]}>
         <ReportsSelectComponentsGroup category={category} lapse={lapse!} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />
         {isButtonEnabled() &&
-          <Layout style={{ ...styles.buttonsContainer, marginTop: lapse === '' ? top : 0 }}>
+          <Layout style={[{ ...styles.buttonsContainer, marginTop: lapse === '' ? top : 0 }, background]}>
             <PrimaryButton disabled={display} text={'Generar'} onPress={fetchData} />
           </Layout>
         }
       </Layout>
-      <Layout style={styles.dataContainer}>
+      <Layout style={[styles.dataContainer, background]}>
         {entityData &&
           <Layout style={styles.container}>
-            <Layout style={styles.listContainer}>
+            <Layout style={[styles.listContainer, background]}>
               <ReportsEntitiesList category={category} entityData={entityData} />
             </Layout>
             <Layout style={styles.flexOne}>

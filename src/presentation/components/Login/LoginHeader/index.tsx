@@ -1,6 +1,6 @@
 import { Layout } from '@ui-kitten/components';
 import { Footnote, Title } from '../../ui';
-import { authStyles } from '../../../styles/auth/styles';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   title: string;
@@ -8,9 +8,10 @@ interface Props {
 }
 
 export const LoginHeader = ({ title, footnote }: Props) => {
+  const { background } = useCustomTheme();
   return (
     <>
-      <Layout style={authStyles.welcomeTextContainer}>
+      <Layout style={[{ alignItems: 'center' }, background]}>
         <Title text={title} />
       </Layout>
       <Footnote text={footnote} />

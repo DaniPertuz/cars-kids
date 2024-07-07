@@ -6,6 +6,7 @@ import { VehicleImage } from '../VehicleImage';
 import { VehicleTitle } from '../VehicleTitle';
 
 import { Vehicle } from '../../../../core/entities';
+import { useCustomTheme } from '../../../hooks';
 
 import { styles } from './styles';
 
@@ -14,9 +15,10 @@ interface Props {
 }
 
 export const VehiclesListItem = ({ vehicle }: Props) => {
+  const { platinumItemBackgroundColor } = useCustomTheme();
   return (
     <ListItem
-      style={styles.container}
+      style={[styles.container, platinumItemBackgroundColor]}
       title={<VehicleTitle vehicle={vehicle} />}
       description={<VehicleDescription vehicle={vehicle} />}
       accessoryLeft={<VehicleImage vehicle={vehicle} />}

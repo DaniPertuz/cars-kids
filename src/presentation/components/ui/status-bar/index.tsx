@@ -1,19 +1,26 @@
-import { Platform, StatusBar, View } from 'react-native';
+import React from 'react';
+import { Platform, StatusBar, View, StyleSheet } from 'react-native';
+import { useCustomTheme } from '../../../hooks';
 
-interface Props {
-  color: string;
-  theme: 'default' | 'dark-content' | 'light-content';
-}
-
-const StatusBarComponent = ({ color, theme }: Props) => {
-
+const StatusBarComponent = () => {
+  const { background, isDarkMode } = useCustomTheme();
   const STATUS_BAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
   return (
-    <View style={{ height: STATUS_BAR_HEIGHT, backgroundColor: color }}>
-      <StatusBar translucent backgroundColor={color} barStyle={theme} />
+    <View style={[styles.statusBar, { height: STATUS_BAR_HEIGHT, backgroundColor: background.backgroundColor }]}>
+      <StatusBar
+        translucent
+        backgroundColor={background.backgroundColor}
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  statusBar: {
+    height: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight,
+  },
+});
 
 export default StatusBarComponent;

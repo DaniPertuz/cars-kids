@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { globalStyles } from '../../../styles/global.styles';
 import { Layout, Text } from '@ui-kitten/components';
+import { useCustomTheme } from '../../../hooks';
+import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   text: string;
@@ -9,9 +10,10 @@ interface Props {
 }
 
 export const LoginFooter = ({ text, linkText, onPress }: Props) => {
+  const { background, defaultColor } = useCustomTheme();
   return (
-    <Layout style={styles.footer}>
-      <Text style={globalStyles.colorOnyx}>{text} </Text>
+    <Layout style={[styles.footer, background]}>
+      <Text style={defaultColor}>{text} </Text>
       <Text style={globalStyles.colorPrimaryRed} onPress={onPress}>
         {linkText}
       </Text>
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
   footer: {
     alignItems: 'flex-end',
     flexDirection: 'row',
-    justifyContent: 'center',
-    ...globalStyles.mainBackground
+    justifyContent: 'center'
   }
 });

@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
 import { Card, Input, Layout } from '@ui-kitten/components';
 
 import { Desk, Purchase, Rental } from '../../../../core/entities';
 import { Transaction } from '../../../../infrastructure/interfaces';
-import { useTransactionEntryModalData } from '../../../hooks';
+import { useCustomTheme, useTransactionEntryModalData } from '../../../hooks';
 import { DefaultInput, NumericInput } from '../../forms';
 import { TransactionEntryModalPaymentFeesSelects } from '../TransactionEntryModalPaymentFeesSelects';
 import { CustomCheckbox, LoadingIndicator, ModalTitle, PrimaryButton, SelectComponent } from '../../ui';
@@ -21,6 +22,7 @@ interface Props {
 }
 
 export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: Props) => {
+  const { background } = useCustomTheme();
   const {
     customPayment,
     customRentalAmount,
@@ -56,14 +58,16 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
   const productOptions = useMemo(() => products.map(p => p.name), [products]);
 
   return (
-    <Card style={globalStyles.mainBackground}>
-      <Layout style={{ ...globalStyles.transactionsContainer, height: loading ? transaction === 'Rental' ? 360 : 288 : 'auto' }}>
+    <Card style={background}>
+      <Layout style={[{ ...globalStyles.transactionsContainer, height: loading ? transaction === 'Rental' ? 425 : 288 : 'auto' }, background]}>
         {loading
           ?
-          <LoadingIndicator color={globalColors.primaryRed} />
+          <Layout style={[background, styles.container]}>
+            <LoadingIndicator color={globalColors.primaryRed} />
+          </Layout>
           :
           <>
-            <Layout style={globalStyles.transactionsOptionsContainer}>
+            <Layout style={[globalStyles.transactionsOptionsContainer, background]}>
               <ModalTitle purchase={purchase} rental={rental} transaction={transaction} setVisible={() => setVisible(false)} />
               <>
                 {transaction === 'Purchase'
@@ -106,3 +110,7 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { flex: 1, alignItems: 'center', justifyContent: 'center' }
+})

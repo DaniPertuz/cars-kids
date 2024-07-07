@@ -1,5 +1,5 @@
 import { Text } from '@ui-kitten/components';
-import { globalStyles } from '../../../styles/global.styles';
+import { useCustomTheme } from '../../../hooks';
 
 interface Props {
   text: string;
@@ -7,4 +7,9 @@ interface Props {
   onPress?: () => void;
 }
 
-export const Callout = ({ text, textColor, onPress }: Props) => <Text category='s1' style={textColor ? { color: textColor } : globalStyles.colorOnyx} onPress={onPress}>{text}</Text>;
+export const Callout = ({ text, textColor, onPress }: Props) => {
+  const { defaultColor } = useCustomTheme();
+  return (
+    <Text category='s1' style={{ color: textColor ? textColor : defaultColor.color }} onPress={onPress}>{text}</Text>
+  );
+};

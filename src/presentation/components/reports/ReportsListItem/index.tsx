@@ -2,9 +2,10 @@ import { ListItem } from '@ui-kitten/components';
 import { Budget, Purchase, Rental, User } from '../../../../core/entities';
 import { DataItem, IStatus } from '../../../../infrastructure/interfaces';
 import { paymentDescriptions } from '../../../../utils';
-import { useFormattedDate } from '../../../hooks';
+import { useCustomTheme, useFormattedDate } from '../../../hooks';
 import { BudgetActions } from '../../budget/BudgetActions';
 import { ReportActions } from '../ReportActions';
+import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export const ReportListItem = ({ item }: Props) => {
-
+  const { isDarkMode, defaultBackgroundColorShadow } = useCustomTheme();
   const { formatDateTime } = useFormattedDate();
 
   const getTitle = (item: DataItem) => {
@@ -70,7 +71,7 @@ export const ReportListItem = ({ item }: Props) => {
 
   return (
     <ListItem
-      style={styles.container}
+      style={[styles.container, { backgroundColor: isDarkMode ? defaultBackgroundColorShadow : globalColors.platinum }]}
       title={getTitle(item)}
       description={getDescription(item)}
       accessoryRight={renderAccessoryRight(item)}

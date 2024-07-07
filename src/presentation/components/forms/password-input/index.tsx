@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Input } from '@ui-kitten/components';
+import { useCustomTheme } from '../../../hooks';
 import { DisplayPassword } from '../DisplayPassword';
-import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   placeholder: string;
@@ -10,7 +10,9 @@ interface Props {
 }
 
 export const PasswordInput = ({ placeholder, value, onChangeText }: Props) => {
+  const { borderColor } = useCustomTheme();
   const [isPasswordVisible, setIsPasswordVisible] = useState(true);
+  
 
   const handlePasswordVisibility = (isVisible: boolean) => {
     setIsPasswordVisible(isVisible);
@@ -23,9 +25,8 @@ export const PasswordInput = ({ placeholder, value, onChangeText }: Props) => {
       secureTextEntry={isPasswordVisible}
       value={value}
       onChangeText={onChangeText}
-      textStyle={globalStyles.colorOnyx}
       accessoryRight={<DisplayPassword handlePasswordVisibility={handlePasswordVisibility} />}
-      style={globalStyles.input}
+      style={[{ borderRadius: 10, borderWidth: 1 }, borderColor]}
     />
   );
 };

@@ -8,16 +8,19 @@ import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
 import { Caption, HeaderLayout, MainLayout } from '../../../components/ui';
+import { useCustomTheme } from '../../../hooks';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { useAuthStore } from '../../../store/auth/useAuthStore';
 
 import { authStyles } from '../../../styles/auth/styles';
 import { globalStyles } from '../../../styles/global.styles';
+import { globalColors } from '../../../theme/globalColors';
 
 interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
 
 export const LoginScreen = ({ navigation }: Props) => {
   const { login } = useAuthStore();
+  const { background } = useCustomTheme();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     email: '',
@@ -30,16 +33,16 @@ export const LoginScreen = ({ navigation }: Props) => {
       SnackbarAdapter.showSnackbar('Ingrese sus credenciales');
       return;
     }
-    
+
     setLoading(true);
     const resp = await login(form.email.trim(), form.password.trim());
-    
+
     if (!resp) {
       setLoading(false);
       SnackbarAdapter.showSnackbar('No hay conexión');
       return;
     }
-    
+
     if (resp.error) {
       setLoading(false);
       SnackbarAdapter.showSnackbar(resp.error);
@@ -52,17 +55,17 @@ export const LoginScreen = ({ navigation }: Props) => {
 
   return (
     <MainLayout>
-      <ScrollView showsVerticalScrollIndicator={false} style={globalStyles.mainMargin}>
+      <ScrollView showsVerticalScrollIndicator={false} style={[globalStyles.mainMargin, background]}>
         <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <LoginHeader title={'Bienvenido'} footnote={'Ingresa tus credenciales'} />
         </HeaderLayout>
-        <Layout style={authStyles.formContainer}>
+        <Layout style={[authStyles.formContainer, background]}>
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
           <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
         </Layout>
-        <Layout style={globalStyles.flexEnd}>
-          <Caption text={'¿Olvidaste tu contraseña?'} textColor={globalStyles.colorPrimaryRed} onPress={() => navigation.navigate('ResetPasswordScreen')} />
+        <Layout style={[{ marginTop: 10, ...globalStyles.flexEnd }, background]}>
+          <Caption text={'¿Olvidaste tu contraseña?'} textColor={globalColors.primaryRed} onPress={() => navigation.navigate('ResetPasswordScreen')} />
         </Layout>
         <LoginButtonContainer disabled={loading} buttonText={'Ingresar'} onPress={onLogin} />
         <LoginFooter text='¿No tienes cuenta?' linkText='Crea una' onPress={() => navigation.dispatch(StackActions.push('RegisterScreen'))} />

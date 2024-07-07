@@ -2,25 +2,28 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
 
-import { useUserInfo } from '../../../hooks';
+import { useCustomTheme, useUserInfo } from '../../../hooks';
 import { IUserRole } from '../../../../infrastructure/interfaces';
 import { RootStackParams } from '../../../navigation/MainNavigator';
 import { ProfileMenuItem } from '../ProfileMenuItem';
 import { LogoutComponent } from '../Logout';
 
+import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 export const ProfileMenu = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
   const { user } = useUserInfo();
+  const { isDarkMode, defaultBackgroundColor } = useCustomTheme();
+  const background = { backgroundColor: isDarkMode ? defaultBackgroundColor : globalColors.background }
 
   const navigateToScreen = (screen: keyof RootStackParams) => {
     navigation.navigate(screen as any);
   };
 
   return (
-    <Layout style={styles.menuContainer}>
-      <Layout style={styles.menuItemsContainer}>
+    <Layout style={[styles.menuContainer, background]}>
+      <Layout style={[styles.menuItemsContainer, background]}>
         <ProfileMenuItem iconName={'edit-outline'} label={'Actualizar datos'} onPress={() => navigateToScreen('UpdateProfileScreen')} />
         <ProfileMenuItem iconName={'browser-outline'} label={'Puestos de trabajo'} onPress={() => navigateToScreen('DesksScreen')} />
         <ProfileMenuItem iconName={'car-outline'} label={'Vehículos'} onPress={() => navigateToScreen('VehiclesScreen')} />

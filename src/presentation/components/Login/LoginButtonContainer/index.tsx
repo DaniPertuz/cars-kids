@@ -1,6 +1,6 @@
 import { Layout } from '@ui-kitten/components';
+import { useCustomTheme } from '../../../hooks';
 import { PrimaryButton, Spacer } from '../../ui';
-import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   buttonText: string;
@@ -9,10 +9,11 @@ interface Props {
 }
 
 export const LoginButtonContainer = ({ buttonText, disabled, onPress }: Props) => {
+  const { background } = useCustomTheme();
   return (
     <>
       <Spacer height={20} />
-      <Layout style={globalStyles.mainBackground}>
+      <Layout style={background}>
         <PrimaryButton disabled={disabled} text={buttonText} onPress={onPress} />
       </Layout>
       <Spacer height={50} />

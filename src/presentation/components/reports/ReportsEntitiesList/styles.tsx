@@ -3,11 +3,9 @@ import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   container: {
-    ...globalStyles.mainMargin,
-    ...globalStyles.mainBackground
+    ...globalStyles.mainMargin
   },
   listContainer: {
-    ...globalStyles.mainBackground,
     gap: 5,
     height: '97%'
   }

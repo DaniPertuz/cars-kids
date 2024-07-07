@@ -1,20 +1,21 @@
 import { Layout, List } from '@ui-kitten/components';
 import { ReportListItem } from '../ReportsListItem';
 import { DataItem } from '../../../../infrastructure/interfaces';
-import { globalStyles } from '../../../styles/global.styles';
+import { useCustomTheme } from '../../../hooks';
 
 interface ReportsListProps {
   data: DataItem[];
 }
 
 export const ReportsList = ({ data }: ReportsListProps) => {
+  const { background } = useCustomTheme();
   return (
     <List
       data={data}
       showsVerticalScrollIndicator={false}
-      style={globalStyles.container}
+      style={background}
       renderItem={({ item }) => (
-        <Layout style={globalStyles.mainBackground}>
+        <Layout style={background}>
           <ReportListItem item={item} />
         </Layout>
       )}

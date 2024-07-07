@@ -1,7 +1,7 @@
 import { Layout } from '@ui-kitten/components';
 import { ApiResponse, DateRange } from '../../../../infrastructure/interfaces';
 import { TotalListMessage, ListPagination, FAB } from '../../ui';
-import { useGeneratePDF } from '../../../hooks';
+import { useCustomTheme, useGeneratePDF } from '../../../hooks';
 import { styles } from './styles';
 
 interface Props {
@@ -17,12 +17,13 @@ interface Props {
 
 export const ReportsListPagination = ({ bottom, category, entityData, lapse, reportLapse, range, fetchNextPage, fetchPrevPage }: Props) => {
   const { generatePDF } = useGeneratePDF({ category, lapse, reportLapse, range, total: entityData.response.total });
+  const { background } = useCustomTheme();
 
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, background]}>
       <TotalListMessage bottom={bottom} item={category} total={entityData?.response.total} />
       <ListPagination<ApiResponse> bottom={bottom} data={entityData?.response} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
-      {category !== 'Presupuestos' && <FAB iconName='printer-outline' iconSize={40} style={styles.fab} onPress={generatePDF} />}
+      {category !== 'Presupuestos' && <FAB iconName='printer-outline' iconSize={40} onPress={generatePDF} />}
     </Layout>
   );
 };

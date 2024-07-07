@@ -1,8 +1,9 @@
 import { Layout, Datepicker } from '@ui-kitten/components';
 
-import { EditSelectedDate } from '../EditSelectedDate';
-import { Footnote, CustomIcon } from '../../ui';
 import { localeDateService } from '../../../../utils';
+import { useCustomTheme } from '../../../hooks';
+import { Footnote, CustomIcon } from '../../ui';
+import { EditSelectedDate } from '../EditSelectedDate';
 
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
@@ -14,8 +15,9 @@ interface Props {
 }
 
 export const DayPicker = ({ date, dateText, setDate }: Props) => {
+  const { background } = useCustomTheme();
   return (
-    <Layout style={styles.container}>
+    <Layout style={[styles.container, background]}>
       <Footnote text={'Fecha'} />
       {!date ?
         <Datepicker

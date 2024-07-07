@@ -1,8 +1,8 @@
 import { Layout } from '@ui-kitten/components';
+import { VehiclesResponse } from '../../../../infrastructure/interfaces';
+import { useCustomTheme } from '../../../hooks';
 import { EmptyListMessage, SpinnerContainer } from '../../ui';
 import { VehiclesList } from '../VehiclesList';
-import { VehiclesResponse } from '../../../../infrastructure/interfaces';
-import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
   bottom: number;
@@ -11,8 +11,9 @@ interface Props {
 }
 
 export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) => {
+  const { background } = useCustomTheme();
   return (
-    <Layout style={{ ...globalStyles.mainBackground, marginHorizontal: 20, paddingBottom: bottom + 200 }}>
+    <Layout style={[{ marginHorizontal: 20, paddingBottom: bottom + 200 }, background]}>
       {(!display)
         ?
         <SpinnerContainer />
