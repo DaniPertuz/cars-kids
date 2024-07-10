@@ -16,6 +16,7 @@ export * from './useProductEntryModalData';
 export * from './useProductsData';
 export * from './useProfileUserImage';
 export * from './useTransactionEntryModalData';
+export * from './useProductsSearchData';
 export * from './useRentalTimer';
 export * from './useRegisterData';
 export * from './useReportsDataHandling';
