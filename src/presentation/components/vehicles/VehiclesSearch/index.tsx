@@ -1,7 +1,7 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout, Spinner } from '@ui-kitten/components';
 
-import { useVehicleSearchData } from '../../../hooks';
+import { useCustomTheme, useVehicleSearchData } from '../../../hooks';
 import { DefaultInput } from '../../forms';
 import { BackgroundImage, EmptyListMessage } from '../../ui';
 import { VehiclesSearchList } from './VehiclesSearchList';
@@ -10,10 +10,11 @@ import { globalStyles } from '../../../styles/global.styles';
 
 export const VehiclesSearch = () => {
   const { top } = useSafeAreaInsets();
+  const { background } = useCustomTheme();
   const { debouncedValue, loading, search, vehicles, setSearch } = useVehicleSearchData();
 
   return (
-    <Layout style={{ ...globalStyles.searchContainer, marginTop: top }}>
+    <Layout style={[{ ...globalStyles.searchContainer, marginTop: top }, background]}>
       <DefaultInput placeholder={'Buscar vehículos'} value={search} onChangeText={setSearch} />
       {!loading && debouncedValue.length < 2 &&
         <BackgroundImage customHeight={85} />
