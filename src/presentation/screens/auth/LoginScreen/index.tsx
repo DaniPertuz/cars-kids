@@ -1,57 +1,18 @@
-import { useState } from 'react';
-import { ScrollView, useWindowDimensions } from 'react-native';
+import { ScrollView } from 'react-native';
 import { StackActions } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
 
-import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { EmailInput, PasswordInput } from '../../../components/forms';
 import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
 import { Caption, HeaderLayout, MainLayout } from '../../../components/ui';
-import { useCustomTheme } from '../../../hooks';
-import { RootStackParams } from '../../../navigation/MainNavigator';
-import { useAuthStore } from '../../../store/auth/useAuthStore';
+import { useLoginData } from '../../../hooks';
 
 import { authStyles } from '../../../styles/auth/styles';
 import { globalStyles } from '../../../styles/global.styles';
 import { globalColors } from '../../../theme/globalColors';
 
-interface Props extends StackScreenProps<RootStackParams, 'LoginScreen'> { }
-
-export const LoginScreen = ({ navigation }: Props) => {
-  const { login } = useAuthStore();
-  const { background } = useCustomTheme();
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    email: '',
-    password: ''
-  });
-  const { height } = useWindowDimensions();
-
-  const onLogin = async () => {
-    if (form.email.length === 0 && form.password.length === 0) {
-      SnackbarAdapter.showSnackbar('Ingrese sus credenciales');
-      return;
-    }
-
-    setLoading(true);
-    const resp = await login(form.email.trim(), form.password.trim());
-
-    if (!resp) {
-      setLoading(false);
-      SnackbarAdapter.showSnackbar('No hay conexión');
-      return;
-    }
-
-    if (resp.error) {
-      setLoading(false);
-      SnackbarAdapter.showSnackbar(resp.error);
-      return;
-    }
-
-    setLoading(false);
-    navigation.navigate('BottomNavigator');
-  };
+export const LoginScreen = () => {
+  const { background, form, height, loading, navigation, onLogin, setForm } = useLoginData();
 
   return (
     <MainLayout>
