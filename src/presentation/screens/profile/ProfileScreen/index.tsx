@@ -1,4 +1,5 @@
-import { useWindowDimensions } from 'react-native';
+import { useState } from 'react';
+import { ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
@@ -12,6 +13,10 @@ export const ProfileScreen = () => {
   const { top } = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const { user } = useUserInfo();
+  const [contentHeight, setContentHeight] = useState(0);
+  const onContentSizeChange = (width: number, height: number) => {
+    setContentHeight(height);
+  };
 
   return (
     <MainLayout>
@@ -19,10 +24,12 @@ export const ProfileScreen = () => {
         ?
         <LoadingScreen />
         :
-        <Layout style={{ marginTop: user.role === IUserRole.Admin ? height * 0.03 : height * 0.08  }}>
-          <ProfileUserImage height={height} />
-          <ProfileHeader />
-          <ProfileMenu />
+        <Layout style={{ marginTop: user.role === IUserRole.Admin ? top * 0.6 : top * 0.4 }}>
+          <ScrollView showsVerticalScrollIndicator={false} onContentSizeChange={onContentSizeChange} scrollEnabled={contentHeight >= height}>
+            <ProfileUserImage height={height} />
+            <ProfileHeader />
+            <ProfileMenu />
+          </ScrollView>
         </Layout>
       }
     </MainLayout>
