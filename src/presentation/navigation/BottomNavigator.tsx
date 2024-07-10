@@ -49,7 +49,7 @@ export const BottomNavigator = () => {
             borderTopColor: isDarkMode ? globalColors.white : globalColors.dark,
             borderWidth: 1,
             elevation: 0,
-            height: 80
+            height: '10%'
           },
           tabBarActiveBackgroundColor: globalColors.primaryRed
         })}
