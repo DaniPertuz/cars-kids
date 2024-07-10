@@ -69,7 +69,6 @@ export const globalStyles = StyleSheet.create({
   },
   searchContainer: {
     alignItems: 'center',
-    backgroundColor: globalColors.background,
     marginHorizontal: 30
   },
   searchListContainer: {
