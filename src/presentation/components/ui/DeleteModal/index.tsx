@@ -2,7 +2,7 @@ import { Card, Layout, Modal } from '@ui-kitten/components';
 
 import { BasicButton, Callout, PrimaryButton } from '../';
 import { Desk, Product, Purchase, Rental, User, Vehicle } from '../../../../core/entities';
-import { useDeleteModal } from '../../../hooks';
+import { useCustomTheme, useDeleteModal } from '../../../hooks';
 import { IStatus } from '../../../../infrastructure/interfaces';
 
 import { globalStyles } from '../../../styles/global.styles';
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, visible, setVisible }: Props) => {
-
+  const { background } = useCustomTheme();
   const { loading, handleDeleteDesk, handleDeleteProduct, handleDeleteTransaction, handleDeleteUser, handleDeleteVehicle } = useDeleteModal({ desk, product, purchase, rental, user, vehicle, visible, setVisible });
 
   return (
@@ -30,10 +30,10 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
       backdropStyle={styles.backdrop}
       onBackdropPress={() => setVisible(false)}
     >
-      <Card style={globalStyles.mainBackground}>
-        <Layout style={styles.container}>
-          <Layout style={styles.titleContainer}>
-            <Layout style={styles.textContainer}>
+      <Card style={background}>
+        <Layout style={[styles.container, background]}>
+          <Layout style={[styles.titleContainer, background]}>
+            <Layout style={[styles.textContainer, background]}>
               {desk && <Callout text={`¿Desea eliminar ${desk.name}?`} />}
               {product && <Callout text={`¿Desea desactivar el producto ${product.name}?`} />}
               {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}
@@ -41,7 +41,7 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
               {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
               {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
             </Layout>
-            <Layout style={styles.closeButtonContainer}>
+            <Layout style={[styles.closeButtonContainer, background]}>
               <BasicButton activeOpacity={1.0} iconName={'close-circle-outline'} fillColor={globalColors.primaryRed} size={{ height: 35, width: 35 }} onPress={() => setVisible(false)} />
             </Layout>
           </Layout>
