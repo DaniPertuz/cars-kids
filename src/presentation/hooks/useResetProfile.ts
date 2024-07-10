@@ -8,28 +8,30 @@ import { RootStackParams } from '../navigation/MainNavigator';
 import { useAuthStore } from '../store/auth/useAuthStore';
 
 export const useResetProfile = () => {
-  const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
-  const { user } = useUserInfo();
-
-  const emailStore = user?.email!;
-  const nameStore = user?.name!;
-  const { updateEmail, updateName, updatePassword } = useAuthStore();
-
-  const [form, setForm] = useState({
+  const init = {
     name: '',
     email: '',
     password: '',
     confirmPassword: ''
-  });
+  };
+  const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
+  const { user } = useUserInfo();
 
-  const { email, name, password, confirmPassword } = form;
+  const emailStore = user?.email ?? '';
+  const nameStore = user?.name ?? '';
+  const { updateEmail, updateName, updatePassword } = useAuthStore();
+
+  const [resetForm, setResetForm] = useState(init);
+  const [done, setDone] = useState(false);
+
+  const { email, name, password, confirmPassword } = resetForm;
 
   const { isEmpty: isEmailEmpty, checkEmptyFields: checkEmailEmpty } = useEmptyFieldValidation();
   const { isEmpty: isPasswordEmpty, checkEmptyFields: checkPasswordEmpty } = useEmptyFieldValidation();
   const { isEmpty: isConfirmedPasswordEmpty, checkEmptyFields: checkConfirmedPasswordEmpty } = useEmptyFieldValidation();
 
   const setData = () => {
-    setForm(prevState => ({
+    setResetForm(prevState => ({
       ...prevState,
       name: nameStore,
       email: emailStore
@@ -84,21 +86,27 @@ export const useResetProfile = () => {
         return;
       }
 
-      SnackbarAdapter.showSnackbar('Contraseña restablecida');
-      navigator.push('LoginScreen');
+      if (resp.user) {
+        SnackbarAdapter.showSnackbar('Contraseña restablecida');
+        navigator.push('LoginScreen');
+        setDone(true);
+      }
     }
   };
 
   useEffect(() => {
-    setData();
+    if (user) {
+      setData();
+    }
   }, [user]);
 
   return {
-    form,
+    confirmPassword,
+    done,
     email,
     password,
-    confirmPassword,
-    setForm,
+    resetForm,
+    setResetForm,
     onUpdateProfile
   };
 };
