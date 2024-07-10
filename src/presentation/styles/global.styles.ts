@@ -24,7 +24,7 @@ export const globalStyles = StyleSheet.create({
   },
   divider: {
     backgroundColor: globalColors.backgroundDark,
-    marginHorizontal: 30,
+    marginHorizontal: 20,
     marginBottom: 5
   },
   flexAlignJustifyCenter: {

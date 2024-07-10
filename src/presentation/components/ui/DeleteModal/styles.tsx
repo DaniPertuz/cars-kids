@@ -7,23 +7,19 @@ export const styles = StyleSheet.create({
   },
   closeButtonContainer: {
     alignItems: 'center',
-    flex: 1,
-    ...globalStyles.mainBackground
+    flex: 1
   },
   container: {
     alignItems: 'center',
     gap: 10,
-    width: 320,
-    ...globalStyles.mainBackground
+    width: 320
   },
   textContainer: {
     alignItems: 'center',
-    flex: 100,
-    ...globalStyles.mainBackground
+    flex: 100
   },
   titleContainer: {
     alignItems: 'center',
-    flexDirection: 'row',
-    ...globalStyles.mainBackground
+    flexDirection: 'row'
   }
 });

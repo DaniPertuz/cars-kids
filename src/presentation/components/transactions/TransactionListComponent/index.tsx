@@ -27,6 +27,6 @@ export const TransactionsListComponent = ({ entity }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 15,
-    marginHorizontal: 20
+    marginHorizontal: 10
   }
 });
