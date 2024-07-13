@@ -9,7 +9,7 @@ import { globalColors } from '../../../../theme/globalColors';
 
 export const RentalItemBody = ({ rental, index }: { index: number, rental: Rental; }) => {
   const { defaultColor, platinumItemBackgroundColor } = useCustomTheme();
-  const { done, time, formatTime, buttonOpacity, buttonSize, status, advanceTime, pause, reset, setDone, start } = useRentalTimer({ rental });
+  const { done, time, formatTime, buttonOpacity, buttonSize, status, advanceTime, pause, reset, setDone, start } = useRentalTimer({ rental });  
   return (
     <Layout style={[styles.mainContainer, platinumItemBackgroundColor]}>
       <Layout style={[styles.container, platinumItemBackgroundColor]}>
