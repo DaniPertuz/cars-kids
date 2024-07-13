@@ -1,21 +1,37 @@
-import { useState } from 'react';
-import { ScrollView, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { LoadingScreen } from '../../LoadingScreen';
 import { ProfileHeader, ProfileMenu, ProfileUserImage } from '../../../components/profile';
 import { MainLayout } from '../../../components/ui';
-import { useUserInfo } from '../../../hooks';
-import { IUserRole } from '../../../../infrastructure/interfaces';
+import { useCustomTheme, useUserInfo } from '../../../hooks';
 
 export const ProfileScreen = () => {
   const { top } = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
+  const { background } = useCustomTheme();
   const { user } = useUserInfo();
-  const [contentHeight, setContentHeight] = useState(0);
-  const onContentSizeChange = (width: number, height: number) => {
-    setContentHeight(height);
+
+  const styles = {
+    container: {
+      flex: 1,
+      paddingTop: top
+    },
+    section: {
+      ...background,
+      flex: 1
+    },
+    userImageSection: {
+      ...background,
+      flex: 3
+    },
+    headerSection: {
+      ...background,
+      flex: 2
+    },
+    menuSection: {
+      ...background,
+      flex: 9
+    },
   };
 
   return (
@@ -24,12 +40,16 @@ export const ProfileScreen = () => {
         ?
         <LoadingScreen />
         :
-        <Layout style={{ marginTop: user.role === IUserRole.Admin ? top * 0.6 : top * 0.4 }}>
-          <ScrollView showsVerticalScrollIndicator={false} onContentSizeChange={onContentSizeChange} scrollEnabled={contentHeight >= height}>
-            <ProfileUserImage height={height} />
+        <Layout style={styles.container}>
+          <Layout style={styles.userImageSection}>
+            <ProfileUserImage />
+          </Layout>
+          <Layout style={styles.headerSection}>
             <ProfileHeader />
+          </Layout>
+          <Layout style={styles.menuSection}>
             <ProfileMenu />
-          </ScrollView>
+          </Layout>
         </Layout>
       }
     </MainLayout>
