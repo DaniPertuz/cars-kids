@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LoadingScreen } from '../../LoadingScreen';
@@ -11,7 +11,6 @@ import { VehiclesResponse } from '../../../../infrastructure/interfaces';
 
 export const VehiclesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
   const { display, vehiclesData, fetchNextPage, fetchPrevPage, getData } = useVehiclesData();
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const VehiclesScreen = () => {
         <LoadingScreen />
         :
         <>
-          <DataLayout paddingTop={height * 0.042}>
+          <DataLayout paddingTop={Platform.OS === 'ios' ? top : top + 20}>
             <TopNavigation top={top} title='Vehículos' renderSearchButton />
             <CustomDivider />
             <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
@@ -34,7 +33,7 @@ export const VehiclesScreen = () => {
             <>
               <TotalListMessage bottom={bottom} item='vehículo' total={vehiclesData.total} />
               <ListPagination<VehiclesResponse> bottom={bottom} data={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
-              <VehicleAddButton top={top} />
+              <VehicleAddButton />
             </>
           }
         </>

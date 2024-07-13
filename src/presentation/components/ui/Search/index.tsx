@@ -1,4 +1,4 @@
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Platform } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { useCustomTheme } from '../../../hooks';
 import { CustomIcon } from '../CustomIcon';
@@ -12,7 +12,7 @@ interface Props {
 export const Search = ({ top, onPress }: Props) => {
   const { background, customFillColor } = useCustomTheme();
   return (
-    <Layout style={{ ...styles.container, top: top }}>
+    <Layout style={{ ...styles.container, top: Platform.OS === 'android' ? top + 20 : top }}>
       <TouchableOpacity
         activeOpacity={1.0}
         onPress={onPress}

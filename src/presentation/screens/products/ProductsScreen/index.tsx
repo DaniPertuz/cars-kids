@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { LoadingScreen } from '../../LoadingScreen';
@@ -11,7 +11,6 @@ import { ProductResponse } from '../../../../infrastructure/interfaces';
 
 export const ProductsScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
 
   const { display, productsData, fetchNextPage, fetchPrevPage, getData } = useProductsData();
 
@@ -26,7 +25,7 @@ export const ProductsScreen = () => {
         <LoadingScreen />
         :
         <>
-          <DataLayout paddingTop={height * 0.042}>
+          <DataLayout paddingTop={Platform.OS === 'ios' ? top : top + 20}>
             <TopNavigation top={top} title='Productos' renderSearchButton />
             <CustomDivider />
             <ProductListComponent bottom={bottom} display={display} productsData={productsData} />
@@ -35,9 +34,9 @@ export const ProductsScreen = () => {
             <>
               <TotalListMessage bottom={bottom} item='producto' total={productsData.total} />
               <ListPagination<ProductResponse> bottom={bottom} data={productsData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+              <ProductAddButton />
             </>
           }
-          <ProductAddButton top={top} />
         </>
       }
     </MainLayout>

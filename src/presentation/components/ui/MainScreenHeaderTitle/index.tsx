@@ -1,11 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { Layout, Spinner } from '@ui-kitten/components';
 
 import { Desk } from '../../../../core/entities';
 import { useCustomTheme } from '../../../hooks';
 import { DeskSelect } from '../../desks/DeskSelect';
 import { HeaderFive } from '../HeaderFive';
-import { globalStyles } from '../../../styles/global.styles';
 import { globalColors } from '../../../theme/globalColors';
 
 interface Props {
@@ -24,7 +23,7 @@ export const MainScreenHeaderTitle = ({ desks, selectedDesk, title, handleDesk }
       <HeaderFive text={title} />
       {desks.length === 0
         ?
-        <Layout style={styles.loadingContainer}>
+        <Layout style={[styles.loadingContainer, background]}>
           <Spinner size='small' style={{ borderColor: globalColors.primaryRed }} />
         </Layout>
         :
@@ -37,14 +36,12 @@ export const MainScreenHeaderTitle = ({ desks, selectedDesk, title, handleDesk }
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 4,
+    flex: 1,
     gap: 10,
-    justifyContent: 'space-between',
-    marginBottom: 15
+    marginBottom: Platform.OS === 'ios' ? 15 : 12
   },
   loadingContainer: {
     alignItems: 'center',
-    flex: 1,
-    ...globalStyles.mainBackground
+    flex: 1
   }
 });

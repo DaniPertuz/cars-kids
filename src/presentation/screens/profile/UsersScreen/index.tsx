@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
-import { CustomDivider, MainLayout, TopNavigation } from '../../../components/ui';
+import { CustomDivider, DataLayout, MainLayout, TopNavigation } from '../../../components/ui';
 import { UsersListComponent } from '../../../components/users/UsersListComponent';
 import { useUsersData } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
@@ -21,10 +21,12 @@ export const UsersScreen = () => {
   }, [usersData]);
 
   return (
-    <MainLayout paddingTop={top}>
-      <TopNavigation top={top} title='Usuarios' />
-      <Layout style={{ ...styles.container, marginVertical: height * 0.02 }}>
+    <MainLayout>
+      <DataLayout paddingTop={Platform.OS === 'ios' ? top + 0 : top + 20}>
+        <TopNavigation top={top} title='Usuarios' />
         <CustomDivider />
+      </DataLayout>
+      <Layout style={{ ...styles.container, marginVertical: height * 0.005 }}>
         {!usersData
           ?
           <LoadingScreen />

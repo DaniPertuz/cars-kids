@@ -1,4 +1,4 @@
-import { useWindowDimensions } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
@@ -18,7 +18,7 @@ export const BudgetScreen = () => {
   const { base, loans, expenses, payroll } = dayBudget;
 
   return (
-    <Layout style={{ paddingTop: height * 0.042, ...styles.container }}>
+    <Layout style={{ paddingTop: Platform.OS === 'ios' ? top : top + 20, ...styles.container }}>
       <TopNavigation top={top} title='Presupuesto' />
       {(!dayBudget) || (base === -1 && loans === -1 && expenses === -1)
         ?

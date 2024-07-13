@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { IStatus, IUserRole } from '../../../../infrastructure/interfaces';
 import { useCustomTheme } from '../../../hooks';
@@ -16,7 +17,7 @@ export const VehicleDescription = ({ vehicle }: Props) => {
   const { user } = useAuthStore();
   const isAdmin = user?.role === IUserRole.Admin;
   return (
-    <Layout style={[{ ...styles.descriptionContainer, width: isAdmin ? '50%' : '30%' }, platinumItemBackgroundColor]}>
+    <Layout style={[{ ...styles.descriptionContainer, width: isAdmin ? Platform.OS === 'ios' ? '55%' : '65%' : Platform.OS === 'ios' ? '35%' : '45%' }, platinumItemBackgroundColor]}>
       <Caption text={(vehicle.category === 'car' ? 'Carro' : 'Moto')} />
       {user?.role === IUserRole.Admin && <CalloutBold text={(vehicle.status === IStatus.Active ? 'Activo' : 'Inactivo')} />}
       <VehicleColor vehicle={vehicle} />

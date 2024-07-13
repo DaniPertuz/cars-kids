@@ -1,9 +1,9 @@
-import { useWindowDimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ReportsEntitiesList, ReportsListPagination, ReportsSelectComponentsGroup } from '../../../components/reports';
-import { CustomDivider, PrimaryButton, TopNavigation } from '../../../components/ui';
+import { CustomDivider, PrimaryButton, Spacer, TopNavigation } from '../../../components/ui';
 import { useCustomTheme, useReportsDataHandling } from '../../../hooks';
 
 import { styles } from './styles';
@@ -11,7 +11,6 @@ import { styles } from './styles';
 export const ReportsScreen = () => {
   const { background } = useCustomTheme();
   const { top, bottom } = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
   const {
     category,
     dayDate,
@@ -33,10 +32,9 @@ export const ReportsScreen = () => {
   } = useReportsDataHandling();
 
   return (
-    <Layout style={[{ paddingTop: height * 0.045, ...styles.container }, background]}>
-      <Layout style={[styles.container, background]}>
-        <TopNavigation top={0} title='Reportes' />
-      </Layout>
+    <Layout style={[{ paddingTop: Platform.OS === 'ios' ? top + 10 : top + 20, ...styles.container }, background]}>
+      <TopNavigation top={top} title='Reportes' />
+      <Spacer height={20} />
       <CustomDivider />
       <Layout style={[styles.selectsButtonContainer, background]}>
         <ReportsSelectComponentsGroup category={category} lapse={lapse!} dayDate={dayDate} dayDateText={dayDateText} setCategory={setCategory} setDayDate={setDayDate} setLapse={setLapse} handleMonthYear={handleMonthYear} handlePeriod={handlePeriod} />

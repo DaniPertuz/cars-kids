@@ -1,4 +1,4 @@
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CustomIcon } from '../components/ui/CustomIcon';
 import StatusBarComponent from '../components/ui/status-bar';
@@ -49,7 +49,7 @@ export const BottomNavigator = () => {
             borderTopColor: isDarkMode ? globalColors.white : globalColors.dark,
             borderWidth: 1,
             elevation: 0,
-            height: '10%'
+            height: Platform.OS === 'ios' ? '10%' : '7%'
           },
           tabBarActiveBackgroundColor: globalColors.primaryRed
         })}

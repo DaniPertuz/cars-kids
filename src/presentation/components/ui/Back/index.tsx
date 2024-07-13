@@ -1,4 +1,4 @@
-import { TouchableOpacity } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Layout } from '@ui-kitten/components';
@@ -12,7 +12,7 @@ export const Back = ({ top }: { top: number; }) => {
   const navigator = useNavigation<StackNavigationProp<RootStackParams>>();
 
   return (
-    <Layout style={{ ...globalStyles.backButtonContainer, marginTop: top }}>
+    <Layout style={{ ...globalStyles.backButtonContainer, marginTop: Platform.OS === 'android' ? top + 20 : top }}>
       <TouchableOpacity
         activeOpacity={1.0}
         onPress={() => navigator.goBack()}
