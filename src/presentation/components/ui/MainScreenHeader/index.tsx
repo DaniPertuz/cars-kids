@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
@@ -10,7 +11,6 @@ import { MainScreenHeaderLoadingSpinner } from '../MainScreenHeaderLoadingSpinne
 
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
-import { Platform } from 'react-native';
 
 interface Props {
   transaction: Transaction;
