@@ -164,9 +164,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
       updateTransactionState('payment', paymentMethod, transaction);
     }
 
-    if (value === 'Personalizado') {
-      setCustomPayment(true);
-    }
+    setCustomPayment(value === 'Personalizado');
   };
 
   const convertPurchasePayment = (value: string): string => {
@@ -377,7 +375,8 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
         }
 
         addTransaction(updatedRental, transaction);
-        showMessage('Alquiler agregado');
+        setLoading(false);
+        setVisible(false);
       }
     } catch (error) {
       showMessage('Error al procesar la transacción');
