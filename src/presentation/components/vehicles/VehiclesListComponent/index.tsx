@@ -13,7 +13,7 @@ interface Props {
 export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) => {
   const { background } = useCustomTheme();
   return (
-    <Layout style={[{ marginHorizontal: 20, paddingBottom: bottom + 200 }, background]}>
+    <Layout style={[{ marginHorizontal: 20, paddingBottom: bottom + 215 }, background]}>
       {(!display)
         ?
         <SpinnerContainer />

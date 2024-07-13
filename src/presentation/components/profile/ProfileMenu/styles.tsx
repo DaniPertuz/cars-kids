@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 30
   },
   menuItemsContainer: {
-    gap: 18,
-    marginBottom: 40
+    gap: 15,
+    marginBottom: 20
   }
 });

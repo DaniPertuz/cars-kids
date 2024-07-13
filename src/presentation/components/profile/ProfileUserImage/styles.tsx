@@ -10,7 +10,8 @@ export const styles = StyleSheet.create({
   editImageIconContainer: {
     borderRadius: 100,
     position: 'absolute',
-    right: 160
+    right: 160,
+    top: 120
   },
   editImageIconSize: {
     height: 25,
@@ -24,6 +25,6 @@ export const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     paddingHorizontal: 30,
-    paddingBottom: 25
+    paddingBottom: 5
   },
 });

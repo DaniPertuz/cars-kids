@@ -3,8 +3,7 @@ import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginBottom: 5
+    flex: 1
   },
   buttonsContainer: {
     ...globalStyles.mainMargin
