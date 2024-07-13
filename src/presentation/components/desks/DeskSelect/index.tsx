@@ -14,12 +14,12 @@ export const DeskSelect = ({ desksNames, selectedDesk, handleDesk }: Props) => {
     <>
       {!selectedDesk &&
         <Layout style={globalStyles.fullWidth}>
-          <SelectComponent initialValue={''} placeholder={'Puesto'} options={desksNames} handleSelection={handleDesk} />
+          <SelectComponent initialValue={''} disabled={desksNames.length === 0} placeholder={desksNames.length === 0 ? 'No hay puestos' : 'Puesto'} options={desksNames} handleSelection={handleDesk} />
         </Layout>
       }
       {selectedDesk &&
         <Layout style={globalStyles.fullWidth}>
-          <SelectComponent initialValue={selectedDesk.name} placeholder={'Puesto'} options={desksNames} handleSelection={handleDesk} />
+          <SelectComponent initialValue={selectedDesk.name} disabled={desksNames.length === 0} placeholder={desksNames.length === 0 ? 'No hay puestos' : 'Puesto'} options={desksNames} handleSelection={handleDesk} />
         </Layout>
       }
     </>

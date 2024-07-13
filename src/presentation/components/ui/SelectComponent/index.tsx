@@ -3,13 +3,14 @@ import { IndexPath, Select, SelectItem } from '@ui-kitten/components';
 import { styles } from './styles';
 
 interface Props {
+  disabled?: boolean;
   initialValue: string;
   options: string[];
   placeholder: string;
   handleSelection: (value: string) => void;
 }
 
-export const SelectComponent = ({ initialValue, options, placeholder, handleSelection }: Props) => {
+export const SelectComponent = ({ disabled, initialValue, options, placeholder, handleSelection }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>();
   const [selectedValue, setSelectedValue] = useState(initialValue);
 
@@ -24,6 +25,7 @@ export const SelectComponent = ({ initialValue, options, placeholder, handleSele
     <Select
       style={styles.container}
       placeholder={placeholder}
+      disabled={disabled}
       selectedIndex={selectedIndex}
       onSelect={index => setSelectedIndex(index)}
       value={selectedValue}

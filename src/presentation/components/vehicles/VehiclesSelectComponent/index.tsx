@@ -7,13 +7,14 @@ import { VehicleItemBody } from './VehicleItemBody';
 import { styles } from './styles';
 
 interface Props {
+  disabled?: boolean;
   initialValue: string;
   vehicles: Vehicle[];
   placeholder: string;
   handleSelection: (value: string) => void;
 }
 
-export const VehiclesSelectComponent = ({ initialValue, vehicles, placeholder, handleSelection }: Props) => {
+export const VehiclesSelectComponent = ({ disabled, initialValue, vehicles, placeholder, handleSelection }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>();
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | undefined>(
     vehicles.find(vehicle => vehicle.nickname === initialValue)
@@ -38,6 +39,7 @@ export const VehiclesSelectComponent = ({ initialValue, vehicles, placeholder, h
     <Select
       style={styles.container}
       placeholder={placeholder}
+      disabled={disabled}
       selectedIndex={selectedIndex}
       onSelect={index => setSelectedIndex(index)}
       value={selectedVehicle?.nickname}
