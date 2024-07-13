@@ -1,3 +1,4 @@
+export * from './InputContainer';
 export * from './Logout';
 export * from './ProfileHeader';
 export * from './ProfileMenu';
