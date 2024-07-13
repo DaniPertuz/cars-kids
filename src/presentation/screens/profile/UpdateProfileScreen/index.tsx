@@ -1,47 +1,51 @@
 import { useState } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
-import { Caption, MainLayout, PrimaryButton, TopNavigation } from '../../../components/ui';
-import { useResetProfile } from '../../../hooks';
+import { InputContainer } from '../../../components/profile';
+import { Caption, CustomDivider, DataLayout, MainLayout, PrimaryButton, Spacer, TopNavigation } from '../../../components/ui';
+import { useCustomTheme, useResetProfile } from '../../../hooks';
 
-import { globalStyles } from '../../../styles/global.styles';
 import { styles } from './styles';
 
 export const UpdateProfileScreen = () => {
   const { top } = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
   const [loading, setLoading] = useState(false);
-  const { form, setForm, onUpdateProfile } = useResetProfile();
+  const { background } = useCustomTheme();
+  const { resetForm, setResetForm, onUpdateProfile } = useResetProfile();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setLoading(true);
-    onUpdateProfile();
+    await onUpdateProfile();
     setLoading(false);
-  }
+  };
 
   return (
-    <MainLayout paddingTop={top}>
-      <TopNavigation top={top} title='Actualizar perfil' />
-      <Layout style={{ ...styles.container, marginVertical: height * 0.03 }}>
-        <Layout style={styles.inputContainer}>
-          <Caption text='Nombre' textColor={globalStyles.colorOnyx} />
-          <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
-        </Layout>
-        <Layout style={styles.inputContainer}>
-          <Caption text='Email' textColor={globalStyles.colorOnyx} />
-          <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
-        </Layout>
-        <Layout style={styles.inputContainer}>
-          <Caption text='Contraseña' textColor={globalStyles.colorOnyx} />
-          <PasswordInput placeholder='Contraseña' value={form.password} onChangeText={(password: string) => setForm({ ...form, password })} />
-        </Layout>
-        <Layout style={styles.inputContainer}>
-          <Caption text='Repetir contraseña' textColor={globalStyles.colorOnyx} />
-          <PasswordInput placeholder='Repetir contraseña' value={form.confirmPassword} onChangeText={(confirmPassword: string) => setForm({ ...form, confirmPassword })} />
-        </Layout>
+    <MainLayout>
+      <DataLayout paddingTop={Platform.OS === 'ios' ? top + 0 : top + 20}>
+        <TopNavigation top={top} title='Actualizar perfil' />
+        <CustomDivider />
+      </DataLayout>
+      <Spacer height={20} />
+      <Layout style={[{ ...styles.container }, background]}>
+        <InputContainer>
+          <Caption text='Nombre' />
+          <DefaultInput placeholder='Nombre' value={resetForm.name} onChangeText={(name: string) => setResetForm({ ...resetForm, name })} />
+        </InputContainer>
+        <InputContainer>
+          <Caption text='Email' />
+          <EmailInput placeholder='Email' value={resetForm.email} onChangeText={(email: string) => setResetForm({ ...resetForm, email })} />
+        </InputContainer>
+        <InputContainer>
+          <Caption text='Contraseña' />
+          <PasswordInput placeholder='Contraseña' value={resetForm.password} onChangeText={(password: string) => setResetForm({ ...resetForm, password })} />
+        </InputContainer>
+        <InputContainer>
+          <Caption text='Repetir contraseña' />
+          <PasswordInput placeholder='Repetir contraseña' value={resetForm.confirmPassword} onChangeText={(confirmPassword: string) => setResetForm({ ...resetForm, confirmPassword })} />
+        </InputContainer>
         <PrimaryButton disabled={loading} text='Actualizar' onPress={onSubmit} />
       </Layout>
     </MainLayout>
