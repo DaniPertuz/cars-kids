@@ -13,8 +13,7 @@ interface Props {
 
 export const TransactionsListComponent = ({ entity }: Props) => {
   const { background } = useCustomTheme();
-  const purchases = useTransactionStore(state => state.purchases);
-  const rentals = useTransactionStore(state => state.rentals);
+  const { purchases, rentals } = useTransactionStore();
 
   return (
     <Layout style={[styles.container, background]}>
