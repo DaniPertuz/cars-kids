@@ -9,7 +9,7 @@ import { useCustomTheme, useUserInfo } from '../../../hooks';
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
-export const ProfileUserImage = ({ height }: { height: number; }) => {
+export const ProfileUserImage = () => {
   const [visible, setVisible] = useState(false);
   const { user } = useUserInfo();
   const { isDarkMode, defaultBackgroundColor } = useCustomTheme();
@@ -17,7 +17,7 @@ export const ProfileUserImage = ({ height }: { height: number; }) => {
   return (
     <Layout style={[styles.imageContainer, { backgroundColor: isDarkMode ? defaultBackgroundColor : globalColors.background }]}>
       <Image style={styles.image} source={user?.img ? { uri: user.img } : require('../../../../assets/logo2.png')} />
-      <Layout style={{ ...styles.editImageIconContainer, top: height * 0.13 }}>
+      <Layout style={styles.editImageIconContainer}>
         <ProfileEditUserImageButton onPress={() => setVisible(true)} />
       </Layout>
       <ProfileUserImageModal visible={visible} setVisible={setVisible} />

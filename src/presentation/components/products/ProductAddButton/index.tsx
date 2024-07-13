@@ -4,14 +4,10 @@ import { FAB } from '../../ui';
 import { ProductEntryModal } from '../ProductEntryModal';
 import { styles } from './styles';
 
-interface Props {
-  top: number;
-}
-
-export const ProductAddButton = ({ top }: Props) => {
+export const ProductAddButton = () => {
   const [visible, setVisible] = useState(false);
   return (
-    <Layout style={{ marginTop: top, ...styles.container }}>
+    <Layout style={styles.container}>
       <FAB iconName='plus-circle-outline' iconSize={50} onPress={() => setVisible(true)} />
       <ProductEntryModal visible={visible} setVisible={setVisible} />
     </Layout>
