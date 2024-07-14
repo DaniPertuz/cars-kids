@@ -16,7 +16,7 @@ export const LoginScreen = () => {
 
   return (
     <MainLayout>
-      <ScrollView showsVerticalScrollIndicator={false} style={[globalStyles.mainMargin, background]}>
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always' style={[globalStyles.mainMargin, background]}>
         <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <LoginHeader title={'Bienvenido'} footnote={'Ingresa tus credenciales'} />
