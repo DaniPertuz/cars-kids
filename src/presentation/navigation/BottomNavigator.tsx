@@ -10,7 +10,7 @@ import { globalColors } from '../theme/globalColors';
 
 export type MainStackParams = {
   RentalsScreen: undefined,
-  ProductsScreen: undefined,
+  PurchasesScreen: undefined,
   ProfileScreen: undefined;
 };
 
