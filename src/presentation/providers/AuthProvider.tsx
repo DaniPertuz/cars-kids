@@ -7,7 +7,7 @@ import { useAuthStore } from '../store/auth/useAuthStore';
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParams>>();
-  const { status, user } = useAuthStore();
+  const { status } = useAuthStore();
 
   const checkUser = async () => {
     const storedUser = await StorageAdapter.getItem('user');
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   
   useEffect(() => {
     handleUserCheck();
-  }, [status, user, navigation]);
+  }, [status, navigation]);
 
   return (
     <>{children}</>
