@@ -40,7 +40,7 @@ export const useLoginData = () => {
     }
 
     setLoading(false);
-    navigation.navigate('BottomNavigator');
+    navigation.push('BottomNavigator', { screen: 'RentalsScreen'});
   };
 
   return {
@@ -51,5 +51,5 @@ export const useLoginData = () => {
     navigation,
     onLogin,
     setForm
-  }
-}
+  };
+};
