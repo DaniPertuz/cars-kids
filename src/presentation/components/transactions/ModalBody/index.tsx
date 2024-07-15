@@ -73,7 +73,7 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
                 {transaction === 'Purchase'
                   ?
                   <>
-                    <SelectComponent disabled={products.length === 0} placeholder={products.length ? 'No hay productos' : 'Producto'} initialValue={purchase?.product.name || ''} options={productOptions} handleSelection={handleProduct} />
+                    <SelectComponent disabled={products.length === 0} placeholder={products.length === 0 ? 'No hay productos' : 'Producto'} initialValue={purchase?.product.name || ''} options={productOptions} handleSelection={handleProduct} />
                     {(newPurchase.product.price || purchase?.product.price) && <Input label={'Precio'} disabled value={String(purchase ? purchase.product.price : newPurchase.product.price)} />}
                     <SelectComponent placeholder={'Cantidad'} initialValue={purchase ? String(purchase?.quantity) : ''} options={quantityPurchases()} handleSelection={(value: string) => handleQuantity(value, 'Purchase')} />
                     <SelectComponent placeholder={'Medio de pago'} initialValue={convertPurchasePayment(purchase?.payment!) || ''} options={paymentOptions()} handleSelection={(value: string) => handlePayment(value, 'Purchase')} />
