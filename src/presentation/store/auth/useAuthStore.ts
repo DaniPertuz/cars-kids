@@ -13,6 +13,7 @@ export interface AuthState {
   user?: User;
   login: (email: string, password: string) => Promise<any>;
   register: (name: string, email: string, password: string, role: string) => Promise<any>;
+  checkUser: (user: User | null) => Promise<any>;
   updateName: (email: string, name: string) => Promise<any>;
   updateImage: (email: string, img: string) => Promise<any>;
   updateEmail: (email: string, newEmail: string) => Promise<any>;
@@ -35,9 +36,9 @@ export const useAuthStore = create<AuthState>()((set) => ({
 
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
-      : (await StorageAdapter.setItem('token', resp.token),
-        await StorageAdapter.setItem('user', JSON.stringify(resp.user)),
-        set({ status: 'authenticated', token: resp.token, user: resp.user }));
+      : (set({ status: 'authenticated', token: resp.token, user: resp.user }),
+        await StorageAdapter.setItem('token', resp.token),
+        await StorageAdapter.setItem('user', JSON.stringify(resp.user)));
 
     return resp;
   },
@@ -46,9 +47,20 @@ export const useAuthStore = create<AuthState>()((set) => ({
 
     resp.error
       ? set({ status: 'unauthenticated', token: undefined, user: undefined })
-      : (await StorageAdapter.setItem('token', resp.token),
-        await StorageAdapter.setItem('user', JSON.stringify(resp.user)),
-        set({ status: 'authenticated', token: resp.token, user: resp.user }));
+      : (set({ status: 'authenticated', token: resp.token, user: resp.user }),
+        await StorageAdapter.setItem('token', resp.token),
+        await StorageAdapter.setItem('user', JSON.stringify(resp.user)));
+
+    return resp;
+  },
+  checkUser: async (user: User | null) => {
+    const resp = await AuthUseCases.checkAuthUserUseCase(user);
+
+    resp.error
+      ? set({ status: 'unauthenticated', token: undefined, user: undefined })
+      : (set({ status: 'authenticated', token: resp.token, user: resp.user }),
+        await StorageAdapter.setItem('token', resp.token),
+        await StorageAdapter.setItem('user', JSON.stringify(resp.user)));
 
     return resp;
   },
