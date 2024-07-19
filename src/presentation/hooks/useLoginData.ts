@@ -1,7 +1,7 @@
+import { useState } from 'react';
+import { Keyboard, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useState } from 'react';
-import { useWindowDimensions } from 'react-native';
 import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { RootStackParams } from '../navigation/MainNavigator';
 import { useAuthStore } from '../store/auth/useAuthStore';
@@ -19,6 +19,7 @@ export const useLoginData = () => {
   const { height } = useWindowDimensions();
 
   const onLogin = async () => {
+    Keyboard.dismiss();
     if (form.email.length === 0 && form.password.length === 0) {
       SnackbarAdapter.showSnackbar('Ingrese sus credenciales');
       return;

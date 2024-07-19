@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Keyboard, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { useCustomTheme } from './useCustomTheme';
@@ -15,6 +15,7 @@ export const useResetPasswordData = () => {
   const isValidEmail = useEmailValidation(email);
 
   const onSubmit = async () => {
+    Keyboard.dismiss();
     setLoading(true);
 
     if (!isValidEmail) {
