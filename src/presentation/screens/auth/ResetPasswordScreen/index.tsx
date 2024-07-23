@@ -35,7 +35,7 @@ export const ResetPasswordScreen = () => {
           </Layout>
           <Footnote text='Ingresa email y nueva contraseña' />
         </HeaderLayout>
-        <Layout style={authStyles.formContainer}>
+        <Layout style={[authStyles.formContainer, background]}>
           <EmailInput placeholder='Email' value={done ? '' : email} onChangeText={(email: string) => setResetForm({ ...resetForm, email })} />
           <PasswordInput placeholder={'Ingresa contraseña'} value={done ? '' : password} onChangeText={(password: string) => setResetForm({ ...resetForm, password })} />
           <PasswordInput placeholder={'Repite contraseña'} value={done ? '' : confirmPassword} onChangeText={(confirmPassword: string) => setResetForm({ ...resetForm, confirmPassword })} />
