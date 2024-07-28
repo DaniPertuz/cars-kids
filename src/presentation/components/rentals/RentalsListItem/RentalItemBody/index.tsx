@@ -10,11 +10,26 @@ import { globalColors } from '../../../../theme/globalColors';
 export const RentalItemBody = ({ rental, index }: { index: number, rental: Rental; }) => {
   const { defaultColor, platinumItemBackgroundColor } = useCustomTheme();
   const { done, time, formatTime, buttonOpacity, buttonSize, status, advanceTime, pause, reset, setDone, start } = useRentalTimer({ rental });  
+  const totalRentalTime = rental.time * 60;
+  let headerBackgroundColor;
+  let textColor;
+
+  if (!done && totalRentalTime - time <= 180) {
+    headerBackgroundColor = globalColors.primaryRed;
+    textColor = globalColors.white;
+  } else if (!done && totalRentalTime - time <= 300) {
+    headerBackgroundColor = globalColors.warning;
+    textColor = globalColors.white;
+  } else {
+    headerBackgroundColor = platinumItemBackgroundColor.backgroundColor;
+    textColor = defaultColor.color;
+  }
+  
   return (
     <Layout style={[styles.mainContainer, platinumItemBackgroundColor]}>
       <Layout style={[styles.container, platinumItemBackgroundColor]}>
-        <Layout style={[styles.headerContainer, { backgroundColor: (!done && (time / 60) < 3) ? globalColors.primaryRed : (!done && (time / 60) < 5) ? globalColors.warning : platinumItemBackgroundColor.backgroundColor }]}>
-          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={(!done && (time / 60) < 3) ? globalColors.white : (!done && (time / 60) < 5) ? globalColors.white : defaultColor.color} />
+        <Layout style={[styles.headerContainer, { backgroundColor: headerBackgroundColor }]}>
+          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={textColor} />
         </Layout>
         <Layout style={styles.descriptionContainer}>
           <RentalItemDescription rental={rental} />
@@ -37,7 +52,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     alignItems: 'center',
-    borderRadius: 50
+    borderRadius: 50,
+    paddingHorizontal: 5
   },
   mainContainer: {
     gap: 20
