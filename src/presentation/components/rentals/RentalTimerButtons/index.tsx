@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 import { Status } from 'use-timer/lib/types';
+import { StorageAdapter } from '../../../../config/adapters/storage-adapter';
 import { Rental } from '../../../../core/entities';
-import { useCustomTheme } from '../../../hooks';
+import { useCustomTheme, useFormattedDate } from '../../../hooks';
 import { BasicButton } from '../../ui';
 import { RentalAddTimeModal } from '../RentalAddTimeModal';
 import { globalColors } from '../../../theme/globalColors';
@@ -22,15 +23,28 @@ interface Props {
 }
 
 export const RentalTimerButtons = ({ buttonOpacity, buttonSize, index, rental, status, advanceTime, pause, reset, setDone, start }: Props) => {
+  const { formatDateTime } = useFormattedDate();
+  const rentalDate = formatDateTime(rental.date).replaceAll(' ', '_');
+  const key = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDate}`;
   const [visible, setVisible] = useState(false);
   const { isDarkMode, platinumItemBackgroundColor } = useCustomTheme();
+
+  const setDoneRental = async () => {
+    try {
+      await StorageAdapter.setItem(key, 'done');
+      setDone(true);
+    } catch (e) {
+      console.error("Error saving time: ", e);
+    }
+  };
+
   return (
     <Layout style={platinumItemBackgroundColor}>
       <Layout style={[styles.container, platinumItemBackgroundColor]}>
         <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.primaryRed} size={buttonSize} iconName={'plus-circle-outline'} onPress={() => setVisible(true)} />
         <BasicButton activeOpacity={buttonOpacity} fillColor={status === 'RUNNING' ? globalColors.warning : globalColors.success} size={buttonSize} iconName={status === 'RUNNING' ? 'pause-circle-outline' : 'play-circle-outline'} onPress={status === 'RUNNING' ? pause : start} />
         <BasicButton activeOpacity={buttonOpacity} fillColor={isDarkMode ? globalColors.white : globalColors.darkDisabled} size={buttonSize} iconName='refresh-outline' onPress={reset} />
-        <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.successLight} size={buttonSize} iconName='checkmark-circle-2-outline' onPress={() => setDone(true)} />
+        <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.successLight} size={buttonSize} iconName='checkmark-circle-2-outline' onPress={setDoneRental} />
       </Layout>
       <RentalAddTimeModal index={index} rental={rental} advanceTime={advanceTime} visible={visible} setVisible={setVisible} />
     </Layout>

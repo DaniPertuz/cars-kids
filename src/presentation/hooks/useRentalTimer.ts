@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react';
 import { useTimer } from 'use-timer';
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
 import { Rental } from '../../core/entities';
+import { useFormattedDate } from './useFormattedDate';
 
 export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
-  const index = `rental_time_${rental.client}_${rental.vehicle.nickname}_${rental.date}`;
+  const { formatDateTime } = useFormattedDate();
+  const rentalDate = formatDateTime(rental.date).replaceAll(' ', '_');
+  const rentalKey = `rental_time_${rental.client}_${rental.vehicle.nickname}_${rental.date}`;
+  const rentalDoneKey = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDate}`;
   const [initialTime, setInitialTime] = useState<number | null>(null);
   const [done, setDone] = useState<boolean>(false);
   const { status, time, advanceTime, start, pause, reset } = useTimer({
@@ -22,7 +26,7 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
 
   const saveTime = async (currentTime: number) => {
     try {
-      await StorageAdapter.setItem(index, currentTime.toString());
+      await StorageAdapter.setItem(rentalKey, currentTime.toString());
     } catch (e) {
       console.error("Error saving time: ", e);
     }
@@ -30,7 +34,7 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
 
   const loadTime = async () => {
     try {
-      const savedTime = await StorageAdapter.getItem(index);
+      const savedTime = await StorageAdapter.getItem(rentalKey);
       if (savedTime !== null) {
         setInitialTime(parseInt(savedTime));
       }
@@ -39,8 +43,23 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
     }
   };
 
+  const checkRentalDone = async () => {
+    try {
+      const savedDone = await StorageAdapter.getItem(rentalDoneKey);
+      if (savedDone !== null) {
+        setDone(true);
+      }
+    } catch (e) {
+      console.error("Error loading time: ", e);
+    }
+  };
+
   useEffect(() => {
     loadTime();
+  }, []);
+
+  useEffect(() => {
+    checkRentalDone();
   }, []);
 
   useEffect(() => {
