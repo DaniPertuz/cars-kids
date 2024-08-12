@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { globalStyles } from '../../../styles/global.styles';
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,14 +8,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 50,
     marginHorizontal: 20,
-    paddingBottom: 40
+    paddingBottom: 45
   },
   titleContainer: {
     alignItems: 'center',
-    flex: 4,
     gap: 10,
-    justifyContent: 'space-between',
-    marginBottom: 15,
-    ...globalStyles.mainBackground
+    justifyContent: 'space-between'
   }
 });

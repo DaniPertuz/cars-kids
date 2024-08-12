@@ -1,6 +1,6 @@
 import { Card, Layout, Modal } from '@ui-kitten/components';
 import { Desk } from '../../../../core/entities';
-import { useDeskEntryModalData } from '../../../hooks';
+import { useCustomTheme, useDeskEntryModalData } from '../../../hooks';
 import { DefaultInput } from '../../forms';
 import { ModalTitle, PrimaryButton } from '../../ui';
 import { globalStyles } from '../../../styles/global.styles';
@@ -12,10 +12,11 @@ interface Props {
 }
 
 export const DeskEntryModal = ({ desk, visible, setVisible }: Props) => {
+  const { background } = useCustomTheme();
   const { loading, deskState, handleFieldChange, onSubmit } = useDeskEntryModalData({ desk, visible, setVisible });
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card style={globalStyles.mainBackground}>
+      <Card style={background}>
         <Layout style={globalStyles.modalContainer}>
           <ModalTitle setVisible={() => setVisible(false)} />
           <DefaultInput caption='Este valor es único' placeholder={'Nombre'} value={deskState.name} onChangeText={(name) => handleFieldChange('name', name)} />
