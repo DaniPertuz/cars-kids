@@ -5,11 +5,10 @@ import { Layout } from '@ui-kitten/components';
 import { Desk } from '../../../../core/entities';
 import { Transaction } from '../../../../infrastructure/interfaces';
 import { useCustomTheme, useMainScreenHeaderData } from '../../../hooks';
-import { BasicButton } from '../BasicButton';
-import { MainScreenHeaderTitle } from '../MainScreenHeaderTitle';
-import { MainScreenHeaderLoadingSpinner } from '../MainScreenHeaderLoadingSpinner';
+import { AddTransactionButton } from './AddTransactionButton';
+import { HeaderTitleContainer } from './HeaderTitleContainer';
+import { UploadTransactionsButton } from './UploadTransactionsButton';
 
-import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
 
 interface Props {
@@ -21,19 +20,17 @@ interface Props {
 export const MainScreenHeader = ({ transaction, title, ModalComponent }: Props) => {
   const { top } = useSafeAreaInsets();
   const { background } = useCustomTheme();
-  const { desks, selectedDesk, loading, visible, handleDesk, uploadPurchase, setVisible, showTransactionModal } = useMainScreenHeaderData({ transaction });
+  const { desks, selectedDesk, loading, visible, handleDesk, uploadTransaction, setVisible, showTransactionModal } = useMainScreenHeaderData({ transaction });
+  const buttonSize = { height: 45, width: 45 };
 
   return (
-    <Layout style={[{ marginTop: Platform.OS === 'ios' ? top : top + 5, ...styles.container }, background]}>
-      <BasicButton activeOpacity={0.5} iconName='plus-circle' fillColor={globalColors.primaryRed} size={{ height: 45, width: 45 }} onPress={showTransactionModal} />
-      <MainScreenHeaderTitle desks={desks} selectedDesk={selectedDesk!} title={title} handleDesk={handleDesk} />
-      {!loading
-        ?
-        <BasicButton activeOpacity={0.5} iconName='upload-outline' fillColor={globalColors.primaryRed} size={{ height: 45, width: 45 }} onPress={transaction === 'Purchase' ? uploadPurchase : uploadPurchase} />
-        :
-        <MainScreenHeaderLoadingSpinner />
-      }
+    <>
+      <Layout style={[{ marginTop: Platform.OS === 'ios' ? top : top + 5, ...styles.container }, background]}>
+        <AddTransactionButton buttonSize={buttonSize} onPress={showTransactionModal} />
+        <HeaderTitleContainer desks={desks} selectedDesk={selectedDesk!} title={title} onPress={handleDesk} />
+        <UploadTransactionsButton loading={loading} buttonSize={buttonSize} onPress={uploadTransaction} />
+      </Layout>
       <ModalComponent transaction={transaction} visible={visible} setVisible={setVisible} desk={selectedDesk!} />
-    </Layout>
+    </>
   );
 };
