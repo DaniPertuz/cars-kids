@@ -21,7 +21,7 @@ export const MainScreenHeaderTitle = ({ desks, selectedDesk, title, handleDesk }
   return (
     <Layout style={[styles.container, background]}>
       <HeaderFive text={title} />
-      {desks.length === 0
+      {!desks
         ?
         <Layout style={[styles.loadingContainer, background]}>
           <Spinner size='small' style={{ borderColor: globalColors.primaryRed }} />
@@ -36,7 +36,6 @@ export const MainScreenHeaderTitle = ({ desks, selectedDesk, title, handleDesk }
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 1,
     gap: 10,
     marginBottom: Platform.OS === 'ios' ? 15 : 12
   },
