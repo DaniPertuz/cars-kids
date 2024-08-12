@@ -27,7 +27,7 @@ export const useMainScreenHeaderData = ({ transaction }: { transaction: Transact
     SnackbarAdapter.showSnackbar(message);
   };
 
-  const uploadPurchase = async () => {
+  const uploadTransaction = async () => {
     const isPurchaseTransaction = transaction === 'Purchase';
 
     if (isPurchaseTransaction && purchasesList.length === 0) {
@@ -60,7 +60,7 @@ export const useMainScreenHeaderData = ({ transaction }: { transaction: Transact
     selectedDesk,
     visible,
     handleDesk,
-    uploadPurchase,
+    uploadTransaction,
     setVisible,
     showTransactionModal
   };
