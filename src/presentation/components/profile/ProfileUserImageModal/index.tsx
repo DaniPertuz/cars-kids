@@ -30,9 +30,9 @@ export const ProfileUserImageModal = ({ visible, setVisible }: Props) => {
     }
   }, [visible, profilePicture, user]);
 
-  const profileImagePath = displayThumb
+  const profileImagePath = (displayThumb || user?.img?.length === 0)
     ? require('../../../../assets/logo2.png')
-    : { uri: profilePicture ? profilePicture?.assets?.[0]?.uri : user?.img };
+    : { uri: profilePicture ? profilePicture.assets?.[0]?.uri : user?.img };
 
   const { background } = useCustomTheme();
 
