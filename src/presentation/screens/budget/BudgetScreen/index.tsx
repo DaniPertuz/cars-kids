@@ -1,24 +1,24 @@
-import { Platform, useWindowDimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Layout } from '@ui-kitten/components';
 
 import { BudgetBase, BudgetExpenses, BudgetLoans, BudgetPayroll } from '../../../components/budget';
 import { PrimaryButton, TopNavigation } from '../../../components/ui';
-import { useBudgetData } from '../../../hooks';
+import { useBudgetData, useCustomTheme } from '../../../hooks';
 import { LoadingScreen } from '../../LoadingScreen';
 
 import { styles } from './styles';
 
 export const BudgetScreen = () => {
+  const { background } = useCustomTheme();
   const { top } = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
 
   const { loading, dayBudget, onSubmit, setDayBudget } = useBudgetData();
 
   const { base, loans, expenses, payroll } = dayBudget;
 
   return (
-    <Layout style={{ paddingTop: Platform.OS === 'ios' ? top : top + 20, ...styles.container }}>
+    <Layout style={{ paddingTop: Platform.OS === 'ios' ? top : top + 20, ...styles.container, ...background }}>
       <TopNavigation top={top} title='Presupuesto' />
       {(!dayBudget) || (base === -1 && loans === -1 && expenses === -1)
         ?
