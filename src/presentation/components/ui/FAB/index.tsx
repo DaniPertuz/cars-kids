@@ -15,7 +15,7 @@ export const FAB = ({ iconName, iconSize, onPress }: Props) => {
   return (
     <Layout style={styles.container}>
       <TouchableOpacity
-        activeOpacity={0.6}
+        activeOpacity={1.0}
         onPress={onPress}
         style={background}
       >
