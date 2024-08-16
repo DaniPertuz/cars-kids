@@ -7,6 +7,8 @@ export interface AuthResponse {
 
 export type AuthStatus = 'authenticated' | 'unauthenticated' | 'checking';
 
+export type TimeStatus = 'RUNNING' | 'PAUSED' | 'STOPPED';
+
 export enum IStatus {
   Active   = 'active',
   Inactive = 'inactive'
