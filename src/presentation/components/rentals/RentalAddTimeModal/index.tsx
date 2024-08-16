@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Keyboard } from 'react-native';
 import { Card, Layout, Modal } from '@ui-kitten/components';
 import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { Rental } from '../../../../core/entities';
@@ -24,6 +25,7 @@ export const RentalAddTimeModal = ({ index, rental, visible, advanceTime, setVis
   const updateRental = useTransactionStore(state => state.updateTransaction);
 
   const onSubmit = () => {
+    Keyboard.dismiss();
     setLoading(true);
     if (minutes === 0 || exception.length === 0) {
       SnackbarAdapter.showSnackbar('Datos incompletos para agregar minutos');
@@ -31,11 +33,12 @@ export const RentalAddTimeModal = ({ index, rental, visible, advanceTime, setVis
       return;
     }
 
-    advanceTime((minutes * 60) * -1);
+    advanceTime(minutes);
     updateRental(index, { ...rental, exception }, 'Rental');
     setLoading(false);
     setVisible(false);
     setMinutes(0);
+    setException('');
   };
 
   return (
