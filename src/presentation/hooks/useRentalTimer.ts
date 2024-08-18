@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useTimer } from 'use-timer';
+import BackgroundTimer from 'react-native-background-timer';
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
 import { Rental } from '../../core/entities';
+import { TimeStatus } from '../../infrastructure/interfaces';
 import { useFormattedDate } from './useFormattedDate';
 
 export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
@@ -9,12 +10,10 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
   const rentalDate = formatDateTime(rental.date).replaceAll(' ', '_');
   const rentalKey = `rental_time_${rental.client}_${rental.vehicle.nickname}_${rental.date}`;
   const rentalDoneKey = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDate}`;
-  const [initialTime, setInitialTime] = useState<number | null>(null);
+  const [timerOn, setTimerOn] = useState(true);
+  const [timerStatus, setTimerStatus] = useState<TimeStatus>('RUNNING');
+  const [secondsLeft, setSecondsLeft] = useState(0);
   const [done, setDone] = useState<boolean>(false);
-  const { status, time, advanceTime, start, pause, reset } = useTimer({
-    initialTime: 0,
-    autostart: false
-  });
   const buttonSize = { height: 30, width: 30 };
   const buttonOpacity = 0.7;
 
@@ -32,15 +31,48 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
     }
   };
 
-  const loadTime = async () => {
-    try {
-      const savedTime = await StorageAdapter.getItem(rentalKey);
-      if (savedTime !== null) {
-        setInitialTime(parseInt(savedTime));
-      }
-    } catch (e) {
-      console.error("Error loading time: ", e);
+  const startTimer = async () => {
+    const now = Date.now();
+    await StorageAdapter.setItem(`${rentalKey}_startTime`, now.toString());
+    BackgroundTimer.runBackgroundTimer(() => {
+      setSecondsLeft(prevTime => {
+        const newTime = prevTime + 1;
+        saveTime(newTime);
+        return newTime;
+      });
+    }, 1000);
+    setTimerStatus('RUNNING');
+  };
+
+  const pauseTimer = () => {
+    BackgroundTimer.stopBackgroundTimer();
+    setTimerOn((current) => !current);
+    setTimerStatus(prevStatus => (prevStatus === 'RUNNING' ? 'STOPPED' : 'RUNNING'));
+  };
+
+  const resetTimer = () => {
+    setTimerOn(false);
+    setSecondsLeft(0);
+    setTimerStatus('STOPPED');
+  };
+
+  const advanceTime = (timeToAdd: number) => {
+    const secondsToAdd = timeToAdd * 60;
+    setSecondsLeft(prevTime => (prevTime + secondsToAdd));
+  };
+
+  const initializeTimer = async () => {
+    const savedTime = await StorageAdapter.getItem(rentalKey);
+    const savedStartTime = await StorageAdapter.getItem(`${rentalKey}_startTime`);
+
+    if (savedStartTime && savedTime) {
+      const now = Date.now();
+      const elapsed = Math.floor((now - parseInt(savedStartTime, 10)) / 1000);
+      const totalElapsedTime = parseInt(savedTime, 10) + elapsed;
+      setSecondsLeft(totalElapsedTime);
     }
+
+    if (timerOn) startTimer();
   };
 
   const checkRentalDone = async () => {
@@ -55,41 +87,23 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
   };
 
   useEffect(() => {
-    loadTime();
-  }, []);
-
-  useEffect(() => {
     checkRentalDone();
   }, []);
 
   useEffect(() => {
-    if (initialTime !== null) {
-      advanceTime(initialTime);
-      start();
-    }
-  }, [initialTime, advanceTime, start]);
-
-  useEffect(() => {
-    if (!done && time === 0) {
-      start();
-    }
-  }, [done, time, start]);
-
-  useEffect(() => {
-    saveTime(time);
-  }, [time]);
+    initializeTimer();
+  }, []);
 
   return {
     buttonOpacity,
     buttonSize,
     done,
-    status,
-    time,
+    secondsLeft,
+    timerStatus,
     advanceTime,
     formatTime,
-    pause,
-    reset,
     setDone,
-    start
+    pauseTimer,
+    resetTimer
   };
 };
