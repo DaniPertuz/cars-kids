@@ -9,15 +9,15 @@ import { globalColors } from '../../../../theme/globalColors';
 
 export const RentalItemBody = ({ rental, index }: { index: number, rental: Rental; }) => {
   const { defaultColor, platinumItemBackgroundColor } = useCustomTheme();
-  const { done, time, formatTime, buttonOpacity, buttonSize, status, advanceTime, pause, reset, setDone, start } = useRentalTimer({ rental });  
+  const { done, formatTime, buttonOpacity, buttonSize, setDone, secondsLeft, timerStatus, advanceTime, pauseTimer, resetTimer } = useRentalTimer({ rental });  
   const totalRentalTime = rental.time * 60;
   let headerBackgroundColor;
   let textColor;
 
-  if (!done && totalRentalTime - time <= 180) {
+  if (!done && totalRentalTime - secondsLeft <= 180) {
     headerBackgroundColor = globalColors.primaryRed;
     textColor = globalColors.white;
-  } else if (!done && totalRentalTime - time <= 300) {
+  } else if (!done && totalRentalTime - secondsLeft <= 300) {
     headerBackgroundColor = globalColors.warning;
     textColor = globalColors.white;
   } else {
@@ -29,13 +29,13 @@ export const RentalItemBody = ({ rental, index }: { index: number, rental: Renta
     <Layout style={[styles.mainContainer, platinumItemBackgroundColor]}>
       <Layout style={[styles.container, platinumItemBackgroundColor]}>
         <Layout style={[styles.headerContainer, { backgroundColor: headerBackgroundColor }]}>
-          <HeaderFive text={`${done ? rental.time : formatTime(time)}${done ? "'" : ''}`} textColor={textColor} />
+          <HeaderFive text={`${done ? rental.time : formatTime(secondsLeft)}${done ? "'" : ''}`} textColor={textColor} />
         </Layout>
         <Layout style={styles.descriptionContainer}>
           <RentalItemDescription rental={rental} />
         </Layout>
       </Layout>
-      {!done && <RentalTimerButtons index={index} rental={rental} buttonOpacity={buttonOpacity} buttonSize={buttonSize} status={status} advanceTime={advanceTime} pause={pause} reset={reset} setDone={setDone} start={start} />}
+      {!done && <RentalTimerButtons index={index} rental={rental} buttonOpacity={buttonOpacity} buttonSize={buttonSize} status={timerStatus} advanceTime={advanceTime} pause={pauseTimer} reset={resetTimer} setDone={setDone} />}
     </Layout>
   );
 };
