@@ -11,13 +11,12 @@ interface Props {
 }
 
 export const FAB = ({ iconName, iconSize, onPress }: Props) => {
-  const { background, customFillColor } = useCustomTheme();
+  const { customFillColor } = useCustomTheme();
   return (
     <Layout style={styles.container}>
       <TouchableOpacity
         activeOpacity={1.0}
         onPress={onPress}
-        style={background}
       >
         <CustomIcon name={iconName} fillColor={customFillColor.fillColor} size={{ height: iconSize, width: iconSize }} />
       </TouchableOpacity>
