@@ -23,7 +23,7 @@ export const useProductEntryModalData = ({ product, visible, setVisible }: Props
   const [productObject, setProductObject] = useState({});
   const [productState, setProductState] = useState<Product>({
     _id: product?._id || '',
-    name: product?.name || '',
+    name: product?.name.trim() || '',
     cost: product?.cost || 0,
     price: product?.price || 0,
     status: product?.status || IStatus.Active

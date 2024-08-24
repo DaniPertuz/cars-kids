@@ -360,7 +360,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
           ...rental,
           ...newRental,
           ...commonFields,
-          client: newRental.client || 'NN',
+          client: newRental.client.trim() || 'NN',
           time: newRental.time!,
           date: newRental.date,
           vehicle: newRental.vehicle,

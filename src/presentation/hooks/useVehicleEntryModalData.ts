@@ -26,7 +26,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   const [vehicleObject, setVehicleObject] = useState({});
   const [vehicleState, setVehicleState] = useState<Vehicle>({
     _id: vehicle?._id || '',
-    nickname: vehicle?.nickname || '',
+    nickname: vehicle?.nickname.trim() || '',
     category: vehicle?.category || IVehicleCategory.Car,
     size: vehicle?.size || '',
     color: vehicle?.color || '',
