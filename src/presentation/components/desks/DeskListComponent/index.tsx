@@ -5,17 +5,16 @@ import { EmptyListMessage } from '../../ui';
 import { DeskList } from '../DeskList';
 
 interface Props {
-  bottom: number;
   desks: Desk[];
 }
 
-export const DeskListComponent = ({ bottom, desks }: Props) => {
+export const DeskListComponent = ({ desks }: Props) => {
   const { background } = useCustomTheme();
   return (
-    <Layout style={[{ marginHorizontal: 20, paddingBottom: bottom + 325 }, background]}>
+    <Layout style={[{ marginHorizontal: 20, height: '90%', marginBottom: 15 }, background]}>
       {(desks.length === 0)
           ?
-          <EmptyListMessage heightBy={0.7} text='No hay puestos de trabajo' />
+          <EmptyListMessage heightBy={0.9} text='No hay puestos de trabajo' />
           :
           <DeskList desks={desks} />
       }
