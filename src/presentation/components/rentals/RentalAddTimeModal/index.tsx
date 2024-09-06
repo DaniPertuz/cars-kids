@@ -34,7 +34,7 @@ export const RentalAddTimeModal = ({ index, rental, visible, advanceTime, setVis
     }
 
     advanceTime(minutes);
-    updateRental(index, { ...rental, exception }, 'Rental');
+    updateRental(index, { ...rental, exception: exception.trim() }, 'Rental');
     setLoading(false);
     setVisible(false);
     setMinutes(0);
