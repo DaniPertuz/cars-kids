@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import BackgroundTimer from 'react-native-background-timer';
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
 import { Rental } from '../../core/entities';
@@ -10,10 +10,12 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
   const rentalDate = formatDateTime(rental.date).replaceAll(' ', '_');
   const rentalKey = `rental_time_${rental.client}_${rental.vehicle.nickname}_${rental.date}`;
   const rentalDoneKey = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDate}`;
+  const rentalStatusKey = `${rentalKey}_status`;
   const [timerOn, setTimerOn] = useState(true);
   const [timerStatus, setTimerStatus] = useState<TimeStatus>('RUNNING');
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [done, setDone] = useState<boolean>(false);
+  const timerRef = useRef<number | null>(null);
   const buttonSize = { height: 30, width: 30 };
   const buttonOpacity = 0.7;
 
@@ -31,29 +33,48 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
     }
   };
 
+  const saveTimerStatus = async (status: TimeStatus) => {
+    try {
+      await StorageAdapter.setItem(rentalStatusKey, status);
+    } catch (e) {
+      console.error("Error saving timer status: ", e);
+    }
+  };
+
   const startTimer = async () => {
     const now = Date.now();
     await StorageAdapter.setItem(`${rentalKey}_startTime`, now.toString());
-    BackgroundTimer.runBackgroundTimer(() => {
-      setSecondsLeft(prevTime => {
+    timerRef.current = BackgroundTimer.setTimeout(() => {
+      setSecondsLeft((prevTime) => {
         const newTime = prevTime + 1;
         saveTime(newTime);
         return newTime;
       });
+      startTimer();
     }, 1000);
     setTimerStatus('RUNNING');
   };
 
-  const pauseTimer = () => {
-    BackgroundTimer.stopBackgroundTimer();
-    setTimerOn((current) => !current);
-    setTimerStatus(prevStatus => (prevStatus === 'RUNNING' ? 'STOPPED' : 'RUNNING'));
+  const pauseTimer = async () => {
+    if (timerRef.current !== null) {
+      BackgroundTimer.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    setTimerOn(current => !current);
+    const newStatus = timerStatus === 'RUNNING' ? 'STOPPED' : 'RUNNING';
+    setTimerStatus(newStatus);
+    await saveTimerStatus(newStatus);
   };
 
-  const resetTimer = () => {
+  const resetTimer = async () => {
+    if (timerRef.current !== null) {
+      BackgroundTimer.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
     setTimerOn(false);
     setSecondsLeft(0);
     setTimerStatus('STOPPED');
+    await saveTimerStatus('STOPPED');
   };
 
   const advanceTime = (timeToAdd: number) => {
@@ -64,6 +85,7 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
   const initializeTimer = async () => {
     const savedTime = await StorageAdapter.getItem(rentalKey);
     const savedStartTime = await StorageAdapter.getItem(`${rentalKey}_startTime`);
+    const savedStatus = await StorageAdapter.getItem(rentalStatusKey);
 
     if (savedStartTime && savedTime) {
       const now = Date.now();
@@ -72,7 +94,12 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
       setSecondsLeft(totalElapsedTime);
     }
 
-    if (timerOn) startTimer();
+    if (savedStatus === 'STOPPED') {
+      setTimerStatus('STOPPED');
+      setTimerOn(false);
+    } else if (timerOn) {
+      startTimer();
+    }
   };
 
   const checkRentalDone = async () => {
@@ -103,6 +130,7 @@ export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
     advanceTime,
     formatTime,
     setDone,
+    startTimer,
     pauseTimer,
     resetTimer
   };
