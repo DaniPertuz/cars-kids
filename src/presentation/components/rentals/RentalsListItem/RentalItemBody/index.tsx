@@ -9,7 +9,7 @@ import { globalColors } from '../../../../theme/globalColors';
 
 export const RentalItemBody = ({ rental, index }: { index: number, rental: Rental; }) => {
   const { defaultColor, platinumItemBackgroundColor } = useCustomTheme();
-  const { done, formatTime, buttonOpacity, buttonSize, setDone, secondsLeft, timerStatus, advanceTime, pauseTimer, resetTimer } = useRentalTimer({ rental });  
+  const { done, buttonOpacity, buttonSize, secondsLeft, timerStatus, formatTime, advanceTime, pauseTimer, resetTimer, setDone, startTimer } = useRentalTimer({ rental });  
   const totalRentalTime = rental.time * 60;
   let headerBackgroundColor;
   let textColor;
@@ -35,7 +35,7 @@ export const RentalItemBody = ({ rental, index }: { index: number, rental: Renta
           <RentalItemDescription rental={rental} />
         </Layout>
       </Layout>
-      {!done && <RentalTimerButtons index={index} rental={rental} buttonOpacity={buttonOpacity} buttonSize={buttonSize} status={timerStatus} advanceTime={advanceTime} pause={pauseTimer} reset={resetTimer} setDone={setDone} />}
+      {!done && <RentalTimerButtons index={index} rental={rental} buttonOpacity={buttonOpacity} buttonSize={buttonSize} status={timerStatus} advanceTime={advanceTime} pause={pauseTimer} reset={resetTimer} setDone={setDone} startTimer={startTimer} />}
     </Layout>
   );
 };

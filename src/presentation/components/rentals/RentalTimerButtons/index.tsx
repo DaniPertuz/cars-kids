@@ -19,9 +19,10 @@ interface Props {
   pause: () => void;
   reset: () => void;
   setDone: (value: boolean) => void;
+  startTimer: () => void;
 }
 
-export const RentalTimerButtons = ({ buttonOpacity, buttonSize, index, rental, status, advanceTime, pause, reset, setDone }: Props) => {
+export const RentalTimerButtons = ({ buttonOpacity, buttonSize, index, rental, status, advanceTime, pause, reset, setDone, startTimer }: Props) => {
   const { formatDateTime } = useFormattedDate();
   const rentalDate = formatDateTime(rental.date).replaceAll(' ', '_');
   const key = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDate}`;
@@ -41,7 +42,7 @@ export const RentalTimerButtons = ({ buttonOpacity, buttonSize, index, rental, s
     <Layout style={platinumItemBackgroundColor}>
       <Layout style={[styles.container, platinumItemBackgroundColor]}>
         <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.primaryRed} size={buttonSize} iconName={'plus-circle-outline'} onPress={() => setVisible(true)} />
-        <BasicButton activeOpacity={buttonOpacity} fillColor={status === 'RUNNING' ? globalColors.warning : globalColors.success} size={buttonSize} iconName={status === 'RUNNING' ? 'pause-circle-outline' : 'play-circle-outline'} onPress={pause} />
+        <BasicButton activeOpacity={buttonOpacity} fillColor={status === 'RUNNING' ? globalColors.warning : globalColors.success} size={buttonSize} iconName={status === 'RUNNING' ? 'pause-circle-outline' : 'play-circle-outline'} onPress={status === 'RUNNING' ? pause : startTimer} />
         <BasicButton activeOpacity={buttonOpacity} fillColor={isDarkMode ? globalColors.white : globalColors.darkDisabled} size={buttonSize} iconName='refresh-outline' onPress={reset} />
         <BasicButton activeOpacity={buttonOpacity} fillColor={globalColors.successLight} size={buttonSize} iconName='checkmark-circle-2-outline' onPress={setDoneRental} />
       </Layout>
