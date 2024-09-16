@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { LoadingScreen } from '../../LoadingScreen';
-import { CustomDivider, DataLayout, ListPagination, MainLayout, TopNavigation, TotalListMessage } from '../../../components/ui';
+import { AddButton, CustomDivider, DataLayout, ListPagination, MainLayout, TopNavigation, TotalListMessage } from '../../../components/ui';
+import { VehicleEntryModal } from '../../../components/vehicles/VehicleEntryModal';
 import { VehicleListComponent } from '../../../components/vehicles/VehiclesListComponent';
-import { VehicleAddButton } from '../../../components/vehicles/VehicleAddButton';
 import { useVehiclesData } from '../../../hooks';
 import { VehiclesResponse } from '../../../../infrastructure/interfaces';
 
@@ -27,7 +26,7 @@ export const VehiclesScreen = () => {
           <DataLayout paddingTop={Platform.OS === 'ios' ? top : top + 20}>
             <TopNavigation top={top} title='Vehículos' renderSearchButton />
             <CustomDivider />
-            <VehicleListComponent bottom={bottom} display={display} vehiclesData={vehiclesData} />
+            <VehicleListComponent display={display} vehiclesData={vehiclesData} />
           </DataLayout>
           {vehiclesData.total !== 0 &&
             <>
@@ -35,7 +34,7 @@ export const VehiclesScreen = () => {
               <ListPagination<VehiclesResponse> bottom={bottom} data={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
             </>
           }
-          <VehicleAddButton />
+          <AddButton Modal={VehicleEntryModal} />
         </>
       }
     </MainLayout>
