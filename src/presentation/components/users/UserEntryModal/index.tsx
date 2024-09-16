@@ -5,7 +5,8 @@ import { User } from '../../../../core/entities';
 import * as UserUseCases from '../../../../core/use-cases/users';
 import { IUserRole } from '../../../../infrastructure/interfaces';
 import { useCustomTheme } from '../../../hooks';
-import { EntryModalTitle, RadioGroupComponent, PrimaryButton, Callout } from '../../ui';
+import { EntryModalTitle } from '../../ui';
+import { UserEntryModalBody } from '../UserEntryModalBody';
 import { globalStyles } from '../../../styles/global.styles';
 
 interface Props {
@@ -53,11 +54,7 @@ export const UserEntryModal = ({ user, visible, setVisible }: Props) => {
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
       <Card style={background}>
         <EntryModalTitle title='Actualizar rol de usuario' onPress={() => setVisible(false)} />
-        <Layout style={globalStyles.modalContainer}>
-          <Callout text={user.email} />
-          <RadioGroupComponent initialValue={initialUserIndex} list={[IUserRole.Admin, IUserRole.Editor]} handleSelection={handleUserRole} />
-          <PrimaryButton disabled={loading} text={'Actualizar'} onPress={onUpdate} />
-        </Layout>
+        <UserEntryModalBody userEmail={user.email} initialUserIndex={initialUserIndex} loading={loading} handleUserRole={handleUserRole} onUpdate={onUpdate} />
       </Card>
     </Modal>
   );
