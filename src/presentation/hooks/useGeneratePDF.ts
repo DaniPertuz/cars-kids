@@ -260,7 +260,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
     const transferPaymentTotal = purchasesData ? getTransferPaymentTotal(purchasesData.data) : { title: '', total: 0 };
     const totalAmount = purchasesData ? purchasesData.sum : 0;
     const { totalCost, totalPrice } = getPurchasesBalance(purchasesData.data);
-    const purchasesTableHeaders: string[] = ['Fecha', 'Producto', 'Costo', 'Cantidad', 'Forma de pago', 'Precio', 'Puesto de trabajo', 'Usuario'];
+    const purchasesTableHeaders: string[] = ['Fecha', 'Producto', 'Costo', 'Precio', 'Cantidad', 'Forma de pago', 'Venta', 'Puesto de trabajo', 'Usuario'];
 
     const options = {
       html: `
@@ -270,7 +270,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
             <div style='width: auto; display: flex; flex-direction: row; justify-content: space-around;'>
               <table style='width: auto;'>
                 <tr>
-                  <td class="bold">Cantidad</td>
+                  <td>Cantidad</td>
                   <td>${purchasesData.total}</td>
                 </tr>
                 <tr>
@@ -312,6 +312,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                           <td>${formatDateNumbersOnly(new Date(purchase.purchaseDate))}</td>
                           <td>${purchase.product.name}</td>
                           <td>${purchase.product.cost}</td>
+                          <td>${purchase.product.price}</td>
                           <td>${purchase.quantity}</td>
                           <td>${payment}</td>
                           <td>${purchase.price}</td>
