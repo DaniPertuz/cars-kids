@@ -13,6 +13,7 @@ export * from './DeleteButton';
 export * from './DeleteModal';
 export * from './EditButton';
 export * from './EmptyListMessage';
+export * from './EntryModalTitle';
 export * from './FAB';
 export * from './Footnote';
 export * from './HeaderFive';
