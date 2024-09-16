@@ -1,21 +1,23 @@
+import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 import { Layout } from '@ui-kitten/components';
-import { TouchableOpacity } from 'react-native';
 import { useCustomTheme } from '../../../hooks';
 import { CustomIcon } from '../CustomIcon';
 import { styles } from './styles';
 
 interface Props {
-  onPress: () => void;
   iconSize: number;
   iconName: string;
+  style?: StyleProp<ViewStyle>;
+  onPress: () => void;
 }
 
-export const FAB = ({ iconName, iconSize, onPress }: Props) => {
+export const FAB = ({ iconName, iconSize, style, onPress }: Props) => {
   const { customFillColor } = useCustomTheme();
   return (
     <Layout style={styles.container}>
       <TouchableOpacity
         activeOpacity={1.0}
+        style={style}
         onPress={onPress}
       >
         <CustomIcon name={iconName} fillColor={customFillColor.fillColor} size={{ height: iconSize, width: iconSize }} />
