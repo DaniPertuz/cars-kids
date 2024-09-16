@@ -5,15 +5,14 @@ import { EmptyListMessage, SpinnerContainer } from '../../ui';
 import { VehiclesList } from '../VehiclesList';
 
 interface Props {
-  bottom: number;
   display: boolean;
   vehiclesData: VehiclesResponse;
 }
 
-export const VehicleListComponent = ({ bottom, display, vehiclesData }: Props) => {
+export const VehicleListComponent = ({ display, vehiclesData }: Props) => {
   const { background } = useCustomTheme();
   return (
-    <Layout style={[{ marginHorizontal: 20, paddingBottom: bottom + 215 }, background]}>
+    <Layout style={[{ marginHorizontal: 20, height: '87.5%' }, background]}>
       {(!display)
         ?
         <SpinnerContainer />
