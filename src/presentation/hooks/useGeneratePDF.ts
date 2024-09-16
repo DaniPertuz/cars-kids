@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import FileViewer from 'react-native-file-viewer';
 import { adaptApiResponse } from '../../config/adapters/api-response-adapter';
 import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Purchase, Rental } from '../../core/entities';
@@ -90,6 +91,10 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
         #main {
           padding: 8px;
         }
+        
+        .bold {
+          font-weight: bold;
+        }
 
         .img-header {
           align-items: center;
@@ -149,10 +154,10 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
           <div style='width: auto; display: flex; flex-direction: row; justify-content: ${lapse === 'Día' ? 'space-between' : 'space-around'};'>
             <table style='width: auto;'>
               <tr>
-                <th colspan="2">Consolidado de ventas</th>
+                <th class="bold" colspan="2">Consolidado de ventas</th>
               </tr>
               <tr>
-                <td>Cantidad</td>
+                <td class="bold">Cantidad</td>
                 <td>${rentalsData.total}</td>
               </tr>
               <tr>
@@ -164,29 +169,29 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                 <td>${transferPaymentTotal.total > 0 ? `${transferPaymentTotal.total}` : '0'}</td>
               </tr>
               <tr>
-                <th>Total</th>
-                <th>${totalAmount}</th>
+                <th class="bold">Total</th>
+                <th class="bold">${totalAmount}</th>
               </tr>
             </table>
             <table style='width: auto;'>
               <tr>
-                ${vehiclesTableHeaders.map(header => `<th>${header}</th>`).join('')}
+                ${vehiclesTableHeaders.map(header => `<th class="bold">${header}</th>`).join('')}
               </tr>
               ${vehiclesFilter.map((vehicle) => (
-                `
+        `
                 <tr>
                   <td>${vehicle.nickname}</td>
                   <td>${vehicle.count}</td>
                   <td>${vehicle.totalAmount}</td>
                 </tr>`
-              )).join('')}
+      )).join('')}
             </table>
             <table style='height: 50%; width: auto;'>
               <tr>
-                ${['Puesto de trabajo', 'Cantidad'].map(header => `<th>${header}</th>`).join('')}
+                ${['Puesto de trabajo', 'Cantidad'].map(header => `<th class="bold">${header}</th>`).join('')}
               </tr>
               ${desksFilter.map((desk) => (
-                `<tr>
+        `<tr>
                   <td>${desk.name}</td>
                   <td>${desk.count}</td>
                 </tr>`
@@ -221,7 +226,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
           <br /><br />
           <table>
             <tr>
-              ${rentalsTableHeaders.map(header => `<th>${header}</th>`).join('')}
+              ${rentalsTableHeaders.map(header => `<th class="bold">${header}</th>`).join('')}
             </tr>
             ${rentalsData.data.map((rental: Rental) => {
               const payment = paymentDescriptions[rental.payment];
@@ -265,7 +270,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
             <div style='width: auto; display: flex; flex-direction: row; justify-content: space-around;'>
               <table style='width: auto;'>
                 <tr>
-                  <td>Cantidad</td>
+                  <td class="bold">Cantidad</td>
                   <td>${purchasesData.total}</td>
                 </tr>
                 <tr>
@@ -277,21 +282,21 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                   <td>${transferPaymentTotal.total > 0 ? `${transferPaymentTotal.total}` : '0'}</td>
                 </tr>
                 <tr>
-                  <th>Total</th>
-                  <th>${totalAmount}</th>
+                  <th class="bold">Total</th>
+                  <th class="bold">${totalAmount}</th>
                 </tr>
               </table>
               <table style='width: auto;'>
                 <tr>
-                  <td>Total de costos</td>
+                  <td class="bold">Total de costos</td>
                   <td>${totalCost}</td>
                 </tr>
                 <tr>
-                  <td>Total de venta</td>
+                  <td class="bold">Total de venta</td>
                   <td>${totalPrice}</td>
                 </tr>
                 <tr>
-                  <td>Utilidad</td>
+                  <td class="bold">Utilidad</td>
                   <td>${totalPrice - totalCost}</td>
                 </tr>
               </table>
@@ -299,7 +304,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
             <br /><br />
             <table>
               <tr>
-                ${purchasesTableHeaders.map(header => `<th>${header}</th>`).join('')}
+                ${purchasesTableHeaders.map(header => `<th class="bold">${header}</th>`).join('')}
               </tr>          
               ${purchasesData.data.map((purchase: Purchase) => {
                 const payment = paymentDescriptions[purchase.payment];
@@ -326,6 +331,11 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
   const generatePDF = async () => {
     let options: any;
 
+    if (!entityData.response) {
+      SnackbarAdapter.showSnackbar('No hay información para exportar a PDF');
+      return;
+    }
+
     if ('rentals' in entityData.response) {
       const rentalsData = adaptApiResponse(entityData.response);
       options = fetchRentalsData(rentalsData as RentalResponse);
@@ -339,7 +349,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
     const file = await RNHTMLtoPDF.convert(options);
 
     if (file.filePath) {
-      SnackbarAdapter.showSnackbar(`Archivo ${category === 'Alquileres' ? 'Pedidos' : 'Accesorios'} - ${reportLapse}.pdf generado exitosamente`);
+      FileViewer.open(file.filePath);
     }
   };
 
