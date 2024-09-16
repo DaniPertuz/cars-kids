@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card, Layout, Modal } from '@ui-kitten/components';
+import { Card, Modal } from '@ui-kitten/components';
 import { SnackbarAdapter } from '../../../../config/adapters/snackbar.adapter';
 import { User } from '../../../../core/entities';
 import * as UserUseCases from '../../../../core/use-cases/users';
