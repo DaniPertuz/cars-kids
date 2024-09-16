@@ -332,10 +332,10 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
           ...purchase,
           ...newPurchase,
           ...commonFields,
-          price: newPurchase.price,
+          price: newPurchase.product.price * newPurchase.quantity,
           product: newPurchase.product,
           purchaseDate: newPurchase.purchaseDate,
-          quantity: newPurchase.quantity,
+          quantity: newPurchase.quantity
         };
 
         if (purchase) {
@@ -346,7 +346,6 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
         }
 
         addTransaction(updatedPurchase, transaction);
-        showMessage('Compra agregada');
       }
 
       if (transaction === 'Rental') {
