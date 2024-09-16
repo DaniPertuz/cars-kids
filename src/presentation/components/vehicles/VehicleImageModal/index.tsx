@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 import { Card, Layout, Modal } from '@ui-kitten/components';
-import { HeaderFive, PrimaryButton } from '../../ui';
-import { useVehicleImage } from '../../../hooks';
+import { EntryModalTitle, PrimaryButton } from '../../ui';
+import { useCustomTheme, useVehicleImage } from '../../../hooks';
 import { Vehicle } from '../../../../core/entities';
 import { globalStyles } from '../../../styles/global.styles';
 import { globalColors } from '../../../theme/globalColors';
@@ -16,6 +16,7 @@ interface Props {
 
 export const VehicleImageModal = ({ vehicle, visible, setVisible }: Props) => {
   const [displayThumb, setDisplayThumb] = useState(false);
+  const { background } = useCustomTheme();
   const { loading, vehiclePicture, setVehiclePicture, selectPicture, takePicture, onSubmit } = useVehicleImage({ vehicle, setVisible });
 
   useEffect(() => {
@@ -36,10 +37,10 @@ export const VehicleImageModal = ({ vehicle, visible, setVisible }: Props) => {
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
-      <Card style={globalStyles.mainBackground}>
+      <Card style={background}>
         <Layout style={globalStyles.modalContainer}>
-          <HeaderFive text={`Imagen de ${vehicle.nickname}`} />
-          <Layout style={{ ...globalStyles.alignJustifyCenter, ...globalStyles.mainBackground }}>
+          <EntryModalTitle title={`Imagen de ${vehicle.nickname}`} onPress={() => setVisible(false)} />
+          <Layout style={{ ...globalStyles.alignJustifyCenter, ...background }}>
             <Image style={styles.vehicleImage} source={vehicleImagePath} />
           </Layout>
           <Layout style={styles.buttonsContainer}>
