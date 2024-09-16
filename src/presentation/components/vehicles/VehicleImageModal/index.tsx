@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 import { Card, Layout, Modal } from '@ui-kitten/components';
-import { EntryModalTitle, PrimaryButton } from '../../ui';
-import { useCustomTheme, useVehicleImage } from '../../../hooks';
 import { Vehicle } from '../../../../core/entities';
+import { useCustomTheme, useVehicleImage } from '../../../hooks';
+import { EntryModalTitle, PrimaryButton } from '../../ui';
 import { globalStyles } from '../../../styles/global.styles';
 import { globalColors } from '../../../theme/globalColors';
 import { styles } from './styles';
@@ -21,7 +21,7 @@ export const VehicleImageModal = ({ vehicle, visible, setVisible }: Props) => {
 
   useEffect(() => {
     const hasVehicleAssets = vehiclePicture?.assets !== undefined;
-    if (vehicle.img) {
+    if (vehicle?.img?.length! > 0) {
       setDisplayThumb(false);
     } else if (visible) {
       setDisplayThumb(!hasVehicleAssets);
@@ -31,9 +31,9 @@ export const VehicleImageModal = ({ vehicle, visible, setVisible }: Props) => {
     }
   }, [visible, vehiclePicture]);
 
-  const vehicleImagePath = displayThumb
+  const vehicleImagePath = (displayThumb || vehicle?.img?.length! === 0)
     ? require('../../../../assets/logo2.png')
-    : { uri: (vehiclePicture && vehiclePicture.assets && vehiclePicture.assets[0] && vehiclePicture.assets[0].uri && vehiclePicture.assets[0].uri.trim() !== '') ? vehiclePicture.assets[0].uri : (vehicle.img && vehicle.img.trim() !== '' ? vehicle.img : undefined) };
+    : { uri: (vehiclePicture ? vehiclePicture.assets?.[0]?.uri : vehicle.img) };
 
   return (
     <Modal visible={visible} backdropStyle={globalStyles.backdrop} onBackdropPress={() => setVisible(false)}>
