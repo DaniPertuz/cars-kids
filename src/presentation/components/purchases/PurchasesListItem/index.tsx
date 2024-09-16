@@ -13,7 +13,7 @@ export const PurchasesListItem = ({ purchase }: Props) => {
 
   const purchaseDescription = () => {
     const payment = paymentDescriptions[purchase.payment];
-    return `Cantidad: ${purchase.quantity}\nPago: ${purchase.price}\nMedio: ${payment}\nPuesto: ${purchase.desk.name}\nUsuario: ${purchase.user?.name}`;
+    return `Cantidad: ${purchase.quantity}\nPrecio unitario: ${purchase.product.price}\nPago: ${purchase.price}\nMedio: ${payment}\nPuesto: ${purchase.desk.name}\nUsuario: ${purchase.user?.name}`;
   };
 
   return (
