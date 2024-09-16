@@ -1127,6 +1127,8 @@ PODS:
     - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
+  - RNFileViewer (2.1.5):
+    - React-Core
   - RNGestureHandler (2.15.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1222,6 +1224,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - RNFileViewer (from `../node_modules/react-native-file-viewer`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
@@ -1354,6 +1357,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNFileViewer:
+    :path: "../node_modules/react-native-file-viewer"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
@@ -1432,6 +1437,7 @@ SPEC CHECKSUMS:
   ReactCommon: 2aa35648354bd4c4665b9a5084a7d37097b89c10
   RNCAsyncStorage: 10591b9e0a91eaffee14e69b3721009759235125
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
+  RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNGestureHandler: 67fb54b3e6ca338a8044e85cd6f340265aa41091
   RNScreens: 17e2f657f1b09a71ec3c821368a04acbb7ebcb46
   RNSnackbar: 3727b42bf6c4314a53c18185b5203e915a4ab020
