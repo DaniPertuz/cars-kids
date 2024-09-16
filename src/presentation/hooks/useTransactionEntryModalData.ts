@@ -279,8 +279,8 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     SnackbarAdapter.showSnackbar(message);
   };
 
-  const fieldValidations = (transaction: Transaction) => {
-    if (!newPurchase.desk || !newRental.desk) {
+  const fieldValidations = (transaction: Transaction) => {console.log({newRental, newPurchase})
+    if ((transaction === 'Purchase' && !newPurchase.desk) || (transaction === 'Rental' && !newRental.desk)) {
       showMessage('Puesto de trabajo no válido');
       return false;
     }
@@ -366,7 +366,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
           vehicle: newRental.vehicle,
           amount: isCustomRentalAmount ? customRentalAmount : handleRentalAmount(newRental.vehicle.size as IVehicleSize, newRental.time)
         };
-
+console.log({updatedRental})
         if (rental) {
           const index = rentals.indexOf(rental);
           updateTransaction(index, updatedRental, transaction);
