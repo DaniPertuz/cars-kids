@@ -21,6 +21,7 @@ interface Props {
 
 export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: Props) => {
   const [dayBudget, setDayBudget] = useState<BudgetResponse>();
+  const [loading, setLoading] = useState(false);
   const { addedTime, extractTimeFromStringDate, formatDateNumbersOnly } = useFormattedDate();
 
   const { entityData, fetchData } = useEntityData({
@@ -191,7 +192,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                 ${['Puesto de trabajo', 'Cantidad'].map(header => `<th class="bold">${header}</th>`).join('')}
               </tr>
               ${desksFilter.map((desk) => (
-        `<tr>
+                `<tr>
                   <td>${desk.name}</td>
                   <td>${desk.count}</td>
                 </tr>`
@@ -330,10 +331,12 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
   };
 
   const generatePDF = async () => {
+    setLoading(true);
     let options: any;
-
+    
     if (!entityData.response) {
       SnackbarAdapter.showSnackbar('No hay información para exportar a PDF');
+      setLoading(false);
       return;
     }
 
@@ -351,8 +354,9 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
 
     if (file.filePath) {
       FileViewer.open(file.filePath);
+      setLoading(false);
     }
   };
 
-  return { generatePDF };
+  return { loading, generatePDF };
 };
