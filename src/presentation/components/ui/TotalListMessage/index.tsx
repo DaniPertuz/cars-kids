@@ -20,7 +20,7 @@ export const TotalListMessage = ({ bottom, item, total }: Props) => {
       case 'Presupuestos':
         return count === 1 ? 'Presupuesto' : 'Presupuestos';
       default:
-        return count === 1 ? word.slice(0, -1) : `${word}s`;
+        return count === 1 ? word : `${word}s`;
     }
   };
 
