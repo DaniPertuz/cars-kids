@@ -51,7 +51,7 @@ export const ReportListItem = ({ item }: Props) => {
       case (item as Purchase).product !== undefined:
         const purchase = item as Purchase;
         const purchaseDate = formatDateTime(purchase.purchaseDate);
-        return `Cantidad: ${safeAccess(purchase.quantity)}\nPago: ${safeAccess(purchase.price)}\nFecha: ${safeAccess(purchaseDate.substring(0, purchaseDate.length - 6))}\nProducto: ${safeAccess(purchase.product?.name)}\nUsuario: ${safeAccess(purchase.user?.name)}`;
+        return `Cantidad: ${safeAccess(purchase.quantity)}\nPrecio unitario: ${purchase.product.price}\nPago: ${safeAccess(purchase.price)}\nFecha: ${safeAccess(purchaseDate.substring(0, purchaseDate.length - 6))}\nProducto: ${safeAccess(purchase.product?.name)}\nUsuario: ${safeAccess(purchase.user?.name)}`;
 
       case (item as User).role !== undefined:
         const user = item as User;
