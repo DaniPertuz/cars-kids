@@ -36,7 +36,7 @@ export const ListPagination = <T extends { prev: string | null; next: string | n
   };
 
   return (
-    <Layout style={[{ ...styles.container, bottom: bottom + 20 }, background]}>
+    <Layout style={[{ ...styles.container, bottom: bottom + 15 }, background]}>
       <PrevButton iconSize={30} prevUrl={prevUrl} onPress={handlePrevClick} />
       <HeaderFive text={String(data.page)} />
       <NextButton iconSize={30} nextUrl={nextUrl} onPress={handleNextClick} />

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   closeButtonContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     flex: 1
   },
   container: {
@@ -15,8 +15,7 @@ export const styles = StyleSheet.create({
     width: 320
   },
   textContainer: {
-    alignItems: 'center',
-    flex: 100
+    alignItems: 'center'
   },
   titleContainer: {
     alignItems: 'center',

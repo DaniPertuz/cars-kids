@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: globalColors.background,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 30,
+    gap: 25,
     position: 'absolute'
   }
 });

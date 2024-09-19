@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
     borderRadius: 15,
-    width: '50%'
+    width: '50%',
+    height: 50
   }
 });
