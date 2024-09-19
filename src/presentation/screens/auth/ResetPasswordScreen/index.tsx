@@ -2,8 +2,8 @@ import { ScrollView } from 'react-native';
 import { Layout } from '@ui-kitten/components';
 
 import { EmailInput, PasswordInput } from '../../../components/forms';
-import { LoginButtonContainer, LoginMainImage } from '../../../components/login';
-import { Footnote, HeaderLayout, Headline, MainLayout, TopNavigation } from '../../../components/ui';
+import { LoginButtonContainer, LoginHeaderContainer } from '../../../components/login';
+import { MainLayout, TopNavigation } from '../../../components/ui';
 import { useResetPasswordData } from '../../../hooks';
 
 import { authStyles } from '../../../styles/auth/styles';
@@ -28,13 +28,7 @@ export const ResetPasswordScreen = () => {
     <MainLayout>
       <TopNavigation top={top} />
       <ScrollView style={globalStyles.mainMargin} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
-        <HeaderLayout paddingTop={height * 0.1}>
-          <LoginMainImage />
-          <Layout style={background}>
-            <Headline text='Restablecer contraseña' />
-          </Layout>
-          <Footnote text='Ingresa email y nueva contraseña' />
-        </HeaderLayout>
+        <LoginHeaderContainer height={height} title={'Restablecer contraseña'} footnote={'Ingresa email y nueva contraseña'} />
         <Layout style={[authStyles.formContainer, background]}>
           <EmailInput placeholder='Email' value={done ? '' : email} onChangeText={(email: string) => setResetForm({ ...resetForm, email })} />
           <PasswordInput placeholder={'Ingresa contraseña'} value={done ? '' : password} onChangeText={(password: string) => setResetForm({ ...resetForm, password })} />
