@@ -23,6 +23,7 @@ interface Props {
 export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, visible, setVisible }: Props) => {
   const { background } = useCustomTheme();
   const { loading, handleDeleteDesk, handleDeleteProduct, handleDeleteTransaction, handleDeleteUser, handleDeleteVehicle } = useDeleteModal({ desk, product, purchase, rental, user, vehicle, visible, setVisible });
+  const startText = '¿Desea eliminar';
 
   return (
     <Modal
@@ -33,17 +34,17 @@ export const DeleteModal = ({ desk, product, purchase, rental, user, vehicle, vi
       <Card style={background}>
         <Layout style={[styles.container, background]}>
           <Layout style={[styles.titleContainer, background]}>
-            <Layout style={[styles.textContainer, background]}>
-              {desk && <Callout text={`¿Desea eliminar ${desk.name}?`} />}
-              {product && <Callout text={`¿Desea desactivar el producto ${product.name}?`} />}
-              {purchase && <Callout text={'¿Desea eliminar esta compra?'} />}
-              {rental && <Callout text={'¿Desea eliminar este alquiler?'} />}
-              {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
-              {vehicle && <Callout text={`¿Desea desactivar el vehículo ${vehicle.nickname}?`} />}
-            </Layout>
             <Layout style={[styles.closeButtonContainer, background]}>
               <BasicButton activeOpacity={1.0} iconName={'close-circle-outline'} fillColor={globalColors.primaryRed} size={{ height: 35, width: 35 }} onPress={() => setVisible(false)} />
             </Layout>
+          </Layout>
+          <Layout style={[styles.textContainer, background]}>
+            {desk && <Callout text={`${startText} ${desk.name}?`} />}
+            {product && <Callout text={`${startText} el producto ${product.name}?`} />}
+            {purchase && <Callout text={`${startText} esta compra?`} />}
+            {rental && <Callout text={`${startText} este alquiler?`} />}
+            {user && <Callout text={`¿Desea ${user.status === IStatus.Active ? 'desactivar' : 'reactivar'} el usuario ${user.name}?`} />}
+            {vehicle && <Callout text={`${startText} el vehículo ${vehicle.nickname}?`} />}
           </Layout>
           <PrimaryButton activeOpacity={0.6} disabled={loading} text={(purchase || desk || rental) ? 'Eliminar' : user?.status === IStatus.Inactive ? 'Reactivar' : 'Desactivar'} onPress={desk ? handleDeleteDesk : product ? handleDeleteProduct : (purchase || rental) ? handleDeleteTransaction : user ? handleDeleteUser : handleDeleteVehicle} />
         </Layout>
