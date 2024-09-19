@@ -21,6 +21,7 @@ export const PasswordInput = ({ placeholder, value, onChangeText }: Props) => {
   return (
     <Input
       placeholder={placeholder}
+      label={placeholder}
       autoCapitalize='none'
       secureTextEntry={isPasswordVisible}
       value={value}

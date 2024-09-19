@@ -13,6 +13,7 @@ export const EmailInput = ({ placeholder, value, onChangeText }: Props) => {
   return (
     <Input
       placeholder={placeholder}
+      label={placeholder}
       keyboardType='email-address'
       autoCapitalize='none'
       value={value}

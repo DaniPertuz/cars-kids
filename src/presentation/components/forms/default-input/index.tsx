@@ -14,6 +14,7 @@ export const DefaultInput = ({ caption, placeholder, value, onChangeText }: Prop
   return (
     <Input
       placeholder={placeholder}
+      label={placeholder}
       caption={caption}
       keyboardType='default'
       value={value}
