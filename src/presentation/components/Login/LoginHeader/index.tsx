@@ -11,10 +11,10 @@ export const LoginHeader = ({ title, footnote }: Props) => {
   const { background } = useCustomTheme();
   return (
     <>
-      <Layout style={[{ alignItems: 'center' }, background]}>
+      <Layout style={[{ alignItems: 'center', gap: 10 }, background]}>
         <Title text={title} />
+        <Footnote text={footnote} />
       </Layout>
-      <Footnote text={footnote} />
     </>
   );
 };
