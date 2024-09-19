@@ -16,7 +16,7 @@ export const RegisterScreen = () => {
 
   return (
     <MainLayout>
-      <ScrollView style={globalStyles.mainMargin}>
+      <ScrollView style={globalStyles.mainMargin} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
         <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <LoginHeader title={'Registro'} footnote={'Ingresa tus datos'} />

@@ -27,7 +27,7 @@ export const ResetPasswordScreen = () => {
   return (
     <MainLayout>
       <TopNavigation top={top} />
-      <ScrollView style={globalStyles.mainMargin} keyboardShouldPersistTaps='always'>
+      <ScrollView style={globalStyles.mainMargin} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
         <HeaderLayout paddingTop={height * 0.1}>
           <LoginMainImage />
           <Layout style={background}>
