@@ -24,7 +24,7 @@ export const ReportsListPagination = ({ bottom, category, entityData, lapse, rep
     <Layout style={[styles.container, background]}>
       <TotalListMessage bottom={bottom} item={category} total={entityData?.response.total} />
       <ListPagination<ApiResponse> bottom={bottom} data={entityData?.response} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
-      {category !== 'Presupuestos' && loading ? <LoadingReportIndicator /> : <FAB iconName='printer-outline' style={{ bottom: 25, right: 5 }} iconSize={45} onPress={generatePDF} />}
+      {(category !== 'Presupuestos') &&<>{loading ? <LoadingReportIndicator /> : <FAB iconName='printer-outline' style={{ bottom: 25, right: 5 }} iconSize={45} onPress={generatePDF} />}</>}
     </Layout>
   );
 };
