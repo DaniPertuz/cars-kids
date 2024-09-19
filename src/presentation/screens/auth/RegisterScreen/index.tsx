@@ -3,8 +3,8 @@ import { StackActions } from '@react-navigation/native';
 import { Layout } from '@ui-kitten/components';
 
 import { DefaultInput, EmailInput, PasswordInput } from '../../../components/forms';
-import { LoginButtonContainer, LoginFooter, LoginHeader, LoginMainImage } from '../../../components/login';
-import { HeaderLayout, MainLayout, RadioGroupComponent } from '../../../components/ui';
+import { LoginButtonContainer, LoginFooter, LoginHeaderContainer } from '../../../components/login';
+import { MainLayout, RadioGroupComponent } from '../../../components/ui';
 import { useCustomTheme, useRegisterData } from '../../../hooks';
 
 import { authStyles } from '../../../styles/auth/styles';
@@ -17,10 +17,7 @@ export const RegisterScreen = () => {
   return (
     <MainLayout>
       <ScrollView style={globalStyles.mainMargin} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
-        <HeaderLayout paddingTop={height * 0.1}>
-          <LoginMainImage />
-          <LoginHeader title={'Registro'} footnote={'Ingresa tus datos'} />
-        </HeaderLayout>
+        <LoginHeaderContainer height={height} title={'Registro'} footnote={'Ingresa tus datos'} />
         <Layout style={[authStyles.formContainer, background]}>
           <DefaultInput placeholder='Nombre' value={form.name} onChangeText={(name: string) => setForm({ ...form, name })} />
           <EmailInput placeholder='Email' value={form.email} onChangeText={(email: string) => setForm({ ...form, email })} />
