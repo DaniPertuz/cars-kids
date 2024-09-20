@@ -12,13 +12,13 @@ export const LoadingScreen = () => {
     const animateScale = Animated.loop(
       Animated.sequence([
         Animated.timing(scaleAnim, {
-          toValue: 1.2,
-          duration: 300,
+          toValue: 1.8,
+          duration: 1200,
           useNativeDriver: true
         }),
         Animated.timing(scaleAnim, {
           toValue: 1.0,
-          duration: 300,
+          duration: 1200,
           useNativeDriver: true
         }),
       ])
@@ -33,7 +33,7 @@ export const LoadingScreen = () => {
     <Layout style={[globalStyles.flexAlignJustifyCenter, background]}>
       <Animated.Image
         source={require('../../assets/carkids-removebg.png')}
-        style={[{ height: 80, width: 150 }, background, { transform: [{ scale: scaleAnim }] }]}
+        style={[{ height: 170, width: 200 }, background, { transform: [{ scale: scaleAnim }] }]}
       />
     </Layout>
   );
