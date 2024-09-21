@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { StyleProp, TextStyle } from 'react-native';
 import { IndexPath, Select, SelectItem } from '@ui-kitten/components';
 import { styles } from './styles';
 
@@ -7,10 +8,11 @@ interface Props {
   initialValue: string;
   options: string[];
   placeholder: string;
+  style?: StyleProp<TextStyle>;
   handleSelection: (value: string) => void;
 }
 
-export const SelectComponent = ({ disabled, initialValue, options, placeholder, handleSelection }: Props) => {
+export const SelectComponent = ({ disabled, initialValue, options, placeholder, style, handleSelection }: Props) => {
   const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>();
   const [selectedValue, setSelectedValue] = useState(initialValue);
 
@@ -23,7 +25,7 @@ export const SelectComponent = ({ disabled, initialValue, options, placeholder, 
 
   return (
     <Select
-      style={styles.container}
+      style={[styles.container, style]}
       placeholder={placeholder}
       disabled={disabled}
       selectedIndex={selectedIndex}
