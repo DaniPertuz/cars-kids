@@ -77,6 +77,11 @@ export interface UserAPIResponse {
   user?:     User;
 }
 
+export interface VehicleRentalTime {
+  time: number;
+  price: number;
+}
+
 export interface VehiclesResponse {
   page:     number;
   limit:    number;
