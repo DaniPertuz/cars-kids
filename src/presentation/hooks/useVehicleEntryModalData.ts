@@ -24,12 +24,13 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   };
   const [loading, setLoading] = useState(false);
   const [vehicleObject, setVehicleObject] = useState({});
+  const [timePriceBlocks, setTimePriceBlocks] = useState(vehicle?.rentalInfo || [{ time: 0, price: 0 }]);
   const [vehicleState, setVehicleState] = useState<Vehicle>({
     _id: vehicle?._id || '',
     nickname: vehicle?.nickname.trim() || '',
     category: vehicle?.category || IVehicleCategory.Car,
     size: vehicle?.size || '',
-    color: vehicle?.color || '',
+    color: vehicle?.color || ''
   });
   const { user } = useUserInfo();
   const isAdmin = user?.role === IUserRole.Admin;
@@ -93,7 +94,23 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   };
 
   const handleNicknameChange = (nickname: string) => {
-    handleFieldChange('nickname', nickname);
+    handleFieldChange('nickname', nickname.trim());
+  };
+
+  const handleBlockChange = (index: number, field: 'time' | 'price', value: number) => {
+    setTimePriceBlocks(prevBlocks => {
+      const updatedBlocks = [...prevBlocks];
+      updatedBlocks[index] = { ...updatedBlocks[index], [field]: value };
+      return updatedBlocks;
+    });
+  };
+
+  const addTimePriceBlock = () => {
+    setTimePriceBlocks([...timePriceBlocks, { time: 0, price: 0 }]);
+  };
+
+  const removeTimePriceBlock = (index: number) => {
+    setTimePriceBlocks(timePriceBlocks.filter((_, i) => i !== index));
   };
 
   const onSubmit = async () => {
@@ -104,9 +121,14 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
       SnackbarAdapter.showSnackbar(vehicleState.category === IVehicleCategory.Cycle ? 'Tamaño no válido para moto' : 'Tamaño no válido para carro');
       return;
     }
-    
-    const resp = vehicle ? await VehicleUseCases.updateVehicleUseCase(vehicle.nickname, vehicleObject as Vehicle) : await VehicleUseCases.addVehicleUseCase(vehicleState);
-    
+
+    const updatedVehicleState = {
+      ...vehicleObject,
+      rentalInfo: [...timePriceBlocks]
+    };
+
+    const resp = vehicle ? await VehicleUseCases.updateVehicleUseCase(vehicle.nickname, updatedVehicleState as Vehicle) : await VehicleUseCases.addVehicleUseCase(updatedVehicleState as Vehicle);
+
     if (resp.error) {
       setLoading(false);
       SnackbarAdapter.showSnackbar(resp.error);
@@ -125,6 +147,15 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   useEffect(() => {
     if (!vehicle && !visible) {
       setVehicleState({ ...vehicleState, nickname: '' });
+      setTimePriceBlocks([{ time: 0, price: 0 }]);
+    }
+
+    if (vehicle && visible) {
+      if (vehicle.rentalInfo && vehicle.rentalInfo.length > 0) {
+        if (timePriceBlocks.length === 0) {
+          setTimePriceBlocks(vehicle.rentalInfo);
+        }
+      }
     }
   }, [vehicle, visible]);
 
@@ -133,12 +164,16 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
     initialCategoryIndex,
     initialSizeValue,
     loading,
+    timePriceBlocks,
     vehicleState,
+    addTimePriceBlock,
+    handleBlockChange,
     handleStatus,
     handleVehicleCategory,
     handleVehicleColor,
     handleVehicleSize,
     handleNicknameChange,
-    onSubmit
+    onSubmit,
+    removeTimePriceBlock
   };
 };
