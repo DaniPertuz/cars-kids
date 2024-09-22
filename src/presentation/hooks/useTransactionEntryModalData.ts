@@ -109,21 +109,9 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     setIsCustomRentalAmount(value);
   };
 
-  const handleRentalAmount = (size: IVehicleSize, time: number, customRentalAmount?: number) => {
-    let rentalAmount: number = 0;
-    switch (size) {
-      case IVehicleSize.Small:
-        rentalAmount = time === 15 ? 8000 : time === 20 ? 10000 : 15000;
-        break;
-      case IVehicleSize.Medium:
-      case IVehicleSize.Large:
-        rentalAmount = time === 15 ? 10000 : time === 20 ? 14000 : 18000;
-        break;
-      case IVehicleSize.XLarge:
-        rentalAmount = time === 15 ? 15000 : time === 20 ? 20000 : 25000;
-        break;
-    }
-    return rentalAmount;
+  const handleRentalAmount = (time: number): number => {
+    const rental = newRental.vehicle.rentalInfo?.find(info => info.time === time);
+    return rental?.price!;
   };
 
   const handleRentalVehicle = (value: string) => {
@@ -225,7 +213,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
     }
 
     const accum = fees.reduce((acc: number, curr) => acc + curr.price, 0);
-    const expectedAmount = transaction === 'Purchase' ? newPurchase.product.price : handleRentalAmount(newRental.vehicle.size as IVehicleSize, newRental.time);
+    const expectedAmount = transaction === 'Purchase' ? newPurchase.product.price : handleRentalAmount(newRental.time);
 
     if (accum !== expectedAmount || isDuplicated) {
       return false;
@@ -360,10 +348,10 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
           ...newRental,
           ...commonFields,
           client: newRental.client.trim() || 'NN',
-          time: newRental.time!,
+          time: newRental.time,
           date: newRental.date,
           vehicle: newRental.vehicle,
-          amount: isCustomRentalAmount ? customRentalAmount : handleRentalAmount(newRental.vehicle.size as IVehicleSize, newRental.time)
+          amount: isCustomRentalAmount ? customRentalAmount : handleRentalAmount(newRental.time)
         };
 
         if (rental) {
