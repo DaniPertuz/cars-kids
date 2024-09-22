@@ -32,9 +32,9 @@ export const VehiclesScreen = () => {
             <>
               <TotalListMessage bottom={bottom} item='vehículo' total={vehiclesData.total} />
               <ListPagination<VehiclesResponse> bottom={bottom} data={vehiclesData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+              <AddButton Modal={VehicleEntryModal} />
             </>
           }
-          <AddButton Modal={VehicleEntryModal} />
         </>
       }
     </MainLayout>

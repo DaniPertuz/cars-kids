@@ -33,9 +33,9 @@ export const ProductsScreen = () => {
             <>
               <TotalListMessage bottom={bottom} item='producto' total={productsData.total} />
               <ListPagination<ProductResponse> bottom={bottom} data={productsData} fetchPrevPage={fetchPrevPage} fetchNextPage={fetchNextPage} />
+              <AddButton Modal={ProductEntryModal} />
             </>
           }
-          <AddButton Modal={ProductEntryModal} />
         </>
       }
     </MainLayout>
