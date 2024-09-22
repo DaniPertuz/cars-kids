@@ -23,7 +23,7 @@ export const DeleteButton = ({ iconName, iconSize, desk, product, purchase, rent
 
   return (
     <Layout style={[styles.container, { backgroundColor: user?.status === IStatus.Inactive ? globalColors.successLight : globalColors.primaryRed }]}>
-      <TouchableOpacity activeOpacity={1.0} onPress={() => setVisible(true)}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setVisible(true)}>
         <CustomIcon name={iconName} size={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
       </TouchableOpacity>
       <DeleteModal visible={visible} setVisible={setVisible} desk={desk} product={product} vehicle={vehicle} user={user} purchase={purchase} rental={rental} />

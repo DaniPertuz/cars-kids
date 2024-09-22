@@ -30,7 +30,7 @@ export const EditButton = ({ iconSize, budget, desk, updateDesk, product, purcha
   const [visible, setVisible] = useState(false);
 
   return (
-    <TouchableOpacity activeOpacity={1.0} onPress={() => setVisible(true)}>
+    <TouchableOpacity activeOpacity={0.7} onPress={() => setVisible(true)}>
       <Layout style={styles.container}>
         <CustomIcon name='edit-outline' size={{ height: iconSize, width: iconSize }} fillColor={globalColors.white} />
         {budget && <BudgetEntryModal budget={budget} visible={visible} setVisible={setVisible} />}
