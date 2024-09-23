@@ -7,7 +7,7 @@ export const CustomCheckbox = ({ isCustomRentalAmount, handleCustomRentalAmount 
       onChange={nextChecked => handleCustomRentalAmount(nextChecked)}
       status='danger'
     >
-      {'Personalizado'}
+      {'Especial'}
     </CheckBox>
   );
 };
