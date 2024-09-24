@@ -3,13 +3,11 @@ import BackgroundTimer from 'react-native-background-timer';
 import { StorageAdapter } from '../../config/adapters/storage-adapter';
 import { Rental } from '../../core/entities';
 import { TimeStatus } from '../../infrastructure/interfaces';
-import { useFormattedDate } from './useFormattedDate';
 
 export const useRentalTimer = ({ rental }: { rental: Rental; }) => {
-  const { formatDateTime } = useFormattedDate();
-  const rentalDate = formatDateTime(rental.date).replaceAll(' ', '_');
-  const rentalKey = `rental_time_${rental.client}_${rental.vehicle.nickname}_${rental.date}`;
-  const rentalDoneKey = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDate}`;
+  const rentalDateFormatString = rental.date.toString().replaceAll(' ', '').replaceAll('-', '').replaceAll(', ', '').replaceAll(':', '').replaceAll('T', '').replaceAll('.', '').replaceAll('Z', '');
+  const rentalKey = `rental_time${rental.client}_${rental.vehicle.nickname.replaceAll(' ', '')}_${rentalDateFormatString}`;
+  const rentalDoneKey = `rental_done_${rental.client}_${rental.vehicle.nickname}_${rentalDateFormatString}`;
   const rentalStatusKey = `${rentalKey}_status`;
   const [timerOn, setTimerOn] = useState(true);
   const [timerStatus, setTimerStatus] = useState<TimeStatus>('RUNNING');
