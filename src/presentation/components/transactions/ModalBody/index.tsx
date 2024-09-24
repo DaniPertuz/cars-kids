@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Card, Input, Layout } from '@ui-kitten/components';
 
@@ -141,6 +141,6 @@ export const ModalBody = ({ desk, purchase, rental, transaction, setVisible }: P
 
 const styles = StyleSheet.create({
   scrollContainer: { flexGrow: 1, gap: 15 },
-  mainContainer: { ...globalStyles.transactionsContainer, minHeight: 250, maxHeight: 500, paddingVertical: 20 },
+  mainContainer: { ...globalStyles.transactionsContainer, minHeight: 250, maxHeight: 320, paddingVertical: 20 },
   selectsContainer: { gap: 20 }
 });
