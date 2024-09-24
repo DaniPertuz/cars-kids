@@ -49,7 +49,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
   const [loading, setLoading] = useState(false);
   const [customPayment, setCustomPayment] = useState(false);
-  const [isCustomRentalInfo, setIsCustomRentalInfo] = useState<boolean>(hasCustomRentalInfo === undefined);
+  const [isCustomRentalInfo, setIsCustomRentalInfo] = useState<boolean>(hasCustomRentalInfo !== undefined);
   const [customRentalAmount, setCustomRentalAmount] = useState(rental?.amount || 0);
   const [customRentalTime, setCustomRentalTime] = useState(rental?.time || 0);
   const [firstFee, setFirstFee] = useState({ payment: {} as IPayment, price: 0 });
@@ -221,7 +221,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
     for (let i = 0; i < fees.length; i++) {
       for (let j = i + 1; j < fees.length; j++) {
-        if (fees[i].payment && fees[j].payment && fees[i].payment === fees[j].payment) {
+        if (fees[i].payment && fees[j].payment && (fees[i].payment === fees[j].payment)) {
           isDuplicated = true;
         }
       }
@@ -272,7 +272,7 @@ export const useTransactionEntryModalData = ({ desk, purchase, rental, setVisibl
 
   const isRentalInvalid = (rental: Rental) => {
     return rental.time === 0 ||
-      isEmptyObject(rental.payment) ||
+      (!customPayment && isEmptyObject(rental.payment)) ||
       isEmptyObject(rental.vehicle);
   };
 
