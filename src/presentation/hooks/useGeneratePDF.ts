@@ -239,7 +239,7 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
                         <td>${rental.time}</td>
                         <td>${startingHour}</td>
                         <td>${endingHour}</td>
-                        <td>${rental.vehicle.nickname}</td>
+                        <td>${rental.vehicle ? rental.vehicle.nickname : 'Eliminado'}</td>
                         <td>${payment}</td>
                         <td>${rental.amount}</td>
                         <td>${rental.desk.name}</td>
@@ -309,11 +309,15 @@ export const useGeneratePDF = ({ category, range, lapse, reportLapse, total }: P
               </tr>          
               ${purchasesData.data.map((purchase: Purchase) => {
                 const payment = paymentDescriptions[purchase.payment];
+                const productName = purchase.product ? purchase.product.name : 'Eliminado';
+                const productCost = purchase.product ? purchase.product.cost : 0;
+                const productPrice = purchase.product ? purchase.product.price : 0;
+
                 return `<tr>
                           <td>${formatDateNumbersOnly(new Date(purchase.purchaseDate))}</td>
-                          <td>${purchase.product.name}</td>
-                          <td>${purchase.product.cost}</td>
-                          <td>${purchase.product.price}</td>
+                          <td>${productName}</td>
+                          <td>${productCost}</td>
+                          <td>${productPrice}</td>
                           <td>${purchase.quantity}</td>
                           <td>${payment}</td>
                           <td>${purchase.price}</td>

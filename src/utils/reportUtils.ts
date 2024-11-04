@@ -55,10 +55,9 @@ export const getTransferPaymentTotal = (data: Purchase[] | Rental[]): PaymentTot
 export const getPurchasesBalance = (data: Purchase[]) => {
   const { totalCost, totalPrice } = data.reduce((acc, curr) => {
     const { product, quantity } = curr;
-    const { cost, price } = product;
 
-    acc.totalCost += cost * quantity;
-    acc.totalPrice += price * quantity;
+    acc.totalCost += product ? product.cost * quantity : 0;
+    acc.totalPrice += product ? product.price * quantity : 0;
 
     return acc;
   }, { totalCost: 0, totalPrice: 0 });
@@ -91,11 +90,13 @@ export const getTotalByVehicleNickname = (rentalsData: RentalResponse): { nickna
 
   rentalsData.data.forEach(rental => {
     const { vehicle, amount } = rental;
-    const { nickname } = vehicle;
+    if (vehicle) {
+      const { nickname } = vehicle;
 
-    result[nickname] = result[nickname] || { count: 0, totalAmount: 0 };
-    result[nickname].count++;
-    result[nickname].totalAmount += amount;
+      result[nickname] = result[nickname] || { count: 0, totalAmount: 0 };
+      result[nickname].count++;
+      result[nickname].totalAmount += amount;
+    }
   });
 
   return Object.entries(result).map(([nickname, { count, totalAmount }]) => ({
