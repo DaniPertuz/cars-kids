@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import KeepAwake from 'react-native-keep-awake';
 import { adaptApiResponse } from '../../../../config/adapters/api-response-adapter';
 import { Budget } from '../../../../core/entities';
