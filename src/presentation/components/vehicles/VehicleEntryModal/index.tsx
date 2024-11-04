@@ -59,5 +59,3 @@ export const VehicleEntryModal = ({ vehicle, visible, setVisible }: Props) => {
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({})
