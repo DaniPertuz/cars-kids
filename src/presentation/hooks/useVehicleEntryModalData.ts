@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { SnackbarAdapter } from '../../config/adapters/snackbar.adapter';
 import { Vehicle } from '../../core/entities';
 import * as VehicleUseCases from '../../core/use-cases/vehicles';
-import { IVehicleCategory, IUserRole, IVehicleSize, IStatus } from '../../infrastructure/interfaces';
+import { IVehicleCategory, IUserRole, IVehicleSize, IStatus, VehicleRentalTime } from '../../infrastructure/interfaces';
 import { useUserInfo } from './useUserInfo';
 
 interface Props {
@@ -24,7 +24,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   };
   const [loading, setLoading] = useState(false);
   const [vehicleObject, setVehicleObject] = useState({});
-  const [timePriceBlocks, setTimePriceBlocks] = useState(vehicle?.rentalInfo || [{ time: 0, price: 0 }]);
+  const [timePriceBlocks, setTimePriceBlocks] = useState<VehicleRentalTime[]>(vehicle?.rentalInfo || [{ time: 0, price: 0 }]);
   const [vehicleState, setVehicleState] = useState<Vehicle>({
     _id: vehicle?._id || '',
     nickname: vehicle?.nickname.trim() || '',
@@ -94,7 +94,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
   };
 
   const handleNicknameChange = (nickname: string) => {
-    handleFieldChange('nickname', nickname.trim());
+    handleFieldChange('nickname', nickname);
   };
 
   const handleBlockChange = (index: number, field: 'time' | 'price', value: number) => {
@@ -124,7 +124,7 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
 
     const updatedVehicleState = {
       ...vehicleObject,
-      rentalInfo: [...timePriceBlocks]
+      rentalInfo: timePriceBlocks
     };
 
     const resp = vehicle ? await VehicleUseCases.updateVehicleUseCase(vehicle.nickname, updatedVehicleState as Vehicle) : await VehicleUseCases.addVehicleUseCase(updatedVehicleState as Vehicle);
@@ -135,27 +135,14 @@ export const useVehicleEntryModalData = ({ vehicle, visible, setVisible }: Props
       return;
     }
 
-    const actionText = vehicle ? 'actualizado' : 'registrado';
-    const successMessage = `Vehículo ${actionText} exitosamente`;
-
     setLoading(false);
     setVisible(false);
-    SnackbarAdapter.showSnackbar(successMessage);
     setVehicleState(vehicle ? vehicleState : init);
   };
 
   useEffect(() => {
     if (!vehicle && !visible) {
       setVehicleState({ ...vehicleState, nickname: '' });
-      setTimePriceBlocks([{ time: 0, price: 0 }]);
-    }
-
-    if (vehicle && visible) {
-      if (vehicle.rentalInfo && vehicle.rentalInfo.length > 0) {
-        if (timePriceBlocks.length === 0) {
-          setTimePriceBlocks(vehicle.rentalInfo);
-        }
-      }
     }
   }, [vehicle, visible]);
 
