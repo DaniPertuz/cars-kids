@@ -1,6 +1,8 @@
+import React from 'react';
 import { StackCardStyleInterpolator, createStackNavigator } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
+import { Vehicle } from '../../core/entities';
 import StatusBarComponent from '../components/ui/status-bar';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import { LoginScreen } from '../screens/auth/LoginScreen';
@@ -14,6 +16,7 @@ import { ProductsScreen } from '../screens/products/ProductsScreen';
 import { ReportsScreen } from '../screens/profile/ReportsScreen';
 import { UsersScreen } from '../screens/profile/UsersScreen';
 import { VehiclesScreen } from '../screens/profile/VehiclesScreen';
+import { VehicleDetailsScreen } from '../screens/profile/VehicleDetailsScreen';
 import { BottomNavigator, MainStackParams } from './BottomNavigator';
 
 export type RootStackParams = {
@@ -26,6 +29,7 @@ export type RootStackParams = {
   SearchScreen: { entity: 'products' | 'vehicles'; };
   UpdateProfileScreen: undefined;
   VehiclesScreen: undefined;
+  VehicleDetailsScreen: { vehicle: Vehicle };
   ProductsScreen: undefined;
   ReportsScreen: undefined;
   UsersScreen: undefined;
@@ -60,6 +64,7 @@ export const MainNavigator = () => {
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="ReportsScreen" component={ReportsScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="UsersScreen" component={UsersScreen} />
         <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="VehiclesScreen" component={VehiclesScreen} />
+        <Stack.Screen options={{ cardStyleInterpolator: fadeAnimation }} name="VehicleDetailsScreen" component={VehicleDetailsScreen} />
       </Stack.Navigator>
     </>
   );
