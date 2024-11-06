@@ -13,7 +13,7 @@ interface Props {
   vehicle?: Vehicle;
   visible: boolean;
   setVisible: (visible: boolean) => void;
-  handleSubmit: (loading: boolean) => void
+  handleSubmit?: (loading: boolean) => void
 }
 
 export const VehicleDetailsForm = ({ vehicle, visible, setVisible, handleSubmit }: Props) => {
@@ -37,13 +37,13 @@ export const VehicleDetailsForm = ({ vehicle, visible, setVisible, handleSubmit 
   } = useVehicleEntryModalData({ vehicle, visible, setVisible });
 
   const onFormSubmit = () => {
-    handleSubmit(loading);
+    handleSubmit!(loading);
     onSubmit();
   };
 
   return (
-    <Layout style={[globalStyles.mainMargin, background]}>
-      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1, paddingBottom: 120, gap: 10, marginVertical: 20 }}>
+    <Layout style={[{ marginHorizontal: vehicle ? 40 : 0 }, background]}>
+      <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1, paddingBottom: vehicle ? 120 : 220, gap: 10, marginVertical: 20 }}>
         <DefaultInput autoFocus={true} caption='Este valor es único' placeholder={'Nombre o apodo'} value={vehicleState.nickname} onChangeText={handleNicknameChange} />
         <RadioGroupComponent initialValue={initialCategoryIndex} list={['Carro', 'Moto']} handleSelection={handleVehicleCategory} />
         <SelectComponent placeholder='Tamaño' options={['Pequeño', 'Estándar', 'Grande', 'Adultos']} handleSelection={handleVehicleSize} initialValue={initialSizeValue} />
